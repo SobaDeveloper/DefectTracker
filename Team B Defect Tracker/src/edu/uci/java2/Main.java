@@ -1,5 +1,7 @@
 package edu.uci.java2;
 
+import javax.swing.JFrame;
+
 /**
  * X460.11/1 - Java Programming II - Team B
  * Main.java
@@ -12,7 +14,14 @@ package edu.uci.java2;
 public class Main {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		
+		JFrame frame = new JFrame("Defect Tracking System");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(300, 300);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+        
+        Login login = new Login(frame);
 
 	}
 

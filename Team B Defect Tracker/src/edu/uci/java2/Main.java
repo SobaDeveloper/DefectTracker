@@ -14,12 +14,12 @@ import javax.swing.JFrame;
  * @version 1.0 8/25/2014
  */
 
-public class Main extends JFrame implements ActionListener {
+public class Main implements ActionListener {
 	
 	private static final long serialVersionUID = -5990528085192234789L;
 	
-	JFrame mFrame;
-	MainMenu mainMenuPanel;
+	JFrame		mFrame;
+	MainMenu	mainMenuPanel;
 	
 	
 	public static void main(String[] args) {
@@ -32,30 +32,30 @@ public class Main extends JFrame implements ActionListener {
 	public Main() {	
 		
 		super();
-
-		this.setTitle("Team B Defect Tracking System");
-		this.setSize(600, 600);
-		this.setLocationRelativeTo(null);
-		
-		// Exit program when close window
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		// Display Login screen
-        Login login = new Login(this);
-        this.add(login, BorderLayout.CENTER);
+		mFrame = new JFrame();
 	}
 	
 	// Display the DTS
 	public void display()
 	{
-		this.setVisible(true);
+		mFrame.setTitle("Team B Defect Tracking System");
+		mFrame.setSize(600, 600);
+		mFrame.setLocationRelativeTo(null);
+		
+		// Exit program when close window
+		mFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		// Display Login screen
+		Login login = new Login(this);
+		mFrame.getContentPane().add(login, BorderLayout.CENTER);	
+		mFrame.setVisible(true);
 	}
 	
 	// Display the Main Menu screen
 	public void DisplayMainMenu()
 	{
 		mainMenuPanel = new MainMenu();
-		this.add(mainMenuPanel, BorderLayout.CENTER);	
+		mFrame.getContentPane().add(mainMenuPanel, BorderLayout.CENTER);	
 		
 	}
 	
@@ -65,5 +65,4 @@ public class Main extends JFrame implements ActionListener {
 		
 		
 	}
-
 }

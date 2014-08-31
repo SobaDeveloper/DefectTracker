@@ -36,13 +36,13 @@ public class Login extends JPanel implements ActionListener{
 	private JButton jbLogin, jbCancel;
 	private DatabaseHelper dh = new DatabaseHelper();
 
-	protected JFrame parent; 
+	protected Main parent; 
 	
 	/**
 	 * 
 	 * @param parent
 	 */
-	public Login(JFrame parent){
+	public Login(Main parent){
 		super();
 
 		// Just to add space to text lines
@@ -135,7 +135,7 @@ public class Login extends JPanel implements ActionListener{
 			
 			// Send message to display the MainMenu screen
 			//OK getParent().add( new MainMenu(), BorderLayout.CENTER);	
-			((Main)parent).DisplayMainMenu();
+			parent.DisplayMainMenu();
 			
 		}
 		//If cancel button is clicked

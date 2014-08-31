@@ -34,7 +34,7 @@ public class Login extends JPanel implements ActionListener{
 	private JTextField jtxtUserName;
 	private JPasswordField jpfPassword;
 	private JButton jbLogin, jbCancel;
-	private DatabaseHelper dh = new DatabaseHelper();
+	private DefectDAO dao = new DefectDAO();
 
 	protected Main parent; 
 	

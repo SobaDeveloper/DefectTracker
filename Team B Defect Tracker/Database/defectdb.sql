@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 28, 2014 at 04:37 AM
+-- Generation Time: Aug 31, 2014 at 03:09 AM
 -- Server version: 5.6.16
 -- PHP Version: 5.5.11
 
@@ -19,6 +19,35 @@ SET time_zone = "+00:00";
 --
 -- Database: `defectdb`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `defect`
+--
+
+CREATE TABLE IF NOT EXISTS `defect` (
+  `APPLICATION` varchar(32) NOT NULL,
+  `DEFECT_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `STATUS` varchar(30) NOT NULL,
+  `DATE_CREATED` date NOT NULL,
+  `SUMMARY` varchar(100) NOT NULL,
+  `DESCRIPTION` varchar(4000) NOT NULL,
+  `ASSIGNEE` varchar(32) DEFAULT NULL,
+  `PRIORITY` int(11) DEFAULT NULL,
+  `FINAL_RESOLUTION` varchar(4000) DEFAULT NULL,
+  `RESOLUTION_DATE` date DEFAULT NULL,
+  PRIMARY KEY (`DEFECT_ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `defect`
+--
+
+INSERT INTO `defect` (`APPLICATION`, `DEFECT_ID`, `STATUS`, `DATE_CREATED`, `SUMMARY`, `DESCRIPTION`, `ASSIGNEE`, `PRIORITY`, `FINAL_RESOLUTION`, `RESOLUTION_DATE`) VALUES
+('FIRST APPLICATION', 1, 'OPEN', '2014-08-30', 'This is the first defect summary.', 'This is the first defect description', NULL, NULL, NULL, NULL),
+('SECOND APPLICATION', 2, 'OPEN', '2014-08-31', 'This is the second defect summary.', 'This is the second defect description.', NULL, NULL, NULL, NULL),
+('THIRD APPLICATION', 3, 'OPEN', '2014-08-30', 'Third defect summary', 'Third defect description', NULL, 0, NULL, NULL);
 
 -- --------------------------------------------------------
 

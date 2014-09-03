@@ -20,33 +20,41 @@ public class DefectDAO {
 	}
 	
 	/**
-	 * Connect to defectdb in MySQL
-	 * @return returns connection object
+	 * Create a Connection object to database in MySQL
+	 * @return return the Connection object
 	 */
 	public Connection getConnection(){
+		
 		Connection connection = null;	
+		
 		try{
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/defectdb", "root", "");
+			Class.forName("com.mysql.jdbc.Driver");
+			String data = "jdbc:mysql://localhost:3306/defectdb";
+			connection = DriverManager.getConnection(data , "root", "");
 		}
-		catch(Exception e){
-			//something
+		catch(ClassNotFoundException e){
+			System.out.println(e.getMessage());
+		}
+		catch(SQLException e){
+			System.out.println(e.getMessage());
 		}
 		return connection;
 	}
 	
 	/**
-	 * Validates user login
-	 * @param email user email
-	 * @param password user password
-	 * @return 
+	 * Validate user login based on user email and password
+	 * @param email the user email
+	 * @param password the user password
+	 * @return true if user email and password exist and match in database
 	 */
-	public Boolean checkLogin(String email, String password)
-	{
+	public Boolean checkLogin(String email, String password){
+		
 		Connection con = getConnection();
+		
 		try{
-			PreparedStatement ps = con.prepareStatement("SELECT * FROM USER WHERE EMAIL=? AND PASSWORD=?");
-			ps.setString(1,  email);
+			String sql = "SELECT * FROM USER WHERE EMAIL=? AND PASSWORD=?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, email);
 			ps.setString(2, password);
 			ResultSet rs = ps.executeQuery();
 			
@@ -57,19 +65,24 @@ public class DefectDAO {
 				return false;
 			}
 		}
+		catch(SQLException e){
+			System.out.println(e.getMessage());
+			return false;
+		}
 		catch(Exception e){
-			System.out.println("Error while");
+			System.out.println(e.getMessage());
 			return false;
 		}
 	}	
 	
 	/**
-	 * Retrieves ResultSet of all defects
+	 * Retrieve ResultSet of all defects ordered by defect ID
 	 * @return ResultSet of all defects 
 	 */
-	public ResultSet getAllDefects()
-	{
+	public ResultSet getAllDefects(){
+		
 		Connection con = getConnection();
+		
 		try{
 			Statement statement = con.createStatement();
 			ResultSet rows;
@@ -77,30 +90,30 @@ public class DefectDAO {
 			rows = statement.executeQuery(sql);
 			return rows;
 		}
-		catch(Exception e){
-			//Something
+		catch(SQLException e){
+			System.out.println(e.getMessage());
 		}
 		return null;
 	}
 	
 	/**
-	 * Converts ResultSet to Defect
-	 * @param defects - ResultSet of defects to be converted
-	 * @return defect
+	 * Extract ResultSet values to new Defect object
+	 * @param rs ResultSet of defects to be extracted
+	 * @return new defect object
 	 */
-	public Defect getDefect(ResultSet defects){
+	public Defect getDefect(ResultSet rs){
 		try
 		{				
-			String appName = defects.getString("APPLICATION");
-			int defectID = defects.getInt("DEFECT_ID");
-			String defectStatus = defects.getString("STATUS");
-			Date dateCreated = defects.getDate("DATE_CREATED");
-			String defectSummary = defects.getString("SUMMARY");
-			String defectDesc = defects.getString("DESCRIPTION");
-			String assignee = defects.getString("ASSIGNEE");
-			int priority = defects.getInt("PRIORITY");
-			String finalResolution = defects.getString("FINAL_RESOLUTION");
-			Date resolutionDate = defects.getDate("RESOLUTION_DATE");
+			String appName = rs.getString("APPLICATION");
+			int defectID = rs.getInt("DEFECT_ID");
+			String defectStatus = rs.getString("STATUS");
+			Date dateCreated = rs.getDate("DATE_CREATED");
+			String defectSummary = rs.getString("SUMMARY");
+			String defectDesc = rs.getString("DESCRIPTION");
+			String assignee = rs.getString("ASSIGNEE");
+			int priority = rs.getInt("PRIORITY");
+			String finalResolution = rs.getString("FINAL_RESOLUTION");
+			Date resolutionDate = rs.getDate("RESOLUTION_DATE");
 			
 			Defect newDefect = new Defect (appName, defectStatus, dateCreated,
 					defectSummary, defectDesc, assignee, priority, finalResolution,
@@ -109,36 +122,38 @@ public class DefectDAO {
 			
 			return newDefect;
 		}
-		catch(Exception e){
-			//something
+		catch(SQLException e){
+			System.out.println(e.getMessage());
 		}
 		return null;
 	}
 	
 	/**
-	 * Inserts a new row in defectdb in MySQL
-	 * @param defect - defect to be added
+	 * Insert a new row in the DEFECT table in database
+	 * @param d the defect to be added
 	 */
-	public void addDefect(Defect defect){
+	public void addDefect(Defect d){
 		
 		Connection con = getConnection();
 		
 		try{
 			
-			String sql = "INSERT INTO DEFECT(APPLICATION, STATUS, DATE_CREATED,"
-					+ "SUMMARY, DESCRIPTION, ASSIGNEE, PRIORITY, FINAL_RESOLUTION, RESOLUTION_DATE)"
+			String sql = "INSERT INTO DEFECT"
+					+ "(APPLICATION, STATUS, DATE_CREATED,"
+					+ "SUMMARY, DESCRIPTION, ASSIGNEE, PRIORITY,"
+					+ "FINAL_RESOLUTION, RESOLUTION_DATE)"
 					+ "VALUES (?,?,?,?,?,?,?,?,?)";
 			
 			PreparedStatement ps = con.prepareStatement(sql);
-			ps.setString(1,  defect.getAppName());
-			ps.setString(2, defect.getDefectStatus());
-			ps.setDate(3, (Date)defect.getDateCreated());
-			ps.setString(4, defect.getDefectSummary());
-			ps.setString(5, defect.getDefectDesc());
-			ps.setString(6, defect.getAssignee());
-			ps.setInt(7, defect.getPriority());
-			ps.setString(8, defect.getFinalResolution());
-			ps.setDate(9, (Date)defect.getResolutionDate());
+			ps.setString(1, d.getAppName());
+			ps.setString(2, d.getDefectStatus());
+			ps.setDate(3, (Date)d.getDateCreated());
+			ps.setString(4, d.getDefectSummary());
+			ps.setString(5, d.getDefectDesc());
+			ps.setString(6, d.getAssignee());
+			ps.setInt(7, d.getPriority());
+			ps.setString(8, d.getFinalResolution());
+			ps.setDate(9, (Date)d.getResolutionDate());
 			ps.executeUpdate();
 			
 		}catch (SQLException e){
@@ -147,31 +162,37 @@ public class DefectDAO {
 	}
 	
 	/**
-	 * Updates a row in defectdb in MySQL
-	 * @param defect - defect to be updated
+	 * Update a row in DEFECT table in database
+	 * @param d the defect to be updated
 	 */
-	public void updateDefect(Defect defect){
+	public void updateDefect(Defect d){
+		
 		Connection con = getConnection();
+		
 		try{
 			
-			String sql = "UPDATE DEFECT SET APPLICATION=?, STATUS=?, DATE_CREATED=?,"
-					+ "SUMMARY=?, DESCRIPTION=?, ASSIGNEE=?, PRIORITY=?, FINAL_RESOLUTION=?, RESOLUTION_DATE=?"
+			String sql = "UPDATE DEFECT"
+					+ "SET APPLICATION=?, STATUS=?, DATE_CREATED=?,"
+					+ "SUMMARY=?, DESCRIPTION=?, ASSIGNEE=?, PRIORITY=?,"
+					+ "FINAL_RESOLUTION=?, RESOLUTION_DATE=?"
 					+ "WHERE DEFECT_ID=?";
 					
 			PreparedStatement ps = con.prepareStatement(sql);
-			ps.setString(1,  defect.getAppName());
-			ps.setString(3, defect.getDefectStatus());
-			ps.setDate(4, (Date)defect.getDateCreated());
-			ps.setString(5, defect.getDefectSummary());
-			ps.setString(6, defect.getDefectDesc());
-			ps.setString(7, defect.getAssignee());
-			ps.setInt(8, defect.getPriority());
-			ps.setString(9, defect.getFinalResolution());
-			ps.setDate(10, (Date)defect.getResolutionDate());
+			ps.setString(1, d.getAppName());
+			ps.setString(2, d.getDefectStatus());
+			ps.setDate(3, (Date)d.getDateCreated());
+			ps.setString(4, d.getDefectSummary());
+			ps.setString(5, d.getDefectDesc());
+			ps.setString(6, d.getAssignee());
+			ps.setInt(7, d.getPriority());
+			ps.setString(8, d.getFinalResolution());
+			ps.setDate(9, (Date)d.getResolutionDate());
+			ps.setInt(10, d.getDefectID());
+			
 			ps.executeUpdate();
 		}
-		catch(Exception e){
-			//something
+		catch(SQLException e){
+			System.out.println(e.getMessage());
 		}
 	}
 }

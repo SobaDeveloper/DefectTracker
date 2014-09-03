@@ -27,7 +27,10 @@ public class MainMenu  extends JPanel {
 	private JButton viewUpdateBtn;
 	private JButton addNewBtn;
 	private JButton logoutBtn;
+	
 	private JPanel dtsPanel;
+	
+	DefectsListPanel defectsListUpdatePanel;
 	
 	MainMenu () 
 	{
@@ -66,16 +69,25 @@ public class MainMenu  extends JPanel {
 		// Menu button was selected: Defect Details, Defects View/Update List or 
 		// Add New Defect screen.
 		Dimension dp = new Dimension( 550, 450 );
+		/*
 		dtsPanel = new JPanel();
 		dtsPanel.setLayout(new FlowLayout());
 		dtsPanel.setPreferredSize( dp );
 		dtsPanel.setBackground(c);
-			
+			*/
+		
+		//Create and set up the content pane.
+        defectsListUpdatePanel = new DefectsListPanel();
+        defectsListUpdatePanel.setOpaque(true); //content panes must be opaque
+        defectsListUpdatePanel.setPreferredSize( dp );
+        //frame.setContentPane(defectsListUpdatePanel);
+		
+		
 		// Add Menu Buttons and panel to Menu Panel
 		this.add(viewUpdateBtn);
 		this.add(addNewBtn);
 		this.add(logoutBtn);
-		this.add(dtsPanel);
+		this.add(defectsListUpdatePanel);
 		
 	}
 }

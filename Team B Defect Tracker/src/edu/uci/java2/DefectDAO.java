@@ -29,14 +29,14 @@ public class DefectDAO {
 		
 		try{
 			Class.forName("com.mysql.jdbc.Driver");
-			String data = "jdbc:mysql://localhost:3306/defectdb";
-			connection = DriverManager.getConnection(data , "root", "");
+			String data = "jdbc:mysql://db4free.net:3306/defectdb";
+			connection = DriverManager.getConnection(data , "uciteamb", "admin11");
 		}
 		catch(ClassNotFoundException e){
 			System.out.println(e.getMessage());
 		}
 		catch(SQLException e){
-			System.out.println(e.getMessage());
+			System.out.println("SQL Error: " + e.getMessage());
 		}
 		return connection;
 	}
@@ -52,7 +52,7 @@ public class DefectDAO {
 		Connection con = getConnection();
 		
 		try{
-			String sql = "SELECT * FROM USER WHERE EMAIL=? AND PASSWORD=?";
+			String sql = "SELECT * FROM staff WHERE EMAIL=? AND PASSWORD=?";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setString(1, email);
 			ps.setString(2, password);
@@ -66,7 +66,7 @@ public class DefectDAO {
 			}
 		}
 		catch(SQLException e){
-			System.out.println(e.getMessage());
+			System.out.println("SQL Error: " + e.getMessage());
 			return false;
 		}
 		catch(Exception e){
@@ -86,15 +86,62 @@ public class DefectDAO {
 		try{
 			Statement statement = con.createStatement();
 			ResultSet rows;
-			String sql = "SELECT * FROM DEFECT ORDER BY DEFECT_ID";
+			String sql = "SELECT * FROM defect ORDER BY DEFECT_ID";
 			rows = statement.executeQuery(sql);
 			return rows;
 		}
 		catch(SQLException e){
-			System.out.println(e.getMessage());
+			System.out.println("SQL Error: " + e.getMessage());
 		}
 		return null;
 	}
+	
+	/**
+	 * Return ResultSet of all defects from an application
+	 * @param appName the application name
+	 * @return ResultSet of defects based on application name
+	 */
+	public ResultSet getDefectsByApp(String appName){
+		
+		Connection con = getConnection();
+		
+		try{
+			String sql = "SELECT * FROM defect WHERE APPLICATION=? ORDER BY DEFECT_ID";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, appName);
+			ResultSet rows = ps.executeQuery();
+			return rows;
+		}
+		catch(SQLException e){
+			System.out.println("SQL Error: " + e.getMessage());
+		}
+		return null;
+	}
+	
+	
+	/**
+	 * Retrieve ResultSet of defect ID and summary values from an application
+	 * @param appName the application name
+	 * @return ResultSet of defect ID and summary values
+	 */
+	public ResultSet getListPanel(String appName){
+		
+		Connection con = getConnection();
+		
+		try{
+			String sql = "SELECT DEFECT_ID, SUMMARY FROM defect "
+					+ "WHERE APPLICATION=? ORDER BY DEFECT_ID";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, appName);
+			ResultSet rows = ps.executeQuery();
+			return rows;
+		}
+		catch(SQLException e){
+			System.out.println("SQL Error: " + e.getMessage());
+		}
+		return null;
+	}
+	
 	
 	/**
 	 * Extract ResultSet values to new Defect object
@@ -123,7 +170,7 @@ public class DefectDAO {
 			return newDefect;
 		}
 		catch(SQLException e){
-			System.out.println(e.getMessage());
+			System.out.println("SQL Error: " + e.getMessage());
 		}
 		return null;
 	}
@@ -138,7 +185,7 @@ public class DefectDAO {
 		
 		try{
 			
-			String sql = "INSERT INTO DEFECT"
+			String sql = "INSERT INTO defect"
 					+ "(APPLICATION, STATUS, DATE_CREATED,"
 					+ "SUMMARY, DESCRIPTION, ASSIGNEE, PRIORITY,"
 					+ "FINAL_RESOLUTION, RESOLUTION_DATE)"
@@ -171,7 +218,7 @@ public class DefectDAO {
 		
 		try{
 			
-			String sql = "UPDATE DEFECT"
+			String sql = "UPDATE defect "
 					+ "SET APPLICATION=?, STATUS=?, DATE_CREATED=?,"
 					+ "SUMMARY=?, DESCRIPTION=?, ASSIGNEE=?, PRIORITY=?,"
 					+ "FINAL_RESOLUTION=?, RESOLUTION_DATE=?"
@@ -192,7 +239,7 @@ public class DefectDAO {
 			ps.executeUpdate();
 		}
 		catch(SQLException e){
-			System.out.println(e.getMessage());
+			System.out.println("SQL Error: " + e.getMessage());
 		}
 	}
 }

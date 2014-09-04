@@ -204,5 +204,19 @@ public class Defect {
 	public void setResolutionDate(Date resolutionDate) {
 		this.resolutionDate = resolutionDate;
 	}
-	
+
+	/**
+	 * Return all defect values to string. This is for console testing purposes
+	 * and not used in the actual application.
+	 * @return all defect values to string
+	 */
+	@Override
+	public String toString() {
+		return "Defect [appName=" + appName + ", defectID=" + defectID
+				+ ", defectStatus=" + defectStatus + ", dateCreated="
+				+ dateCreated + ", defectSummary=" + defectSummary
+				+ ", defectDesc=" + defectDesc + ", assignee=" + assignee
+				+ ", priority=" + priority + ", finalResolution="
+				+ finalResolution + ", resolutionDate=" + resolutionDate + "]";
+	}
 }

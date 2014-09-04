@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Insets;
-
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -32,7 +31,7 @@ public class MainMenu  extends JPanel {
 	
 	DefectsListPanel defectsListUpdatePanel;
 	
-	MainMenu () 
+	MainMenu ()
 	{
 		super();	
 		

@@ -2,7 +2,6 @@ package edu.uci.java2;
 
 
 import javax.swing.*;
-
 import java.awt.*;
 import java.awt.event.*;
 
@@ -75,19 +74,15 @@ public class Login extends JPanel implements ActionListener{
 		jlbSpacer2.setPreferredSize(new Dimension(120, TEXT_HEIGHT));
 		this.add(jlbSpacer2);
 		
-		/* Commenting out for now. Do we want a password?
 		// Password label
 		jlbPassword = new JLabel("Password");
 		jlbPassword.setPreferredSize(new Dimension(LABEL_WIDTH, TEXT_HEIGHT));
 		jlbPassword.setHorizontalAlignment(JLabel.RIGHT);
 		this.add(jlbPassword);
 		
-		// Password field
-		//this.add(jpfPassword = new JPasswordField(TEXT_SIZE));
 		jpfPassword = new JPasswordField(TEXT_SIZE);
 		jpfPassword.setPreferredSize(new Dimension(TEXTFIELD_WIDTH, TEXT_HEIGHT));
 		this.add(jpfPassword);
-		*/
 
 		// Buttons
 		jbLogin = new JButton("Login");
@@ -107,36 +102,25 @@ public class Login extends JPanel implements ActionListener{
 		
 		//If login button is clicked
 		if(e.getSource() == jbLogin){
-			String email = new String(jtxtUserName.getText());
-			
-			
-			// TEMP CODE
-			JOptionPane.showMessageDialog(null, "Sucessful Login!",
-					"Successful Login", JOptionPane.INFORMATION_MESSAGE);
-			
-/*SLM - Commenting out for now, until we have a DB for valid staff. 
- * Also, Do we want a password? 
- * 			
+			String email = new String(jtxtUserName.getText());	
 			String password = new String(jpfPassword.getPassword());
-			System.out.println(email + " " + password);
 			
-			if(dh.checkLogin(email, password)){
+			if(dao.checkLogin(email, password)){
 				JOptionPane.showMessageDialog(null, "Sucessful Login!",
 						"Successful Login", JOptionPane.INFORMATION_MESSAGE);
-				this.dispose();
 			}
 			else{
 				JOptionPane.showMessageDialog(null, "Login failed!",
 						"Login failed", JOptionPane.ERROR_MESSAGE);
 			}
-	*/
+			
 			// Hide Login screen
 			this.setVisible(false);
 			
 			// Send message to display the MainMenu screen
 			//OK getParent().add( new MainMenu(), BorderLayout.CENTER);	
-			parent.DisplayMainMenu();
-			
+				parent.DisplayMainMenu();
+				
 		}
 		//If cancel button is clicked
 		else if(e.getSource() == jbCancel){

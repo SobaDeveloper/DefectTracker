@@ -1,4 +1,4 @@
-package edu.uci.java2;
+package edu.uci.java2.model;
 
 import java.util.Date;
 

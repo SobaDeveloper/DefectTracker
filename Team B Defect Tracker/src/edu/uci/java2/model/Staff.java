@@ -1,4 +1,4 @@
-package edu.uci.java2;
+package edu.uci.java2.model;
 /**
  * X460.11/1 - Java Programming II - Team B
  * Staff.java

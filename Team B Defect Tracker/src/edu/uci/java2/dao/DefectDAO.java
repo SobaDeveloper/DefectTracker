@@ -1,5 +1,7 @@
-package edu.uci.java2;
+package edu.uci.java2.dao;
 import java.sql.*;
+
+import edu.uci.java2.model.Defect;
 
 /**
  * X460.11/1 - Java Programming II - Team B

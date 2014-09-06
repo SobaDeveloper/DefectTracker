@@ -8,6 +8,7 @@ import edu.uci.java2.model.Staff;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.HashSet;
+import java.util.TreeSet;
 
 /**
  * X460.11/1 - Java Programming II - Team B
@@ -81,13 +82,15 @@ public class Login extends JPanel implements ActionListener {
                 
 		//FOR USE WITH APPLICATION JCOMBOBOX
 		HashSet<String> appNamesSet = new HashSet<>(dao.getAllAppNames());
-		
+                TreeSet<String> sortedList = new TreeSet<String>(appNamesSet);
+                
                 // Applications combo box             
                 jcbAppsList = new JComboBox();
-                for (String appName : appNamesSet) {
+                for (String appName : sortedList) {
                     jcbAppsList.addItem(appName);
                 }
-                jcbAppsList.setPreferredSize(new Dimension(300, TEXT_HEIGHT));      
+                jcbAppsList.setPreferredSize(new Dimension(300, TEXT_HEIGHT));
+                jcbAppsList.setSelectedIndex(0);
                 this.add(jcbAppsList);
         
 		// Username label

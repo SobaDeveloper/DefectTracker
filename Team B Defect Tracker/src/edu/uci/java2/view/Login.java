@@ -7,6 +7,7 @@ import edu.uci.java2.model.Staff;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.HashSet;
 
 /**
  * X460.11/1 - Java Programming II - Team B
@@ -70,6 +71,11 @@ public class Login extends JPanel implements ActionListener {
 		
 		// Set size of Login screen
 		setPreferredSize(new Dimension(LOGIN_PANEL_WIDTH, LOGIN_PANEL_HT));
+		
+		
+		//FOR USE WITH APPLICATION JCOMBOBOX
+		HashSet<String> appNamesSet = new HashSet<>(dao.getAllAppNames());
+		
 		
 		// Username label
 		jlbUserName = new JLabel("Username     ");

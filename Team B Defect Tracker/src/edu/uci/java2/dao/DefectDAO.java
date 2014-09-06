@@ -1,5 +1,6 @@
 package edu.uci.java2.dao;
 import java.sql.*;
+import java.util.HashSet;
 
 import edu.uci.java2.model.Defect;
 
@@ -97,6 +98,33 @@ public class DefectDAO {
 		}
 		return null;
 	}
+	
+	/**
+	 * Retrieve all application names from database and pass to HashSet
+	 * @return a HashSet of all application names
+	 */
+	public HashSet<String> getAllAppNames(){
+		Connection con = getConnection();
+		
+		try{
+			Statement statement = con.createStatement();
+			ResultSet rows;
+			String sql = "SELECT APPLICATION FROM defect";
+			rows = statement.executeQuery(sql);
+			
+			HashSet<String> tempSet = new HashSet<>();
+			while(rows.next()){
+				String tempString = rows.getString(1);
+				tempSet.add(tempString);
+			}
+			return tempSet;
+		}
+		catch(SQLException e){
+			System.out.println("SQL Error: " + e.getMessage());
+		}
+		return null;
+	}
+	
 	
 	/**
 	 * Return ResultSet of all defects from an application

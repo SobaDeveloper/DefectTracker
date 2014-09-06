@@ -175,7 +175,7 @@ public class Login extends JPanel implements ActionListener {
                 }                   
 	}
         
-        private String getAppSelected() {
+        public String getAppSelected() {
             return mAppSelected;
         }        
 }

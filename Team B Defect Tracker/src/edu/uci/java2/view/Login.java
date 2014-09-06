@@ -44,12 +44,13 @@ public class Login extends JPanel implements ActionListener {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private JLabel jlbUserName, jlbPassword;
+	private JLabel jlbUserName, jlbPassword, jlbAppsList;
 	private JTextField jtxtUserName;
 	private JPasswordField jpfPassword;
 	private JButton jbLogin, jbCancel;
 	private DefectDAO dao = new DefectDAO();
-
+        private JComboBox<String> jcbAppsList;
+        private String mAppSelected = "None";
 	
 	private Staff staff;
 	
@@ -72,11 +73,23 @@ public class Login extends JPanel implements ActionListener {
 		// Set size of Login screen
 		setPreferredSize(new Dimension(LOGIN_PANEL_WIDTH, LOGIN_PANEL_HT));
 		
-		
+                // Applications label
+                jlbAppsList = new JLabel("Application    ");
+                jlbAppsList.setPreferredSize(new Dimension(LABEL_WIDTH, TEXT_HEIGHT));
+                jlbAppsList.setHorizontalAlignment(JLabel.RIGHT);
+                this.add(jlbAppsList);
+                
 		//FOR USE WITH APPLICATION JCOMBOBOX
 		HashSet<String> appNamesSet = new HashSet<>(dao.getAllAppNames());
 		
-		
+                // Applications combo box             
+                jcbAppsList = new JComboBox();
+                for (String appName : appNamesSet) {
+                    jcbAppsList.addItem(appName);
+                }
+                jcbAppsList.setPreferredSize(new Dimension(300, TEXT_HEIGHT));      
+                this.add(jcbAppsList);
+        
 		// Username label
 		jlbUserName = new JLabel("Username     ");
 		jlbUserName.setPreferredSize(new Dimension(LABEL_WIDTH, TEXT_HEIGHT));
@@ -111,6 +124,7 @@ public class Login extends JPanel implements ActionListener {
 		
 		jbLogin.addActionListener(this);
 		jbCancel.addActionListener(this);
+                jcbAppsList.addActionListener(this);                  
 	}
 
 
@@ -150,12 +164,17 @@ public class Login extends JPanel implements ActionListener {
 			// Send message to display the MainMenu screen
 			dts.DisplayMainMenu();
 			
-		}
-		//If cancel button is clicked
-		else if(e.getSource() == jbCancel){
-			System.exit(0);
-		}			
+                } else if(e.getSource() == jbCancel){
+                    	//If cancel button is clicked
+			System.exit(0);			
+                } else if (e.getSource() == jcbAppsList) {
+                        mAppSelected = jcbAppsList.getSelectedItem().toString(); 
+                }                   
 	}
+        
+        private String getAppSelected() {
+            return mAppSelected;
+        }        
 }
 	
 

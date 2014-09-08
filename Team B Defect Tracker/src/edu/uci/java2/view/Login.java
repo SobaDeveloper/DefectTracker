@@ -1,14 +1,11 @@
 package edu.uci.java2.view;
 
 import javax.swing.*;
-
 import edu.uci.java2.dao.DefectDAO;
 import edu.uci.java2.model.Staff;
-
 import java.awt.*;
 import java.awt.event.*;
-import java.util.HashSet;
-import java.util.TreeSet;
+
 
 /**
  * X460.11/1 - Java Programming II - Team B
@@ -45,13 +42,11 @@ public class Login extends JPanel implements ActionListener {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private JLabel jlbUserName, jlbPassword, jlbAppsList;
+	private JLabel jlbUserName, jlbPassword;
 	private JTextField jtxtUserName;
 	private JPasswordField jpfPassword;
 	private JButton jbLogin, jbCancel;
 	private DefectDAO dao = new DefectDAO();
-        private JComboBox<String> jcbAppsList;
-        private String mAppSelected = "None";
 	
 	private Staff staff;
 	
@@ -73,25 +68,6 @@ public class Login extends JPanel implements ActionListener {
 		
 		// Set size of Login screen
 		setPreferredSize(new Dimension(LOGIN_PANEL_WIDTH, LOGIN_PANEL_HT));
-		
-                // Applications label
-                jlbAppsList = new JLabel("Application    ");
-                jlbAppsList.setPreferredSize(new Dimension(LABEL_WIDTH, TEXT_HEIGHT));
-                jlbAppsList.setHorizontalAlignment(JLabel.RIGHT);
-                this.add(jlbAppsList);
-                
-		//FOR USE WITH APPLICATION JCOMBOBOX
-		HashSet<String> appNamesSet = new HashSet<>(dao.getAllAppNames());
-                TreeSet<String> sortedList = new TreeSet<String>(appNamesSet);
-                
-                // Applications combo box             
-                jcbAppsList = new JComboBox();
-                for (String appName : sortedList) {
-                    jcbAppsList.addItem(appName);
-                }
-                jcbAppsList.setPreferredSize(new Dimension(300, TEXT_HEIGHT));
-                jcbAppsList.setSelectedIndex(0);
-                this.add(jcbAppsList);
         
 		// Username label
 		jlbUserName = new JLabel("Username     ");
@@ -127,7 +103,7 @@ public class Login extends JPanel implements ActionListener {
 		
 		jbLogin.addActionListener(this);
 		jbCancel.addActionListener(this);
-                jcbAppsList.addActionListener(this);                  
+                         
 	}
 
 
@@ -170,14 +146,10 @@ public class Login extends JPanel implements ActionListener {
                 } else if(e.getSource() == jbCancel){
                     	//If cancel button is clicked
 			System.exit(0);			
-                } else if (e.getSource() == jcbAppsList) {
-                        mAppSelected = jcbAppsList.getSelectedItem().toString(); 
-                }                   
+                }               
 	}
         
-        public String getAppSelected() {
-            return mAppSelected;
-        }        
+       
 }
 	
 

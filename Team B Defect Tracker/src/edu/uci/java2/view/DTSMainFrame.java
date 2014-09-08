@@ -45,7 +45,7 @@ public class DTSMainFrame {
 		// Create the Main JFrame
 		mFrame = new JFrame();
 		mFrame.setTitle("Team B Defect Tracking System");
-		mFrame.setSize(600, 600);
+		mFrame.setSize(800, 600);
 		mFrame.setLocationRelativeTo(null);
 		// Exit program when close window
 		mFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

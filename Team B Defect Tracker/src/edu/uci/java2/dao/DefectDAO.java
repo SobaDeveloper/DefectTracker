@@ -159,7 +159,7 @@ public class DefectDAO {
 		Connection con = getConnection();
 		
 		try{
-			String sql = "SELECT DEFECT_ID, SUMMARY FROM defect "
+			String sql = "SELECT DEFECT_ID, SUMMARY, DATE_CREATED, STATUS FROM defect "
 					+ "WHERE APPLICATION=? ORDER BY DEFECT_ID";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setString(1, appName);

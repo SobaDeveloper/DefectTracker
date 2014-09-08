@@ -52,7 +52,7 @@ public class MainMenu extends JPanel
 		setLayout( new BorderLayout());
 		
 		
-		Dimension db = new Dimension( 550, 110 );
+		Dimension db = new Dimension( 750, 110 );
 		btnPanel = new JPanel();
 		btnPanel.setLayout(new FlowLayout());
 		btnPanel.setPreferredSize( db );
@@ -63,7 +63,7 @@ public class MainMenu extends JPanel
 		// Create the dtsPanel which will contain one of the following panels 
 		// depending on which menu button is selected: 
 		// Defect Details, Defects View/Update List or Add New Defect screen.
-		Dimension dp = new Dimension( 550, 450 );
+		Dimension dp = new Dimension( 750, 450 );
 		dtsPanel = new JPanel();
 		dtsPanel.setLayout(new FlowLayout());
 		dtsPanel.setPreferredSize( dp );

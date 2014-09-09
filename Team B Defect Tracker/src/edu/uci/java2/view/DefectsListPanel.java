@@ -23,7 +23,6 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-import edu.uci.java2.controller.DefectsListRowSelectionController;
 import edu.uci.java2.dao.DefectDAO;
 import edu.uci.java2.model.Defect;
 import edu.uci.java2.model.DefectsList;
@@ -57,8 +56,6 @@ public class DefectsListPanel extends JPanel implements ItemListener {
 	ListSelectionModel	lsm;
 	TableModel			model;
 	DefectDAO 			dao;
-	
-	DefectsListRowSelectionController listSelectController;
 	
 	DefectsListPanel( DefectDAO dao)
 	{
@@ -98,11 +95,7 @@ public class DefectsListPanel extends JPanel implements ItemListener {
         mDefectTable = new JTable();
         mDefectTable.setPreferredScrollableViewportSize(new Dimension(750, 400 ));
         mDefectTable.setFillsViewportHeight(true);
-                
-		// Set up controller for table/row selection
-		listSelectController = new DefectsListRowSelectionController( dao, this );
-		listSelectController.defectListRowSelectionController();
-		
+	
         
         //Sorter
         

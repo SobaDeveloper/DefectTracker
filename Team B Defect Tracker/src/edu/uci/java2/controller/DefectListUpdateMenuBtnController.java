@@ -3,7 +3,6 @@ package edu.uci.java2.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import edu.uci.java2.model.Defect;
 import edu.uci.java2.view.MainMenu;
 
 /**
@@ -18,16 +17,13 @@ import edu.uci.java2.view.MainMenu;
 
 public class DefectListUpdateMenuBtnController {
 
-	
-	private Defect defect;
     private MainMenu mainMenuView;
     private ActionListener actionListener;
     
-    public DefectListUpdateMenuBtnController( Defect defect, MainMenu mainMenuView){
+    public DefectListUpdateMenuBtnController(  MainMenu mainMenuView){
     	
     	System.out.println( " In DefectListUpdateMenuBtnController  constructor");
     	
-        this.defect = defect;
         this.mainMenuView = mainMenuView;
                           
     }

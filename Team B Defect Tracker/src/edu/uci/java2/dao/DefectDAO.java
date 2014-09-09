@@ -174,6 +174,48 @@ public class DefectDAO {
 	
 	
 	/**
+	 * Retrieve Defect for given a defectID
+	 * @param defectID
+	 * @return Defect defect from the DB
+	 */
+	public Defect getDefectByID ( int defectID ) {
+		Connection con = getConnection();
+		Defect defect = null; 
+		
+		try{
+			String sql = "SELECT * FROM defect "
+					+ "WHERE DEFECT_ID =?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setLong(1, defectID);
+			ResultSet defectRS = ps.executeQuery();
+			
+			
+			
+		//	ResultSet defectRS = dao.getDefectByID( defectID );
+			
+			//try{
+				while( defectRS.next()){
+					defect = getDefect(defectRS);
+				}
+				System.out.println("Defect = "+defect.toString());
+		/*	}
+			catch(SQLException ex){
+				System.out.println("SQL Error: " + ex.getMessage());
+				
+			}
+			*/
+			
+			return defect;
+		}
+		catch(SQLException e){
+			System.out.println("SQL Error: " + e.getMessage());
+		}
+		return null;
+	}
+	
+	
+	
+	/**
 	 * Extract ResultSet values to new Defect object
 	 * @param rs ResultSet of defects to be extracted
 	 * @return new defect object

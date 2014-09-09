@@ -18,20 +18,13 @@ public class DefectsList {
 
 	private DefectDAO 	dao;
 	private ResultSet	mOpenDefects;
-	//Temporary application name
-	private String		tempApplication = "FIRST APPLICATION";
 	
 	/**
-	 * Default Constructor
+	 * DefectsList Constructor
+	 * @param dao - pass in the DefectDAO DB connection/a
 	 */
-	public DefectsList( String appName){
-		dao = new DefectDAO();
-		getOpenDefects(appName);
-		
-	}
-	
-	public DefectsList(){
-		dao = new DefectDAO();
+	public DefectsList( DefectDAO dao ){
+		this.dao = dao;
 		// No app name so don't do anything
 		
 	}
@@ -52,24 +45,5 @@ public class DefectsList {
 		mOpenDefects = dao.getListPanel(appName);
 		return mOpenDefects;
 	}
-	
-	/**
-	 * @return the tempApplication
-	 */
-	public String getTempApplication() {
-		return tempApplication;
-	}
-	
-	/**
-	 * Refresh the mOpenDefects ResultSet by retrieving data from DB.
-	 * Modifies mOpenDefects.
-	 */
-/*	public void refreshDB()
-	{
-		System.out.println(" IN OpenDefectsList refreshDB()");
-		mOpenDefects = dao.getListPanel(tempApplication);
-	}
-	*/
-
 	
 }

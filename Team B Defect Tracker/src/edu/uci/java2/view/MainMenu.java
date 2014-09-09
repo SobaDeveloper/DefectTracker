@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 
 import edu.uci.java2.controller.DefectDetailsMenuBtnController;
 import edu.uci.java2.controller.DefectListUpdateMenuBtnController;
+import edu.uci.java2.dao.DefectDAO;
 import edu.uci.java2.model.Defect;
 
 
@@ -44,6 +45,8 @@ public class MainMenu extends JPanel
 	
 	private Defect defect = null;
 	private boolean isDetails = false;
+	
+	private DefectDAO 	dao = new DefectDAO();
 	
 	MainMenu () 
 	{
@@ -125,7 +128,7 @@ public class MainMenu extends JPanel
 		System.out.println("In createMenuPanels");
 		
 		//Create and set up the Defects List/Update Panel.
-        defectsListUpdatePanel = new DefectsListPanel();
+        defectsListUpdatePanel = new DefectsListPanel( dao );
         defectsListUpdatePanel.setPreferredSize( dp );
         
         // The Controller for the List/Update Defect Menu Button

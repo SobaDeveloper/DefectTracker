@@ -5,6 +5,7 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JTable;
 
+import edu.uci.java2.dao.DefectDAO;
 import edu.uci.java2.model.Defect;
 import edu.uci.java2.view.DefectsListPanel;
 
@@ -22,10 +23,13 @@ public class DefectsListRowSelectionController {
 	private Defect defect;
     private DefectsListPanel dlPanel;
     private MouseListener mouseListener;
+    private DefectDAO dao;
 	
-    public DefectsListRowSelectionController( DefectsListPanel dlPanel)
+    public DefectsListRowSelectionController( DefectDAO dao, DefectsListPanel dlPanel)
 	{
     	this.dlPanel = dlPanel;
+    	this.dao = dao;
+    	
 		System.out.println( " In DefectsListItemSelectionController  constructor");		
 	}
     
@@ -45,8 +49,12 @@ public class DefectsListRowSelectionController {
 				System.out.println("defect id = "+target.getValueAt(row, 0).toString());
 				
 				System.out.println("In Controller table row clicked... row = "+row);
+				
+				// 
+				
 			}
 
+			// Below stubs are unused right now but required by interface
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub

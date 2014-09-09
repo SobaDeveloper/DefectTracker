@@ -54,14 +54,17 @@ public class DefectsListPanel extends JPanel implements ItemListener {
 	JComboBox<String>	jcbApps;
 	TableColumn 		column;
 	
-	//  I think THE DAO Stuff should be in a model 
-	DefectDAO 			dao = new DefectDAO();
 	ListSelectionModel	lsm;
 	TableModel			model;
+	DefectDAO 			dao;
 	
-	DefectsListPanel()
+	DefectsListRowSelectionController listSelectController;
+	
+	DefectsListPanel( DefectDAO dao)
 	{
 		super();
+		
+		this.dao = dao;
 		
 		//Retrieve HashSet of application names
 		HashSet<String> appNamesSet = new HashSet<>(dao.getAllAppNames());
@@ -87,7 +90,7 @@ public class DefectsListPanel extends JPanel implements ItemListener {
         
   
         // Get list of Defects from DefectDAO
-     	mOpenDefectsList = new DefectsList(); 
+     	mOpenDefectsList = new DefectsList( dao ); 
         
        
         
@@ -95,6 +98,11 @@ public class DefectsListPanel extends JPanel implements ItemListener {
         mDefectTable = new JTable();
         mDefectTable.setPreferredScrollableViewportSize(new Dimension(750, 400 ));
         mDefectTable.setFillsViewportHeight(true);
+                
+		// Set up controller for table/row selection
+		listSelectController = new DefectsListRowSelectionController( dao, this );
+		listSelectController.defectListRowSelectionController();
+		
         
         //Sorter
         
@@ -174,14 +182,8 @@ SLM */
 	 */
 	public void updateTable(String appName){
 		
-		//Retrieve ResultSet of defect info
-//SLM	mOpenDefects = dao.getListPanel(appName);
-		// Get list of Defects from DefectDAO
-     	//mOpenDefectsList = new DefectsList(); 
-		
-		
 		//Build the table with RowSorter
-		TableModel model = buildTableModel(mOpenDefectsList.getOpenDefects(appName)); //SLM
+		TableModel model = buildTableModel(mOpenDefectsList.getOpenDefects(appName)); 
 		mDefectTable.setModel(model);
 		RowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
 		mDefectTable.setRowSorter(sorter);
@@ -189,11 +191,6 @@ SLM */
 		//Set up table attributes
 		mDefectTable.getTableHeader().setFont(new Font("SansSerif", Font.ITALIC | Font.BOLD, 14));
 		mDefectTable.setFont(new Font("SansSerif", Font.PLAIN, 14));
-	
-		// Set up controller for table/row selection
-		DefectsListRowSelectionController listSelectController = new DefectsListRowSelectionController( this );
-		listSelectController.defectListRowSelectionController();
-		
 		
 	    //Set up column widths
 	    column = mDefectTable.getColumnModel().getColumn(0);  

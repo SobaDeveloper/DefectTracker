@@ -9,15 +9,19 @@ import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.TreeSet;
 import java.util.Vector;
+
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.RowSorter;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import edu.uci.java2.dao.DefectDAO;
 import edu.uci.java2.model.Defect;
@@ -49,6 +53,7 @@ public class DefectsListPanel extends JPanel implements ItemListener {
 	TableColumn 		column;
 	DefectDAO 			dao = new DefectDAO();
 	ListSelectionModel	lsm;
+	TableModel			model;
 	
 	DefectsListPanel()
 	{
@@ -75,10 +80,20 @@ public class DefectsListPanel extends JPanel implements ItemListener {
         jcbApps.addItemListener(this);
         this.add(jcbApps);
 		
+        
+  
+        
+        
+       
+        
 		//Setup table attributes (size, font, etc) 
         table = new JTable();
         table.setPreferredScrollableViewportSize(new Dimension(750, 400 ));
         table.setFillsViewportHeight(true);
+        
+        //Sorter
+        
+        
         
         //Add ListenSelectionListener to table 
         lsm = table.getSelectionModel();  
@@ -117,7 +132,7 @@ public class DefectsListPanel extends JPanel implements ItemListener {
 	 * @param rs ResultSet of defect ID, summary, date created, and status
 	 * @return DefaultTableModel
 	 */
-	public DefaultTableModel buildTableModel(ResultSet rs){
+	public TableModel buildTableModel(ResultSet rs){
 		
 		try{
 	    //Create vector with column name headings 
@@ -156,8 +171,11 @@ public class DefectsListPanel extends JPanel implements ItemListener {
 		//Retrieve ResultSet of defect info
 		mOpenDefects = dao.getListPanel(appName);
 		
-		//Build the table
-		table.setModel(buildTableModel(mOpenDefects));
+		//Build the table with RowSorter
+		TableModel model = buildTableModel(mOpenDefects);
+		table.setModel(model);
+		RowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
+		table.setRowSorter(sorter);
 		
 		//Set up table attributes
 	    table.getTableHeader().setFont(new Font("SansSerif", Font.ITALIC | Font.BOLD, 14));

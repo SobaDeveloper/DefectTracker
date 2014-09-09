@@ -23,8 +23,10 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
+import edu.uci.java2.controller.DefectsListRowSelectionController;
 import edu.uci.java2.dao.DefectDAO;
 import edu.uci.java2.model.Defect;
+import edu.uci.java2.model.DefectsList;
 
 /**
  * X460.11/1 - Java Programming II - Team B
@@ -45,12 +47,14 @@ public class DefectsListPanel extends JPanel implements ItemListener {
 	final int COL3_WIDTH = 80;
 	final int COL4_WIDTH = 50;
 	
-	ResultSet			mOpenDefects;
+	DefectsList			mOpenDefectsList;
 	Defect				mDefect;
 	String				selectedApp;
-	JTable				table;
+	JTable				mDefectTable;
 	JComboBox<String>	jcbApps;
 	TableColumn 		column;
+	
+	//  I think THE DAO Stuff should be in a model 
 	DefectDAO 			dao = new DefectDAO();
 	ListSelectionModel	lsm;
 	TableModel			model;
@@ -82,27 +86,28 @@ public class DefectsListPanel extends JPanel implements ItemListener {
 		
         
   
-        
+        // Get list of Defects from DefectDAO
+     	mOpenDefectsList = new DefectsList(); 
         
        
         
 		//Setup table attributes (size, font, etc) 
-        table = new JTable();
-        table.setPreferredScrollableViewportSize(new Dimension(750, 400 ));
-        table.setFillsViewportHeight(true);
+        mDefectTable = new JTable();
+        mDefectTable.setPreferredScrollableViewportSize(new Dimension(750, 400 ));
+        mDefectTable.setFillsViewportHeight(true);
         
         //Sorter
         
         
-        
+ /*SLM - PUT IN A CONTROLLER       
         //Add ListenSelectionListener to table 
-        lsm = table.getSelectionModel();  
+        lsm = mDefectTable.getSelectionModel();  
         lsm.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);  
         lsm.addListSelectionListener(new ListSelectionListener(){
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				 if (!e.getValueIsAdjusting()) {
-					 ListSelectionModel model = table.getSelectionModel(); 
+					 ListSelectionModel model = mDefectTable.getSelectionModel(); 
 					 int selected = model.getLeadSelectionIndex();
 					 if(selected>=0)
 						 printID(selected); 
@@ -112,14 +117,15 @@ public class DefectsListPanel extends JPanel implements ItemListener {
 			//Print defect ID of selected row in console
 			private void printID(int selected){  
 	            String temp = "";  
-	            Object obj = table.getValueAt(selected, 0);  
+	            Object obj = mDefectTable.getValueAt(selected, 0);  
 	            temp += obj.toString();    
 	            System.out.println(temp);	
 			}
         });  
+SLM */
         
         //Create the scroll pane and add the table to it.
-        JScrollPane scrollPane = new JScrollPane(table);
+        JScrollPane scrollPane = new JScrollPane(mDefectTable);
 
         //Add the scroll pane to this panel.
         add(jcbApps);
@@ -169,28 +175,56 @@ public class DefectsListPanel extends JPanel implements ItemListener {
 	public void updateTable(String appName){
 		
 		//Retrieve ResultSet of defect info
-		mOpenDefects = dao.getListPanel(appName);
+//SLM	mOpenDefects = dao.getListPanel(appName);
+		// Get list of Defects from DefectDAO
+     	//mOpenDefectsList = new DefectsList(); 
+		
 		
 		//Build the table with RowSorter
-		TableModel model = buildTableModel(mOpenDefects);
-		table.setModel(model);
+		TableModel model = buildTableModel(mOpenDefectsList.getOpenDefects(appName)); //SLM
+		mDefectTable.setModel(model);
 		RowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
-		table.setRowSorter(sorter);
+		mDefectTable.setRowSorter(sorter);
 		
 		//Set up table attributes
-	    table.getTableHeader().setFont(new Font("SansSerif", Font.ITALIC | Font.BOLD, 14));
-	    table.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		mDefectTable.getTableHeader().setFont(new Font("SansSerif", Font.ITALIC | Font.BOLD, 14));
+		mDefectTable.setFont(new Font("SansSerif", Font.PLAIN, 14));
 	
+		// Set up controller for table/row selection
+		DefectsListRowSelectionController listSelectController = new DefectsListRowSelectionController( this );
+		listSelectController.defectListRowSelectionController();
+		
+		
 	    //Set up column widths
-	    column = table.getColumnModel().getColumn(0);  
+	    column = mDefectTable.getColumnModel().getColumn(0);  
 	    column.setPreferredWidth(COL1_WIDTH); 
-	    column = table.getColumnModel().getColumn(1); 
+	    column = mDefectTable.getColumnModel().getColumn(1); 
 	    column.setPreferredWidth(COL2_WIDTH);
-	    column = table.getColumnModel().getColumn(2);
+	    column = mDefectTable.getColumnModel().getColumn(2);
 	    column.setPreferredWidth(COL3_WIDTH);
-	    column = table.getColumnModel().getColumn(3);
+	    column = mDefectTable.getColumnModel().getColumn(3);
 	    column.setPreferredWidth(COL4_WIDTH);	    
 	}
+	
+
+	/**
+	 * @return return the mDefectTable JTable from DefectsListPanel
+	 */
+	public JTable getDefectsListTable()
+	{
+		return mDefectTable;
+	}
+	
+	
+	/**
+	 * Call when screen is displayed so DB is refreshed
+	 */
+	public void refresh()
+	{
+		System.out.println(" IN DefectsListPanel refresh()");
+		mOpenDefectsList.getOpenDefects(selectedApp);
+		this.repaint();
+	}	
 	
 	/**
 	 * JComboBox itemlistener

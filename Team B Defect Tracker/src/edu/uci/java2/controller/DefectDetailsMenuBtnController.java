@@ -26,8 +26,7 @@ public class DefectDetailsMenuBtnController {
     	System.out.println( " In DefectDetailsMenuBtnController  constructor");
     	
         this.defect = defect;
-        this.mainMenuView = mainMenuView;
-                          
+        this.mainMenuView = mainMenuView;            
     }
     
     public void defectDetailsBtnControl(){        
@@ -35,7 +34,9 @@ public class DefectDetailsMenuBtnController {
         	public void actionPerformed(ActionEvent actionEvent) {  
         		
         		System.out.println( " In defectDetailsBtnControl  actionPerformed");
-        		mainMenuView.DisplayDefectDetailsPanel(); 
+        		// Pass in "0" for defectID to indicate that this is a 
+        		// request to add a NEW defect.
+        		mainMenuView.DisplayDefectDetailsPanel(0); 
             	  
         	}
         };                

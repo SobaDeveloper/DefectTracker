@@ -23,4 +23,13 @@ public class DefectDetailsPanel extends JPanel {
 		Color c = Color.GRAY;
 		setBackground(c);
 	}
+	
+	/**
+	 * Call when DefectDetailsPanel is displayed so DB is refreshed.
+	 * (NOT implemented yet)
+	 */
+	public void refreshDB()
+	{
+		System.out.println(" IN DefectDetailsPanel refreshDB()");
+	}
 }

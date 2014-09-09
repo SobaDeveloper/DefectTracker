@@ -43,6 +43,7 @@ public class MainMenu extends JPanel
 	private DefectDetailsPanel defectDetailsPanel;
 	
 	private Defect defect = null;
+	private boolean isDetails = false;
 	
 	MainMenu () 
 	{
@@ -58,7 +59,7 @@ public class MainMenu extends JPanel
 		btnPanel.setPreferredSize( db );
 		
 		// Create the menu buttons 
-		createMenuButtons( btnPanel);
+		createMenuButtons();
 				
 		// Create the dtsPanel which will contain one of the following panels 
 		// depending on which menu button is selected: 
@@ -72,21 +73,18 @@ public class MainMenu extends JPanel
 		// Create the panels that will be displayed when a menu button is pressed
 		createMenuPanels( dp );
         
-		
 		// Add Menu Buttons and panel to MainMenu Panel
-		//this.add(viewUpdateBtn, BorderLayout.NORTH);
-		//this.add(addNewBtn, BorderLayout.NORTH);
-		//this.add(logoutBtn, BorderLayout.NORTH);
 		this.add(btnPanel, BorderLayout.NORTH);
 		this.add(dtsPanel, BorderLayout.CENTER);
 
 		// Setup initial panel for Defect Tracking System (List/Update)
 		setPanel(defectsListUpdatePanel);
-		
 	}
 	
-	
-	void createMenuButtons( JPanel panel)
+	/**
+	 * Create the Menu Buttons for the MainMenu view
+	 */
+	void createMenuButtons( )
 	{
 		Dimension d = new Dimension( MENU_BTN_WIDTH, MENU_BTN_HT );
 		// Define the View/Update Menu button
@@ -113,11 +111,15 @@ public class MainMenu extends JPanel
 		logoutBtn = new JButton("Logout");
 		logoutBtn.setPreferredSize( d );
 		
-		panel.add(viewUpdateBtn );
-		panel.add(addNewBtn );
-		panel.add(logoutBtn );
+		btnPanel.add(viewUpdateBtn );
+		btnPanel.add(addNewBtn );
+		btnPanel.add(logoutBtn );
 	}
 	
+	/**
+	 * Create the panels that will be displayed when a menu button is pressed
+	 * @param dp the Dimension of the panel
+	 */
 	void createMenuPanels( Dimension dp)
 	{
 		System.out.println("In createMenuPanels");
@@ -126,27 +128,34 @@ public class MainMenu extends JPanel
         defectsListUpdatePanel = new DefectsListPanel();
         defectsListUpdatePanel.setPreferredSize( dp );
         
-
-        DefectListUpdateMenuBtnController updateController = new DefectListUpdateMenuBtnController(defect, this );
+        // The Controller for the List/Update Defect Menu Button
+        DefectListUpdateMenuBtnController updateController = 
+        	new DefectListUpdateMenuBtnController(defect, this );
         updateController.defectListUpdateBtnControl();
         
         
 		//Create and set up the Defects Detail Panel
-        // UNCOMMENT WHEN READY
         defectDetailsPanel = new DefectDetailsPanel();
         defectDetailsPanel.setPreferredSize( dp );
      
-        DefectDetailsMenuBtnController detailsController = new DefectDetailsMenuBtnController(defect, this );
+        DefectDetailsMenuBtnController detailsController = 
+        	new DefectDetailsMenuBtnController(defect, this );
         detailsController.defectDetailsBtnControl();
 	}
 	
+	/**
+	 * 
+	 * @param panel
+	 */
 	private void setPanel( JPanel panel )
 	{
 		System.out.println("In setPanel  "+ panel.toString());
 		
 		try
 		{
-			// Can do a removeAll here instead
+			// SLM _ NOT SURE THIS IS THE RIGHT WAY TO DO THE PANEL SWITCHING.
+			// WILL TRY TO FIGURE OUT A BETTER WAY.
+			
 			// Want to remove the current JPanel from dtsPanel
 			if ( dtsPanel.getComponent(0) != null )
 			{
@@ -165,16 +174,32 @@ public class MainMenu extends JPanel
 			// Nothing has been added to dtsPanel yet (i.e. 1st time)
 			dtsPanel.add(panel);
 			dtsPanel.repaint();
-			
+		}
+		finally
+		{
+			if ( isDetails )
+				((DefectDetailsPanel) panel).refreshDB();
+			else
+				 ((DefectsListPanel) panel).refresh();
+				//((DefectsListPanel) panel).refresh();
+			// Reset the isDetails flag
+			isDetails = false;	
 		}
 	}
 	
-	public void DisplayDefectDetailsPanel()
+	/**
+	 * @param defectID
+	 */
+	public void DisplayDefectDetailsPanel( int defectID )
 	{
-		System.out.println("in DisplayDefectDetailsPanel");
+		isDetails = true;
+		System.out.println("in DisplayDefectDetailsPanel"+ defectID );
 		setPanel(defectDetailsPanel );
 	}
 	
+	/**
+	 * 
+	 */
 	public void DisplayDefectsListPanel()
 	{
 		System.out.println("in DisplayDefectsListPanel");
@@ -182,10 +207,19 @@ public class MainMenu extends JPanel
 	}
 	
 	
+	/**
+	 * @return returns the button object associated with displaying the 
+	 * Add New Defect.
+	 */
 	public JButton getDefectDetailsButton()
 	{
 		return addNewBtn;
 	}
+	
+	/**
+	 * @return returns the button object associated with displaying the panel
+	 * containing the list of open defects.
+	 */
 	public JButton getDefectListUpdateButton()
 	{
 		return viewUpdateBtn;

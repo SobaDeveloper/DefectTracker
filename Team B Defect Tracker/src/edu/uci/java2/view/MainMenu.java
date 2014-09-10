@@ -48,7 +48,8 @@ public class MainMenu extends JPanel
 	private boolean isDetails = false;
 	
 	private DefectDAO 	dao = new DefectDAO();
-	private Defect		mainDefect;
+	
+	private int	defectID2Show = 0;
 	
 	MainMenu () 
 	{
@@ -56,8 +57,6 @@ public class MainMenu extends JPanel
 		
 		Color c = Color.GRAY;
 		setLayout( new BorderLayout());
-		
-		mainDefect = null;
 		
 		Dimension db = new Dimension( 750, 110 );
 		btnPanel = new JPanel();
@@ -137,13 +136,12 @@ public class MainMenu extends JPanel
         // The Controller for the List/Update Defect Menu Button
         DefectListUpdateMenuBtnController updateController = 
         	new DefectListUpdateMenuBtnController( this );
-// was    	new DefectListUpdateMenuBtnController(defect, this );
         updateController.defectListUpdateBtnControl();
         
         
         // Set up controller for DefectListPanel's table/row selection
         DefectsListRowSelectionController listSelectController = 
-        	new DefectsListRowSelectionController( dao, this, defectsListUpdatePanel );
+        	new DefectsListRowSelectionController( this, defectsListUpdatePanel );
 		listSelectController.defectListRowSelectionController();
        
         
@@ -191,7 +189,7 @@ public class MainMenu extends JPanel
 		finally
 		{
 			if ( isDetails )
-				((DefectDetailsPanel) panel).refreshDB();
+				((DefectDetailsPanel) panel).refreshDB( getDefectID2Show() );
 			else
 				 ((DefectsListPanel) panel).refresh();
 				//((DefectsListPanel) panel).refresh();
@@ -206,18 +204,11 @@ public class MainMenu extends JPanel
 	public void DisplayDefectDetailsPanel( int defectID )
 	{
 		isDetails = true;
-		System.out.println("in DisplayDefectDetailsPanel"+ defectID );
+		defectID2Show = defectID;
+		System.out.println("in DisplayDefectDetailsPanel  "+ defectID2Show );
 		setPanel(defectDetailsPanel );
 	}
-	
-	public void DisplayDefectDetailsPanel( Defect d )
-	{
-		isDetails = true;
-		System.out.println("in DisplayDefectDetailsPanel"+ d.toString() );
-		mainDefect = d;
-		setPanel(defectDetailsPanel );
-	}
-	
+
 	/**
 	 * 
 	 */
@@ -245,12 +236,19 @@ public class MainMenu extends JPanel
 	{
 		return viewUpdateBtn;
 	}
-	
-	public void setDefect ( Defect d ) {
-		mainDefect = d;
+
+	/**
+	 * @param d
+	 */
+	public void setDefectID2Show ( int d ) {
+		defectID2Show = d;
 	}
 	
-	public Defect getDefect ( ) {
-		return mainDefect;
+	/**
+	 * @return
+	 */
+	public int getDefectID2Show ( ) {
+		return defectID2Show;
 	}
+	
 }

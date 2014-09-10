@@ -298,13 +298,22 @@ public class DefectDetailsPanel extends JPanel {
 		
 	}
 	
+
 	/**
 	 * Call when DefectDetailsPanel is displayed so DB is refreshed.
 	 * (NOT implemented yet)
+	 * @param defectID
 	 */
-	public void refreshDB()
+	public void refreshDB( int defectID)
 	{
-		System.out.println(" IN DefectDetailsPanel refreshDB()");
+		System.out.println(" IN DefectDetailsPanel refreshDB().   defectID =  "+defectID );
+	}
+	
+	/**
+	 * @return Returns the submit button object
+	 */
+	public JButton getSubmitButton() {
+		return jbtSubmit;
 	}
 }
 

@@ -152,7 +152,9 @@ public class DefectDetailsPanel extends JPanel {
 		String [] priorityItems = {"", "Urgent", "High", "Medium", "Low"};
 		jcbDP = new JComboBox<String>(priorityItems);
 		//Set initial Defect Priority as the default
-		jcbDP.setSelectedItem(mDefect.getPriority());
+		if (mDefect.getPriority() != "") {
+			jcbDP.setSelectedItem("");
+		} else jcbDP.setSelectedItem(mDefect.getPriority());
 		jcbDP.setEditable(false);
 		jcbDP.setPreferredSize(new Dimension(70, 25));
 		jcbDP.setFont(new Font("SansSerif", Font.PLAIN, 12));

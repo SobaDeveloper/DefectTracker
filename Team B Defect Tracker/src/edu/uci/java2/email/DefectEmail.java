@@ -2,6 +2,7 @@ package edu.uci.java2.email;
 
 import java.util.Properties;
  
+
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -9,6 +10,7 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.swing.JOptionPane;
 
 /**
  * X460.11/1 - Java Programming II - Team B
@@ -22,6 +24,7 @@ import javax.mail.internet.MimeMessage;
 public class DefectEmail {
     private final String from =  "staffdefecttrackingsystem@gmail.com";
     private final String password = "dtsdts123";
+    private boolean success;
     
     public void send(String to, String cc, String body) {
         // Get the session object  
@@ -50,8 +53,17 @@ public class DefectEmail {
             // send message  
             Transport.send(message);
             System.out.println("Email sent");
+            success = true;
         } catch (MessagingException e) {
             System.out.println("Email send exception: " + e.getMessage());
+          //Display message
+            success = false;
+			JOptionPane.showMessageDialog(null, "Illegal Email Address",
+						"Error", JOptionPane.ERROR_MESSAGE);
         }
+    }
+    
+    public boolean checkSuccess(){
+    	return success;
     }
 }

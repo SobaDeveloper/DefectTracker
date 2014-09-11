@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import edu.uci.java2.controller.AddDefectController;
 import edu.uci.java2.controller.DefectDetailsMenuBtnController;
 import edu.uci.java2.controller.DefectListUpdateMenuBtnController;
 import edu.uci.java2.controller.DefectsListRowSelectionController;
@@ -48,6 +49,8 @@ public class MainMenu extends JPanel
 	private DefectDetailsPanel defectDetailsPanel;
 	//NEW Defect Details Dialog
 	private DefectDetailsDialog defectDetailsDialog;
+	//NEW Add Defect Dialog
+	private AddDefectDialog addDefectDialog;
 	
 	private Defect defect = null;
 	private boolean isDetails = false;
@@ -143,6 +146,9 @@ public class MainMenu extends JPanel
         	new DefectListUpdateMenuBtnController( this );
         updateController.defectListUpdateBtnControl();
         
+        //Controller for Add Defect Button
+        AddDefectController adc = new AddDefectController(this);
+        adc.AddDefectControl();
         
         // Set up controller for DefectListPanel's table/row selection
         DefectsListRowSelectionController listSelectController = 
@@ -228,6 +234,16 @@ public class MainMenu extends JPanel
 		defectDetailsDialog.setVisible(true);
 			
 	}
+	
+	/**
+	 * Display the Add Defect Dialog
+	 */
+	public void displayAddDefectDialog(){
+		JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+		addDefectDialog = new AddDefectDialog(topFrame);
+		addDefectDialog.setVisible(true);
+		
+	}
 
 	/**
 	 * 
@@ -244,7 +260,7 @@ public class MainMenu extends JPanel
 	 * @return returns the button object associated with displaying the 
 	 * Add New Defect.
 	 */
-	public JButton getDefectDetailsButton()
+	public JButton getAddDefectButton()
 	{
 		return addNewBtn;
 	}

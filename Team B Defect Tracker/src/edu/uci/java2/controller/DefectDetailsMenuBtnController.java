@@ -40,7 +40,7 @@ public class DefectDetailsMenuBtnController {
             	  
         	}
         };                
-        mainMenuView.getDefectDetailsButton().addActionListener(actionListener);   
+       // mainMenuView.getDefectDetailsButton().addActionListener(actionListener);   
     }
 
 }

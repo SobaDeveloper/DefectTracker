@@ -20,7 +20,7 @@ public class Defect {
 	private String defectSummary;
 	private String defectDesc;
 	private String assignee;
-	private int priority;
+	private String priority;
 	private String finalResolution;
 	private Date resolutionDate;
 	
@@ -32,7 +32,7 @@ public class Defect {
 
 	public Defect(String appName, String defectStatus, Date dateCreated,
 			String defectSummary, String defectDesc, String assignee,
-			int priority, String finalResolution, Date resolutionDate){
+			String priority, String finalResolution, Date resolutionDate){
 		this.appName = appName;
 		this.defectStatus = defectStatus;
 		this.dateCreated = dateCreated;
@@ -161,7 +161,7 @@ public class Defect {
 	 * Get the defect priority
 	 * @return the defect priority
 	 */
-	public int getPriority() {
+	public String getPriority() {
 		return priority;
 	}
 
@@ -169,7 +169,7 @@ public class Defect {
 	 * Set the defect priority
 	 * @param priority the defect priority
 	 */
-	public void setPriority(int priority) {
+	public void setPriority(String priority) {
 		this.priority = priority;
 	}
 

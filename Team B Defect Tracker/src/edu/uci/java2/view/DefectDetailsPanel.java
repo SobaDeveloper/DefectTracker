@@ -49,7 +49,7 @@ public class DefectDetailsPanel extends JPanel {
 	JButton	jbtSubmit;
 	JButton	jbtCancel;
 	JComboBox<String>	jcbDS;
-	JComboBox<Integer>	jcbDP;
+	JComboBox<String>	jcbDP;
 
 	
 	public DefectDetailsPanel(Defect d){
@@ -153,12 +153,10 @@ public class DefectDetailsPanel extends JPanel {
 		
 		
 		//Create Defect Priority JComboBox
-		jcbDP = new JComboBox<Integer>();
-		jcbDP.addItem(0);
-		jcbDP.addItem(1);
-		jcbDP.addItem(2);
+		String [] priorityItems = {"", "Urgent", "High", "Medium", "Low"};
+		jcbDP = new JComboBox<String>(priorityItems);
 		//Set initial Defect Priority as the default
-		jcbDS.setSelectedIndex(mDefect.getPriority());
+		jcbDS.setSelectedItem(mDefect.getPriority());
 		jcbDS.setEditable(false);
 		jcbDS.setPreferredSize(new Dimension(70, 25));
 		jcbDS.setFont(new Font("SansSerif", Font.PLAIN, 12));

@@ -230,7 +230,7 @@ public class DefectDAO {
 			String defectSummary = rs.getString("SUMMARY");
 			String defectDesc = rs.getString("DESCRIPTION");
 			String assignee = rs.getString("ASSIGNEE");
-			int priority = rs.getInt("PRIORITY");
+			String priority = rs.getString("PRIORITY");
 			String finalResolution = rs.getString("FINAL_RESOLUTION");
 			Date resolutionDate = rs.getDate("RESOLUTION_DATE");
 			
@@ -257,11 +257,10 @@ public class DefectDAO {
 		
 		try{
 			
-			String sql = "INSERT INTO defect"
+			String sql = "INSERT INTO defect "
 					+ "(APPLICATION, STATUS, DATE_CREATED,"
-					+ "SUMMARY, DESCRIPTION, ASSIGNEE, PRIORITY,"
-					+ "FINAL_RESOLUTION, RESOLUTION_DATE)"
-					+ "VALUES (?,?,?,?,?,?,?,?,?)";
+					+ "SUMMARY, DESCRIPTION, ASSIGNEE, PRIORITY) "
+					+ "VALUES (?,?,?,?,?,?,?)";
 			
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setString(1, d.getAppName());
@@ -270,9 +269,7 @@ public class DefectDAO {
 			ps.setString(4, d.getDefectSummary());
 			ps.setString(5, d.getDefectDesc());
 			ps.setString(6, d.getAssignee());
-			ps.setInt(7, d.getPriority());
-			ps.setString(8, d.getFinalResolution());
-			ps.setDate(9, (Date)d.getResolutionDate());
+			ps.setString(7, d.getPriority());
 			ps.executeUpdate();
 			
 		}catch (SQLException e){
@@ -303,7 +300,7 @@ public class DefectDAO {
 			ps.setString(4, d.getDefectSummary());
 			ps.setString(5, d.getDefectDesc());
 			ps.setString(6, d.getAssignee());
-			ps.setInt(7, d.getPriority());
+			ps.setString(7, d.getPriority());
 			ps.setString(8, d.getFinalResolution());
 			ps.setDate(9, (Date)d.getResolutionDate());
 			ps.setInt(10, d.getDefectID());

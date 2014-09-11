@@ -5,8 +5,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Insets;
+
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import edu.uci.java2.controller.DefectDetailsMenuBtnController;
 import edu.uci.java2.controller.DefectListUpdateMenuBtnController;
@@ -43,6 +46,8 @@ public class MainMenu extends JPanel
 	
 	private DefectsListPanel defectsListUpdatePanel;
 	private DefectDetailsPanel defectDetailsPanel;
+	//NEW Defect Details Dialog
+	private DefectDetailsDialog defectDetailsDialog;
 	
 	private Defect defect = null;
 	private boolean isDetails = false;
@@ -141,18 +146,20 @@ public class MainMenu extends JPanel
         
         // Set up controller for DefectListPanel's table/row selection
         DefectsListRowSelectionController listSelectController = 
-        	new DefectsListRowSelectionController( this, defectsListUpdatePanel );
+        	new DefectsListRowSelectionController( this, defectsListUpdatePanel, dao );
 		listSelectController.defectListRowSelectionController();
        
         
 		//Create and set up the Defects Detail Panel
-        defectDetailsPanel = new DefectDetailsPanel();
-        defectDetailsPanel.setPreferredSize( dp );
+       // defectDetailsPanel = new DefectDetailsPanel();
+        //defectDetailsPanel.setPreferredSize( dp );
      
         DefectDetailsMenuBtnController detailsController = 
         	new DefectDetailsMenuBtnController(defect, this );
         detailsController.defectDetailsBtnControl();
 	}
+	
+	
 	
 	/**
 	 * 
@@ -200,7 +207,7 @@ public class MainMenu extends JPanel
 	
 	/**
 	 * @param defectID
-	 */
+	 *
 	public void DisplayDefectDetailsPanel( int defectID )
 	{
 		isDetails = true;
@@ -208,15 +215,29 @@ public class MainMenu extends JPanel
 		System.out.println("in DisplayDefectDetailsPanel  "+ defectID2Show );
 		setPanel(defectDetailsPanel );
 	}
+	*/
+	
+	/**
+	 * 
+	 * @param d
+	 */
+	public void displayDetailsDialog(Defect d){
+		defect = d;
+		JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+		defectDetailsDialog = new DefectDetailsDialog(topFrame, d);
+		defectDetailsDialog.setVisible(true);
+			
+	}
 
 	/**
 	 * 
-	 */
+	 *
 	public void DisplayDefectsListPanel()
 	{
 		System.out.println("in DisplayDefectsListPanel");
 		setPanel( defectsListUpdatePanel );
 	}
+	*/
 	
 	
 	/**
@@ -250,5 +271,9 @@ public class MainMenu extends JPanel
 	public int getDefectID2Show ( ) {
 		return defectID2Show;
 	}
+	
+	public void setDefect ( Defect d ) {
+		defect = d;
+	} 
 	
 }

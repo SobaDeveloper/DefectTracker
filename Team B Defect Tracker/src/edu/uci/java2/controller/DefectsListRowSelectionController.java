@@ -5,6 +5,8 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JTable;
 
+import edu.uci.java2.dao.DefectDAO;
+import edu.uci.java2.model.Defect;
 import edu.uci.java2.view.DefectsListPanel;
 import edu.uci.java2.view.MainMenu;
 
@@ -23,11 +25,14 @@ public class DefectsListRowSelectionController {
 	private MainMenu mainMenu;
     private DefectsListPanel dlPanel;
     private MouseListener mouseListener;
+    private Defect defect;
+    private DefectDAO dao;
 
-    public DefectsListRowSelectionController( MainMenu mainMenu, DefectsListPanel dlPanel)
+    public DefectsListRowSelectionController(MainMenu mainMenu, DefectsListPanel dlPanel, DefectDAO dao)
 	{
     	this.dlPanel = dlPanel;
     	this.mainMenu = mainMenu;
+    	this.dao = dao;
     	
 		System.out.println( " In DefectsListItemSelectionController  constructor");		
 	}
@@ -52,7 +57,16 @@ public class DefectsListRowSelectionController {
 				System.out.println("In Controller table row clicked... row = "+row);
 				
 				// Pass the defectID to the DefectDetailsPanel
-				mainMenu.DisplayDefectDetailsPanel(defectID);
+				//mainMenu.DisplayDefectDetailsPanel(defectID);
+				
+				// Retrieve the defect from the DB that has defectID for it's ID
+				defect = dao.getDefectByID( defectID );
+				
+				//SET DEFECT IN MAINMENU
+				mainMenu.setDefect(defect);
+				//DISPLAY DETAILS DIALOG
+				mainMenu.displayDetailsDialog(defect);
+				
 			}
 
 			// Below stubs are unused right now but required by interface

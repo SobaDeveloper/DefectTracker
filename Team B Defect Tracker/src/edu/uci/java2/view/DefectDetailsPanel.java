@@ -1,6 +1,5 @@
 package edu.uci.java2.view;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagLayout; 
@@ -52,13 +51,10 @@ public class DefectDetailsPanel extends JPanel {
 	JComboBox<String>	jcbDS;
 	JComboBox<Integer>	jcbDP;
 
-
 	
-	DefectDetailsPanel()
-	{
-		super();
-		Color c = Color.GRAY;
-		setBackground(c);
+	public DefectDetailsPanel(Defect d){
+		
+		mDefect = d;
 		layout = new GridBagLayout();
 		this.setLayout(layout);
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -74,6 +70,7 @@ public class DefectDetailsPanel extends JPanel {
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		layout.addLayoutComponent(jlbAppName, gbc);
+		this.add(jlbAppName);
 		
 		//Display the Defect ID
 		jlbDefectID = new JLabel("Defect ID: " + mDefect.getDefectID());
@@ -82,6 +79,7 @@ public class DefectDetailsPanel extends JPanel {
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		layout.addLayoutComponent(jlbDefectID, gbc);
+		this.add(jlbDefectID);
 		
 		//Display the Creation Date
 		jlbDateCreated = new JLabel("Creation Date: " + mDefect.getDateCreated());
@@ -90,7 +88,7 @@ public class DefectDetailsPanel extends JPanel {
 		gbc.gridx = 1;
 		gbc.gridy = 1;
 		layout.addLayoutComponent(jlbDateCreated, gbc);
-		
+		this.add(jlbDateCreated);
 		
 		//Create Defect Statuses JComboBox
 		jcbDS = new JComboBox<String>();
@@ -118,11 +116,13 @@ public class DefectDetailsPanel extends JPanel {
 		gbc.gridx = 1;
 		gbc.gridy = 2;
 		layout.addLayoutComponent(jlbDefectStatus, gbc);
+		this.add(jlbDefectStatus);
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.weightx = 0.1; 	//not sure if should be zero
 		gbc.gridx = 1;		
 		gbc.gridy = 2;
 		layout.addLayoutComponent(jcbDS, gbc);
+		this.add(jcbDS);
 		
 		
 		//Create Assignee JTextField
@@ -141,13 +141,15 @@ public class DefectDetailsPanel extends JPanel {
 		gbc.gridx = 2;
 		gbc.gridy = 1;
 		layout.addLayoutComponent(jlbAssignee, gbc);
+		this.add(jlbAssignee);
+		
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.weightx = 0.1; 	//not sure if should be zero
 		gbc.gridwidth = 2;
 		gbc.gridx = 2;
 		gbc.gridy = 1;
 		layout.addLayoutComponent(jtxtAssignee, gbc);
-		
+		this.add(jtxtAssignee);
 		
 		
 		//Create Defect Priority JComboBox
@@ -169,12 +171,14 @@ public class DefectDetailsPanel extends JPanel {
 		gbc.gridx = 2;
 		gbc.gridy = 2;
 		layout.addLayoutComponent(jlbPriority, gbc);
+		this.add(jlbPriority);
+		
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.weightx = 0.1; //not sure if should be zero
 		gbc.gridx = 2;
 		gbc.gridy = 2;
 		layout.addLayoutComponent(jcbDP, gbc);
-		
+		this.add(jcbDP);
 		
 		//Create Summary JTextArea
 		jtxtSummary = new JTextArea(5, 50);
@@ -186,6 +190,8 @@ public class DefectDetailsPanel extends JPanel {
 		jtxtSummary.setEditable(true); 
 		JScrollPane jscpDefectSummary = new JScrollPane(jtxtSummary);
 		//Add Listener to save edits in the text area
+		this.add(jscpDefectSummary);
+		
 		
 		//Display Summary
 		jlbDefectSummary = new JLabel("Summary: ");
@@ -194,14 +200,16 @@ public class DefectDetailsPanel extends JPanel {
 		gbc.gridx = 0;
 		gbc.gridy = 3;
 		layout.addLayoutComponent(jlbDefectSummary, gbc);
+		this.add(jlbDefectSummary);
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.weightx = 0.1;
 		gbc.gridwidth = 3;
 		gbc.gridheight = 2;
 		gbc.gridx = 0;
 		gbc.gridy = 3;
-		layout.addLayoutComponent(jscpDefectSummary, gbc);
-	
+		layout.addLayoutComponent(jlbDefectSummary, gbc);
+		
+
 		
 		//Create Description JTextArea and JScrollPane
 		jtxtDefectDesc = new JTextArea(5, 50);
@@ -221,6 +229,8 @@ public class DefectDetailsPanel extends JPanel {
 		gbc.gridx = 0;
 		gbc.gridy = 5;
 		layout.addLayoutComponent(jlbDefectDesc, gbc);
+		this.add(jscpDefectDesc);
+		
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.weightx = 0.1;
 		gbc.gridwidth = 3;
@@ -228,6 +238,7 @@ public class DefectDetailsPanel extends JPanel {
 		gbc.gridx = 0;
 		gbc.gridy = 5;
 		layout.addLayoutComponent(jscpDefectDesc, gbc);
+		this.add(jlbDefectDesc);
 		
 				
 		//Create Resolution Date JTextField
@@ -251,7 +262,7 @@ public class DefectDetailsPanel extends JPanel {
 		gbc.gridx = 0;
 		gbc.gridy = 7;
 		layout.addLayoutComponent(jtxtResolutionDate, gbc);
-		
+		this.add(jtxtResolutionDate);
 		
 		
 		//Create Final Resolution JTextArea (With JScrollPane?)
@@ -271,12 +282,14 @@ public class DefectDetailsPanel extends JPanel {
 		gbc.gridx = 0;
 		gbc.gridy = 8;
 		layout.addLayoutComponent(jlbFinalResolution, gbc);
+		this.add(jlbFinalResolution);
+		
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.weightx = 0.1;
 		gbc.gridx = 0;
 		gbc.gridy = 7;
 		layout.addLayoutComponent(jscFinalResolution, gbc);
-		
+		this.add(jscFinalResolution);
 		
 		
 		//Create Submit Button (Need to tie to/make a listener that will save edits on hitting Submit)
@@ -286,6 +299,7 @@ public class DefectDetailsPanel extends JPanel {
 		gbc.gridx = 0;
 		gbc.gridy = 11;
 		layout.addLayoutComponent(jbtSubmit, gbc);
+		this.add(jbtSubmit);
 		
 		//Create Cancel Button (Needs to return to DefectListPanel without saving changes)
 		jbtCancel = new JButton("Cancel");
@@ -294,24 +308,23 @@ public class DefectDetailsPanel extends JPanel {
 		gbc.gridx = 2;
 		gbc.gridy = 11;
 		layout.addLayoutComponent(jbtSubmit, gbc);
-		
+		this.add(jbtSubmit);
 		
 	}
 	
-
 	/**
 	 * Call when DefectDetailsPanel is displayed so DB is refreshed.
 	 * (NOT implemented yet)
 	 * @param defectID
 	 */
-	public void refreshDB( int defectID)
+	public void refreshDB(int defectID)
 	{
-		System.out.println(" IN DefectDetailsPanel refreshDB().   defectID =  "+defectID );
+		System.out.println(" IN DefectDetailsPanel refreshDB()");
 	}
 	
 	/**
-	 * @return Returns the submit button object
-	 */
+	* @return Returns the submit button object
+	*/
 	public JButton getSubmitButton() {
 		return jbtSubmit;
 	}

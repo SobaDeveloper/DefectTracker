@@ -33,7 +33,8 @@ public class DefectListUpdateMenuBtnController {
         	public void actionPerformed(ActionEvent actionEvent) {  
         		
         		System.out.println( " In defectDetailsBtnControl  actionPerformed");
-        		mainMenuView.DisplayDefectsListPanel(); 
+        		//DISABLED FOR NOW
+        		//mainMenuView.DisplayDefectsListPanel(); 
             	  
         	}
         };                

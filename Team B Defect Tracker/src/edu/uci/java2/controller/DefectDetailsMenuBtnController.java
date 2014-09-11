@@ -36,7 +36,7 @@ public class DefectDetailsMenuBtnController {
         		System.out.println( " In defectDetailsBtnControl  actionPerformed");
         		// Pass in "0" for defectID to indicate that this is a 
         		// request to add a NEW defect.
-        		mainMenuView.DisplayDefectDetailsPanel(0); 
+        		//mainMenuView.DisplayDefectDetailsPanel(0); 
             	  
         	}
         };                

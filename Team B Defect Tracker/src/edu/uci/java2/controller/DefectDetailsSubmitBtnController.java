@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import edu.uci.java2.view.DefectDetailsPanel;
+import edu.uci.java2.email.DefectEmail;
 
 /**
  * X460.11/1 - Java Programming II - Team B
@@ -18,13 +19,14 @@ public class DefectDetailsSubmitBtnController {
 	
 	private DefectDetailsPanel ddPanel;
 	private ActionListener actionListener;
-	
+        private DefectEmail email;
+        
 	/**
 	 * @param ddPanel - This is a reference to the DefectDetailsPanel.
 	 * It's passed in from the MainMenu class upon creation of the controller.
 	 */
 	public DefectDetailsSubmitBtnController( DefectDetailsPanel ddPanel ) {
-		
+            email = new DefectEmail();
 	}
 	
 	/**
@@ -44,7 +46,17 @@ public class DefectDetailsSubmitBtnController {
 				// Whatever method call or action we want to take
 				//    Submit should save data to DB and send an email to the
 				// 	  assignee
-				
+                                
+                                /*
+                                // assignee
+                                String to = "";
+                                // current user logged in
+                                String cc = "";
+                                // body include defect id and summary
+                                String body = "Defect ID: " + 1 + ", Summary: ";
+				email.send(to, cc, body);
+                                */
+                                
 				// Can use ddPanel to access any methods in DefectDetailsPanel
 				// AND/OR pass in MainMenu into constructor so can access methods there
 				

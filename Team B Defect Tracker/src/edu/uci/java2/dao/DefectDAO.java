@@ -290,7 +290,7 @@ public class DefectDAO {
 			String sql = "UPDATE defect "
 					+ "SET APPLICATION=?, STATUS=?, DATE_CREATED=?,"
 					+ "SUMMARY=?, DESCRIPTION=?, ASSIGNEE=?, PRIORITY=?,"
-					+ "FINAL_RESOLUTION=?, RESOLUTION_DATE=?"
+					+ "FINAL_RESOLUTION=?, RESOLUTION_DATE=? "
 					+ "WHERE DEFECT_ID=?";
 					
 			PreparedStatement ps = con.prepareStatement(sql);

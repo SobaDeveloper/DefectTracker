@@ -64,8 +64,11 @@ public class DefectDetailsPanel extends JPanel implements ItemListener{
 
 	private DefectDAO dao = new DefectDAO();
 	
-	public DefectDetailsPanel(Defect d){
+	protected MainMenu mainMenu;
+	
+	public DefectDetailsPanel( final MainMenu mainMenu, Defect d){
 		
+		this.mainMenu = mainMenu;
 		mDefect = d;
 		layout = new GridBagLayout();
 		this.setLayout(layout);
@@ -390,6 +393,10 @@ public class DefectDetailsPanel extends JPanel implements ItemListener{
 							
 		//Close parent JDialog
 		JDialog parent = (JDialog) getRootPane().getParent();
+		
+		//SLM
+		mainMenu.refreshDLP();
+		
 		parent.dispose();
 		}
 	});		

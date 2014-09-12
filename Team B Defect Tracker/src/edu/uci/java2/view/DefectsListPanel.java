@@ -212,8 +212,9 @@ SLM */
 	public void refresh()
 	{
 		System.out.println(" IN DefectsListPanel refresh()");
-		mOpenDefectsList.getOpenDefects(selectedApp);
-		this.repaint();
+//		mOpenDefectsList.getOpenDefects(selectedApp);
+//		this.repaint();
+		updateTable(selectedApp);
 	}	
 	
 	/**

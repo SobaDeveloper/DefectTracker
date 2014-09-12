@@ -46,7 +46,7 @@ public class MainMenu extends JPanel
 	private JPanel btnPanel;
 	
 	private DefectsListPanel defectsListUpdatePanel;
-	private DefectDetailsPanel defectDetailsPanel;
+	protected DefectDetailsPanel defectDetailsPanel;
 	//NEW Defect Details Dialog
 	private DefectDetailsDialog defectDetailsDialog;
 	//NEW Add Defect Dialog
@@ -230,7 +230,7 @@ public class MainMenu extends JPanel
 	public void displayDetailsDialog(Defect d){
 		defect = d;
 		JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
-		defectDetailsDialog = new DefectDetailsDialog(topFrame, d);
+		defectDetailsDialog = new DefectDetailsDialog(this, topFrame, d);
 		defectDetailsDialog.setVisible(true);
 			
 	}
@@ -291,5 +291,12 @@ public class MainMenu extends JPanel
 	public void setDefect ( Defect d ) {
 		defect = d;
 	} 
+	
+	/**
+	 * Refreshes DefectsListPanel table. Called after submit on DefectDetailsPanel.
+	 */
+	public void refreshDLP() {
+		defectsListUpdatePanel.refresh();
+	}
 	
 }

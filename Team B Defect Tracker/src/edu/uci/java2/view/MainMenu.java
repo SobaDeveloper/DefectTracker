@@ -182,10 +182,20 @@ public class MainMenu extends JPanel
 	 */
 	public void displayAddDefectDialog(){
 		JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
-		addDefectDialog = new AddDefectDialog(this, topFrame);
+		addDefectDialog = new AddDefectDialog(topFrame);
 		addDefectDialog.setVisible(true);
 		
 	}
+
+	/**
+	 * 
+	 *
+	public void DisplayDefectsListPanel()
+	{
+		System.out.println("in DisplayDefectsListPanel");
+		setPanel( defectsListUpdatePanel );
+	}
+	*/
 	
 	
 	/**

@@ -41,8 +41,12 @@ public class AddDefectPanel extends JPanel {
 	private java.util.Date utilDate;
 	private DefectEmail dEmail;
 	
+	protected MainMenu mainMenu;
 	
-	public AddDefectPanel(){
+	
+	public AddDefectPanel( final MainMenu mainMenu ){
+		
+		this.mainMenu = mainMenu;
 		
 		//Set Layout
 		layout = new GridBagLayout();
@@ -262,6 +266,10 @@ public class AddDefectPanel extends JPanel {
 				
 			//Close parent JDialog
 			JDialog parent = (JDialog) getRootPane().getParent();
+			
+			// Refresh the DefectsListPanel after add
+			mainMenu.refreshDLP();
+			
 			parent.dispose();
 			}
 			

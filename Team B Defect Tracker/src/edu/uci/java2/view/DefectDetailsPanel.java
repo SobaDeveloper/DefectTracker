@@ -70,6 +70,10 @@ public class DefectDetailsPanel extends JPanel implements ItemListener{
 		
 		this.mainMenu = mainMenu;
 		mDefect = d;
+		
+		Dimension dp = new Dimension( 800, 300 );
+		this.setPreferredSize( dp );
+		
 		layout = new GridBagLayout();
 		this.setLayout(layout);
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -120,8 +124,9 @@ public class DefectDetailsPanel extends JPanel implements ItemListener{
 		jcbDS.addItemListener(this);
 		
 		//Display Defect Statuses
-		jlbDefectStatus = new JLabel("Defect Status:  ");
-		gbc.fill = GridBagConstraints.HORIZONTAL;
+		jlbDefectStatus = new JLabel("Defect Status: ");
+		gbc.anchor = GridBagConstraints.EAST;
+		gbc.fill = GridBagConstraints.NONE;
 		gbc.weightx = 0.5;
 		gbc.gridx = 2;
 		gbc.gridy = 1;
@@ -145,8 +150,9 @@ public class DefectDetailsPanel extends JPanel implements ItemListener{
 		jtxtAssignee.setEditable(true); 
 		
 		//Display Assignee 
-		jlbAssignee = new JLabel("Assignee:  ");
-		gbc.fill = GridBagConstraints.HORIZONTAL;
+		jlbAssignee = new JLabel("Assignee: ");
+		gbc.anchor = GridBagConstraints.EAST;
+		gbc.fill = GridBagConstraints.NONE;
 		gbc.weightx = 0.5;
 		gbc.gridx = 0;
 		gbc.gridy = 2;
@@ -179,7 +185,8 @@ public class DefectDetailsPanel extends JPanel implements ItemListener{
 		
 		//Display Defect Priority
 		jlbPriority = new JLabel("Priority: ");
-		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.anchor = GridBagConstraints.EAST;
+		gbc.fill = GridBagConstraints.NONE;
 		gbc.weightx = 0.5;
 		gbc.gridx = 2;
 		gbc.gridy = 2;
@@ -207,8 +214,9 @@ public class DefectDetailsPanel extends JPanel implements ItemListener{
 		//Add Listener to save edits in the text area?
 				
 		//Display Summary
-		jlbDefectSummary = new JLabel("Summary:  ");
-		gbc.fill = GridBagConstraints.HORIZONTAL;
+		jlbDefectSummary = new JLabel("Summary: ");
+		gbc.anchor = GridBagConstraints.EAST;
+		gbc.fill = GridBagConstraints.NONE;
 		gbc.weightx = 0.5;
 		gbc.gridx = 0;
 		gbc.gridy = 3;
@@ -238,8 +246,9 @@ public class DefectDetailsPanel extends JPanel implements ItemListener{
 		//Add Listener to save edits in the text area?
 		
 		//Display Description
-		jlbDefectDesc = new JLabel("Defect Description:  ");
-		gbc.fill = GridBagConstraints.HORIZONTAL;
+		jlbDefectDesc = new JLabel("Defect Description: ");
+		gbc.anchor = GridBagConstraints.EAST;
+		gbc.fill = GridBagConstraints.NONE;
 		gbc.gridwidth = 1;
 		gbc.gridheight = 1;
 		gbc.weightx = 0.5;
@@ -278,7 +287,8 @@ public class DefectDetailsPanel extends JPanel implements ItemListener{
 		
 		//Display Resolution Date
 		jlbResolutionDateLabel = new JLabel("Resolution Date: ");
-		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.anchor = GridBagConstraints.EAST;
+		gbc.fill = GridBagConstraints.NONE;
 		gbc.gridwidth = 1;
 		gbc.gridheight = 1;
 		gbc.weightx = 0.5;
@@ -318,7 +328,8 @@ public class DefectDetailsPanel extends JPanel implements ItemListener{
 		
 		//Display Final Resolution
 		jlbFinalResolution = new JLabel("Final Resolution: ");
-		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.anchor = GridBagConstraints.EAST;
+		gbc.fill = GridBagConstraints.NONE;
 		gbc.weightx = 0.5;
 		gbc.gridx = 0;
 		gbc.gridy = 8;

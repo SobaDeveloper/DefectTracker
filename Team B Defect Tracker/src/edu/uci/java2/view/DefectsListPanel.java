@@ -39,7 +39,7 @@ import edu.uci.java2.model.DefectsList;
 public class DefectsListPanel extends JPanel implements ItemListener {
 	
 	private static final long serialVersionUID = -9090224968726821365L;
-	final int COL1_WIDTH = 50;
+	final int COL1_WIDTH = 55;
 	final int COL2_WIDTH = 500;
 	final int COL3_WIDTH = 80;
 	final int COL4_WIDTH = 50;

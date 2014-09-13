@@ -25,6 +25,8 @@ import edu.uci.java2.email.DefectEmail;
 
 public class AddDefectPanel extends JPanel {
 
+	private static final String DEFAULT_APPNAME = "DEFAULT APPLICATION";
+	
 	private static final long serialVersionUID = 5148449399655441280L;
 	final static boolean shouldFill = true;
 	final static boolean shouldWeightX = true;
@@ -68,7 +70,7 @@ public class AddDefectPanel extends JPanel {
 		layout.addLayoutComponent(jlbAppName, gbc);
 		this.add(jlbAppName);
 		
-		jtxtAppName = new JTextField();
+		jtxtAppName = new JTextField(DEFAULT_APPNAME);
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.gridwidth = 2;
 		gbc.weightx = 0.5;

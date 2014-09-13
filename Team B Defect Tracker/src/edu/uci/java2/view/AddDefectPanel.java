@@ -8,8 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.HashSet;
-import java.util.TreeSet;
 
 import javax.swing.*;
 
@@ -39,14 +37,13 @@ public class AddDefectPanel extends JPanel {
 	private JTextArea	jtxtSummary, jtxtDefectDesc;
 	private JTextField	jtxtAssignee, jtxtAppName, jtxtDateCreated;
 	private JButton	jbtSubmit, jbtCancel, jbtEmail;
-	private JComboBox<String>	jcbDS, jcbDP, jcbApps;
+	private JComboBox<String>	jcbDS, jcbDP;
 	private java.util.Date utilDate;
 	private DefectEmail dEmail;
 	
 	
 	public AddDefectPanel(){
 		
-		super();
 
 		Dimension dp = new Dimension( 800, 250 );
 		this.setPreferredSize( dp );
@@ -71,31 +68,16 @@ public class AddDefectPanel extends JPanel {
 		layout.addLayoutComponent(jlbAppName, gbc);
 		this.add(jlbAppName);
 		
-		//Retrieve HashSet of application names
-		HashSet<String> appNamesSet = new HashSet<>(dao.getAllAppNames());
-		//Sort HashSet
-		TreeSet<String> sortedList = new TreeSet<String>(appNamesSet);
-		
-		//Create JComboBox of application names
-		jcbApps = new JComboBox<String>();
-        jcbApps.addItem("Select An Application");
-        
-        for (String s : sortedList) {
-            jcbApps.addItem(s);
-        }
-        
-        //Display the List of Applications
-        jcbApps.setSelectedIndex(0);
-        jcbApps.setEditable(false);
-        jcbApps.setFont(new Font("SansSerif", Font.BOLD, 14));
+		jtxtAppName = new JTextField();
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.gridwidth = 2;
 		gbc.weightx = 0.5;
 		gbc.weighty = 0.5;
 		gbc.gridx = 1;
 		gbc.gridy = 0;
-		layout.addLayoutComponent(jcbApps, gbc);
-        this.add(jcbApps);
+		layout.addLayoutComponent(jtxtAppName, gbc);
+		this.add(jtxtAppName);
+		
 		
 		
 		//Display the Creation Date
@@ -269,7 +251,7 @@ public class AddDefectPanel extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 				
 			//Retrieve values from user input
-			String appName = String.valueOf(jcbApps.getSelectedItem());
+			String appName = jtxtAppName.getText();
 			String status = String.valueOf(jcbDS.getSelectedItem());
 			String summary = jtxtSummary.getText();
 			String desc = jtxtDefectDesc.getText();
@@ -345,7 +327,8 @@ public class AddDefectPanel extends JPanel {
 		});	
 	}
 	
-
+	
+	
 	
 	/**
 	 * Call when DefectDetailsPanel is displayed so DB is refreshed.

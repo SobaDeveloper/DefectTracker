@@ -394,7 +394,7 @@ public class DefectDetailsPanel extends JPanel implements ItemListener{
 		//Close parent JDialog
 		JDialog parent = (JDialog) getRootPane().getParent();
 		
-		//SLM
+		// Refresh the DefectsListPanel after update
 		mainMenu.refreshDLP();
 		
 		parent.dispose();

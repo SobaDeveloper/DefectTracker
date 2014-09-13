@@ -49,7 +49,7 @@ public class DTSMainFrame {
 		mFrame.setLocationRelativeTo(null);
 		
 		// Add the Help/About menubar
-		menuBar = new DTSMenuBar();
+		menuBar = new DTSMenuBar(mainMenuView);
 		mFrame.setJMenuBar(menuBar.getMenuBar());
 		menuBar.setVisibleFalse();
 		

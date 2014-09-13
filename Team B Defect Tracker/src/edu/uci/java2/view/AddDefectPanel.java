@@ -41,9 +41,11 @@ public class AddDefectPanel extends JPanel {
 	private java.util.Date utilDate;
 	private DefectEmail dEmail;
 	
+	protected MainMenu mainMenu;
 	
-	public AddDefectPanel(){
+	public AddDefectPanel(final MainMenu mainMenu){
 		
+		this.mainMenu = mainMenu;
 
 		Dimension dp = new Dimension( 800, 250 );
 		this.setPreferredSize( dp );
@@ -279,6 +281,9 @@ public class AddDefectPanel extends JPanel {
 					
 				//Close parent JDialog
 				JDialog parent = (JDialog) getRootPane().getParent();
+				
+				mainMenu.refreshDLP();
+				
 				parent.dispose();
 			}
 			else {

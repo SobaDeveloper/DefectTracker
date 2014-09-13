@@ -182,7 +182,7 @@ public class MainMenu extends JPanel
 	 */
 	public void displayAddDefectDialog(){
 		JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
-		addDefectDialog = new AddDefectDialog(topFrame);
+		addDefectDialog = new AddDefectDialog(this, topFrame);
 		addDefectDialog.setVisible(true);
 		
 	}
@@ -238,6 +238,7 @@ public class MainMenu extends JPanel
 	 * Refreshes DefectsListPanel table. Called after submit on DefectDetailsPanel.
 	 */
 	public void refreshDLP() {
+		System.out.println("In MainMenu refreshDLP");
 		defectsListUpdatePanel.refresh();
 	}
 	

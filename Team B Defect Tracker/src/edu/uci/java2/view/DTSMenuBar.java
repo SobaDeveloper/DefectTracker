@@ -29,9 +29,14 @@ public class DTSMenuBar extends JPanel{
 	private DTSMenuBarController controller;
 	private AddDefectDialog addDefectDialog;
 	
-	public DTSMenuBar(){
+	private MainMenu mainMenu;
+	
+	public DTSMenuBar(MainMenu mainMenu){
 		
 		super(true);
+		
+		this.mainMenu = mainMenu;
+		
 		//Create menu bar
 		menuBar = new JMenuBar();
 		
@@ -111,7 +116,7 @@ public class DTSMenuBar extends JPanel{
 	 */
 	public void displayAddDefectDialog(){
 		JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
-		addDefectDialog = new AddDefectDialog(topFrame);
+		addDefectDialog = new AddDefectDialog(mainMenu, topFrame);
 		addDefectDialog.setVisible(true);
 		
 	}

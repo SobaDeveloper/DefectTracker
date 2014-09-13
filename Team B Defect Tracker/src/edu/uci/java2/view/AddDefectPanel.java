@@ -44,6 +44,10 @@ public class AddDefectPanel extends JPanel {
 	
 	public AddDefectPanel(){
 		
+
+		Dimension dp = new Dimension( 800, 250 );
+		this.setPreferredSize( dp );
+		
 		//Set Layout
 		layout = new GridBagLayout();
 		this.setLayout(layout);
@@ -55,7 +59,8 @@ public class AddDefectPanel extends JPanel {
 		
 		//Display the Application Name
 		jlbAppName = new JLabel("Application Name: ");
-		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.anchor = GridBagConstraints.EAST;
+		gbc.fill = GridBagConstraints.NONE;
 		gbc.weightx = 0.5;
 		gbc.weighty = 0.5;
 		gbc.gridx = 0;
@@ -77,7 +82,8 @@ public class AddDefectPanel extends JPanel {
 		
 		//Display the Creation Date
 		jlbDateCreated = new JLabel("Creation Date: ");
-		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.anchor = GridBagConstraints.EAST;
+		gbc.fill = GridBagConstraints.NONE;
 		gbc.gridwidth = 1;
 		gbc.weightx = 0.5;
 		gbc.gridx = 0;
@@ -89,6 +95,7 @@ public class AddDefectPanel extends JPanel {
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		String s = df.format(utilDate);
 		jtxtDateCreated = new JTextField();
+		gbc.anchor = GridBagConstraints.WEST;
 		gbc.weightx = 0.5;
 		gbc.gridx = 1;
 		gbc.gridy = 1;
@@ -106,8 +113,9 @@ public class AddDefectPanel extends JPanel {
 		jcbDS.setFont(new Font("SansSerif", Font.PLAIN, 12));
 		
 		//Display Defect Statuses
-		jlbDefectStatus = new JLabel("Defect Status:  ");
-		gbc.fill = GridBagConstraints.HORIZONTAL;
+		jlbDefectStatus = new JLabel("Defect Status: ");
+		gbc.anchor = GridBagConstraints.EAST;
+		gbc.fill = GridBagConstraints.NONE;
 		gbc.weightx = 0.5;
 		gbc.gridx = 2;
 		gbc.gridy = 1;
@@ -128,8 +136,9 @@ public class AddDefectPanel extends JPanel {
 		jtxtAssignee.setEditable(true); 
 		
 		//Display Assignee 
-		jlbAssignee = new JLabel("Assignee:  ");
-		gbc.fill = GridBagConstraints.HORIZONTAL;
+		jlbAssignee = new JLabel("Assignee: ");
+		gbc.anchor = GridBagConstraints.EAST;
+		gbc.fill = GridBagConstraints.NONE;
 		gbc.weightx = 0.5;
 		gbc.gridx = 0;
 		gbc.gridy = 2;
@@ -155,7 +164,8 @@ public class AddDefectPanel extends JPanel {
 		
 		//Display Defect Priority
 		jlbPriority = new JLabel("Priority: ");
-		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.anchor = GridBagConstraints.EAST;
+		gbc.fill = GridBagConstraints.NONE;
 		gbc.weightx = 0.5;
 		gbc.gridx = 2;
 		gbc.gridy = 2;
@@ -178,8 +188,9 @@ public class AddDefectPanel extends JPanel {
 		JScrollPane jscpDefectSummary = new JScrollPane(jtxtSummary);
 		
 		//Display Summary
-		jlbDefectSummary = new JLabel("Summary:  ");
-		gbc.fill = GridBagConstraints.HORIZONTAL;
+		jlbDefectSummary = new JLabel("Summary: ");
+		gbc.anchor = GridBagConstraints.EAST;
+		gbc.fill = GridBagConstraints.NONE;
 		gbc.weightx = 0.5;
 		gbc.gridx = 0;
 		gbc.gridy = 3;
@@ -204,8 +215,9 @@ public class AddDefectPanel extends JPanel {
 		JScrollPane jscpDefectDesc = new JScrollPane(jtxtDefectDesc);
 		
 		//Display Description
-		jlbDefectDesc = new JLabel("Defect Description:  ");
-		gbc.fill = GridBagConstraints.HORIZONTAL;
+		jlbDefectDesc = new JLabel("Defect Description: ");
+		gbc.anchor = GridBagConstraints.EAST;
+		gbc.fill = GridBagConstraints.NONE;
 		gbc.gridwidth = 1;
 		gbc.gridheight = 1;
 		gbc.weightx = 0.5;

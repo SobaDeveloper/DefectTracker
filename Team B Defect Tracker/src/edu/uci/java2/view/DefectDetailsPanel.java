@@ -23,6 +23,7 @@ import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 
 import edu.uci.java2.dao.DefectDAO;
+import edu.uci.java2.email.DefectEmail;
 import edu.uci.java2.model.Defect;
 /**
  * X460.11/1 - Java Programming II - Team B
@@ -63,9 +64,27 @@ public class DefectDetailsPanel extends JPanel implements ItemListener{
 	JComboBox<String>	jcbDP;
 
 	private DefectDAO dao = new DefectDAO();
+        private DefectEmail email = new DefectEmail();
 	
 	protected MainMenu mainMenu;
 	
+        private void sendDefect() {
+            //Retrieve assignee
+            String to = jtxtAssignee.getText();
+            // current user logged in
+            String cc = "dnlhom11@gmail.com";
+            // body include defect id and summary
+            String body = "App Name: " + jlbAppName.getText() + ", Summary: " + jtxtSummary.getText();
+
+            email.send(to, cc, body);
+
+            //Display message
+            if (email.checkSuccess()) {
+                JOptionPane.showMessageDialog(null, "Defect Status Email Has Been Sent!",
+                        "Success!", JOptionPane.INFORMATION_MESSAGE);
+            }            
+        }
+
 	public DefectDetailsPanel( final MainMenu mainMenu, Defect d){
 		
 		this.mainMenu = mainMenu;
@@ -383,14 +402,17 @@ public class DefectDetailsPanel extends JPanel implements ItemListener{
 			rSqlDate = getSqlDate(startDate);	
 		}			
 		defect.setResolutionDate(rSqlDate);
-						
+                        
 		//Update defect in database
 		dao.updateDefect(defect);	
-						
+                        
 		//Display message after success
 		JOptionPane.showMessageDialog(null, "Defect Has Been Updated!",
 				"Success!", JOptionPane.INFORMATION_MESSAGE);
-							
+
+                // send defect via email
+                sendDefect();
+                
 		//Close parent JDialog
 		JDialog parent = (JDialog) getRootPane().getParent();
 		

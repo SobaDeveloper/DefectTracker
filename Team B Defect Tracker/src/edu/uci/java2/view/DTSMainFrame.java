@@ -50,8 +50,8 @@ public class DTSMainFrame {
 		
 		// Add the Help/About menubar
 		menuBar = new DTSMenuBar();
-		mFrame.setJMenuBar(menuBar.menuBar);
-		
+		mFrame.setJMenuBar(menuBar.getMenuBar());
+		menuBar.setVisibleFalse();
 		
 		// Exit program when close window
 		mFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -73,7 +73,6 @@ public class DTSMainFrame {
 	{
 		//mainMenuView = new MainMenu();
 		mFrame.getContentPane().add(mainMenuView, BorderLayout.CENTER);	
-		
-	}
-			
+		menuBar.setVisibleTrue();
+	}		
 }

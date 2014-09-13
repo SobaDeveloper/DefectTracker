@@ -1,14 +1,15 @@
 package edu.uci.java2.view;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.Font;
+import java.awt.event.KeyEvent;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+
+import edu.uci.java2.controller.DTSMenuBarController;
 
 /**
  * X460.11/1 - Java Programming II - Team B
@@ -21,43 +22,112 @@ import javax.swing.SwingUtilities;
 public class DTSMenuBar extends JPanel{
 	
 	private static final long serialVersionUID = 3506496063505483051L;
-	public JMenuBar menuBar;
-	public JFrame topFrame;
+	private JMenuBar menuBar;
+	//private JFrame topFrame;
+	private JMenu jmFile, jmAddDefect, jmHelp;
+	private JMenuItem jmiAbout, jmiLogout, jmiAddDefect;
+	private DTSMenuBarController controller;
+	private AddDefectDialog addDefectDialog;
 	
 	public DTSMenuBar(){
+		
 		super(true);
 		//Create menu bar
 		menuBar = new JMenuBar();
-		//Create "Help" menu
-	    JMenu jmHelp = new JMenu("Help");
-	    //Create "About" menu item
-	    JMenuItem jmiAbout = new JMenuItem("About");
-	    //Add menu bar components
-	    menuBar.add(jmHelp);
-	    jmHelp.add(jmiAbout);
-	    //Retrieve parent frame
-	    topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+		
+		controller  = new DTSMenuBarController(this);
+		
+		//Create "File" menu
+	    jmFile = new JMenu("File");
+	    jmFile.setFont(new Font("SansSerif", Font.BOLD, 14));
+	    jmFile.setMnemonic(KeyEvent.VK_F);
 	    
-	    //Add "About" menu item actionlistener
-	    jmiAbout.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(topFrame,
-					    getMessage(), "About", JOptionPane.INFORMATION_MESSAGE);	
-			}	
-	    });
+	    //Create "Add Defect" menu
+	    jmAddDefect = new JMenu("Add Defect");
+	    jmAddDefect.setFont(new Font("SansSerif", Font.BOLD, 14));
+	    jmAddDefect.setMnemonic(KeyEvent.VK_A);
+	    
+	    //Create "Help" menu
+	    jmHelp = new JMenu("Help");
+	    jmHelp.setFont(new Font("SanSerif", Font.BOLD, 14));
+	    jmHelp.setMnemonic(KeyEvent.VK_H);   
+	    
+	    //Create "About" item
+	    jmiAbout = new JMenuItem("About");
+	    jmiAbout.setFont(new Font("SansSerif", Font.PLAIN, 14));
+	    controller.jmiAboutControl();
+	   
+	    //Create "Add New Defect" item
+	    jmiAddDefect = new JMenuItem("Add New Defect");
+	    jmiAddDefect.setFont(new Font("SansSerif", Font.PLAIN, 14));
+	    controller.jmiAddDefectControl();
+	    
+	    //Create "Logout" item
+	    jmiLogout = new JMenuItem("Logout");
+	    jmiLogout.setFont(new Font("SansSerif", Font.PLAIN, 14));
+	    controller.jmiLogOutControl();
+	    
+	    //Add menu bar components
+	    menuBar.add(jmFile);
+	    menuBar.add(jmAddDefect);
+	    menuBar.add(jmHelp);
+	    
+	    jmFile.add(jmiLogout);
+	    jmAddDefect.add(jmiAddDefect);
+	    jmHelp.add(jmiAbout);  
+	}
+	
+	public JMenuBar getMenuBar(){
+		return menuBar;
+	}
+	
+	
+	public JMenu getFileMenu(){
+		return jmFile;
+	}
+	
+	public JMenu getAddDefectMenu(){
+		return jmAddDefect;
+	}
+	
+	public JMenu getHelpMenu(){
+		return jmHelp;
+	}
+	
+	public JMenuItem getAboutMenuItem(){
+		return jmiAbout;
+	}
+	
+	public JMenuItem getAddDefectMenuItem(){
+		return jmiAddDefect;
+	}
+	
+	public JMenuItem getLogoutMenuItem(){
+		return jmiLogout;
 	}
 	
 	/**
-	 * Create message for dialog
-	 * @return message
+	 * Display the Add Defect Dialog
 	 */
-	private String getMessage(){
-		StringBuilder sb = new StringBuilder();
-		sb.append("Team B Defect System Tracker\n");
-		sb.append("Version 1.0\n\n");
-		sb.append("X460.11/1 - Java Programming II\n\n");
-		sb.append("By Shaun Adriano, Dennis Hom, Levi Hsiao, Susan Marosek");
-		return sb.toString();
+	public void displayAddDefectDialog(){
+		JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+		addDefectDialog = new AddDefectDialog(topFrame);
+		addDefectDialog.setVisible(true);
+		
+	}
+	
+	/**
+	 * Set Menu Bar visible to true
+	 */
+	
+	public void setVisibleTrue(){
+		menuBar.setVisible(true);
+	}
+	
+	/**
+	 * Set Menu Bar visible to false
+	 */
+	public void setVisibleFalse(){
+		menuBar.setVisible(false);
 	}
 }

@@ -152,7 +152,7 @@ public class DefectDetailsPanel extends JPanel implements ItemListener{
 		layout.addLayoutComponent(jlbDefectStatus, gbc);
 		this.add(jlbDefectStatus);
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.weightx = 0.5; 	//not sure if should be zero
+		gbc.weightx = 0.5; 
 		gbc.gridx = 3;		
 		gbc.gridy = 1;
 		layout.addLayoutComponent(jcbDS, gbc);
@@ -179,7 +179,7 @@ public class DefectDetailsPanel extends JPanel implements ItemListener{
 		this.add(jlbAssignee);
 		
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.weightx = 0.5; 	//not sure if should be zero
+		gbc.weightx = 0.5; 	
 		gbc.gridx = 1;
 		gbc.gridy = 2;
 		layout.addLayoutComponent(jtxtAssignee, gbc);
@@ -200,7 +200,6 @@ public class DefectDetailsPanel extends JPanel implements ItemListener{
 		jcbDP.setEditable(false);
 		jcbDP.setPreferredSize(new Dimension(70, 25));
 		jcbDP.setFont(new Font("SansSerif", Font.PLAIN, 12));
-		//Add Listener to save selected option when hitting Submit?
 		
 		//Display Defect Priority
 		jlbPriority = new JLabel("Priority: ");
@@ -213,7 +212,7 @@ public class DefectDetailsPanel extends JPanel implements ItemListener{
 		this.add(jlbPriority);
 		
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.weightx = 0.5; //not sure if should be zero
+		gbc.weightx = 0.5;
 		gbc.gridx = 3;
 		gbc.gridy = 2;
 		layout.addLayoutComponent(jcbDP, gbc);
@@ -223,14 +222,12 @@ public class DefectDetailsPanel extends JPanel implements ItemListener{
 		
 		//Create Summary JTextArea with JScrollPane
 		jtxtSummary = new JTextArea(2, 50);
-		//jtxtSummary.setPreferredSize(new Dimension(140, 50));
 		jtxtSummary.setLineWrap(true);
 		if (mDefect.getDefectSummary() != null)	{	
 			jtxtSummary.setText(mDefect.getDefectSummary()); //Sets Defect Summary as default text in the field, if any
 		}
 		jtxtSummary.setEditable(true); 
 		JScrollPane jscpDefectSummary = new JScrollPane(jtxtSummary);
-		//Add Listener to save edits in the text area?
 				
 		//Display Summary
 		jlbDefectSummary = new JLabel("Summary: ");
@@ -255,14 +252,12 @@ public class DefectDetailsPanel extends JPanel implements ItemListener{
 		
 		//Create Description JTextArea and JScrollPane
 		jtxtDefectDesc = new JTextArea(2, 50);
-		//jtxtDefectDesc.setPreferredSize(new Dimension(140, 50));
 		jtxtDefectDesc.setLineWrap(true);
 		if (mDefect.getDefectDesc() != null)	{	
 			jtxtDefectDesc.setText(mDefect.getDefectDesc()); //Sets Defect Description as default text in the field, if any
 		}
 		jtxtDefectDesc.setEditable(true); 
 		JScrollPane jscpDefectDesc = new JScrollPane(jtxtDefectDesc);
-		//Add Listener to save edits in the text area?
 		
 		//Display Description
 		jlbDefectDesc = new JLabel("Defect Description: ");
@@ -320,22 +315,10 @@ public class DefectDetailsPanel extends JPanel implements ItemListener{
 		gbc.gridx = 1;
 		gbc.gridy = 7;
 		layout.addLayoutComponent(jtxtResolutionDate, gbc);
-		this.add(jtxtResolutionDate, gbc);
-		
-		//Remove with the JTextField
-		/*
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.weightx = 0.1;
-		gbc.gridx = 0;
-		gbc.gridy = 7;
-		layout.addLayoutComponent(jtxtResolutionDate, gbc);
-		this.add(jtxtResolutionDate);
-		*/
-		
+		this.add(jtxtResolutionDate, gbc);		
 		
 		//Create Final Resolution JTextArea with JScrollPane
 		jtxtFinalResolution = new JTextArea(2, 50);
-		//jtxtFinalResolution.setPreferredSize(new Dimension(70, 25));
 		
 		
 		if (mDefect.getFinalResolution() != null)	{	
@@ -343,7 +326,6 @@ public class DefectDetailsPanel extends JPanel implements ItemListener{
 		}
 		jtxtFinalResolution.setEditable(true); 
 		JScrollPane jscFinalResolution = new JScrollPane(jtxtFinalResolution);
-		//Add Listener to save edits in the text field
 		
 		//Display Final Resolution
 		jlbFinalResolution = new JLabel("Final Resolution: ");
@@ -373,7 +355,6 @@ public class DefectDetailsPanel extends JPanel implements ItemListener{
 		gbc.weightx = 0.5;
 		gbc.gridx = 1;
 		gbc.gridy = 10;
-		//layout.addLayoutComponent(jbtSubmit, gbc);
 		this.add(jbtSubmit, gbc);
 		
 		//Disable Submit Button if defect status is "CLOSED"
@@ -437,13 +418,12 @@ public class DefectDetailsPanel extends JPanel implements ItemListener{
 		
 		
 		
-		//Create Cancel Button (Needs to return to DefectListPanel without saving changes)
+		//Create Cancel Button
 		jbtCancel = new JButton("Cancel");
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.weightx = 0.5;
 		gbc.gridx = 2;
 		gbc.gridy = 10;
-		//layout.addLayoutComponent(jbtCancel, gbc);
 		this.add(jbtCancel, gbc);
 		
 		

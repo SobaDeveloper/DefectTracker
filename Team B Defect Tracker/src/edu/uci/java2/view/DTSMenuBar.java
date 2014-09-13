@@ -39,32 +39,32 @@ public class DTSMenuBar extends JPanel{
 		
 		//Create "File" menu
 	    jmFile = new JMenu("File");
-	    jmFile.setFont(new Font("SansSerif", Font.BOLD, 14));
+	    jmFile.setFont(new Font("SansSerif", Font.PLAIN, 12));
 	    jmFile.setMnemonic(KeyEvent.VK_F);
 	    
 	    //Create "Add Defect" menu
 	    jmAddDefect = new JMenu("Add Defect");
-	    jmAddDefect.setFont(new Font("SansSerif", Font.BOLD, 14));
+	    jmAddDefect.setFont(new Font("SansSerif", Font.PLAIN, 12));
 	    jmAddDefect.setMnemonic(KeyEvent.VK_A);
 	    
 	    //Create "Help" menu
 	    jmHelp = new JMenu("Help");
-	    jmHelp.setFont(new Font("SanSerif", Font.BOLD, 14));
+	    jmHelp.setFont(new Font("SanSerif", Font.PLAIN, 12));
 	    jmHelp.setMnemonic(KeyEvent.VK_H);   
 	    
 	    //Create "About" item
 	    jmiAbout = new JMenuItem("About");
-	    jmiAbout.setFont(new Font("SansSerif", Font.PLAIN, 14));
+	    jmiAbout.setFont(new Font("SansSerif", Font.PLAIN, 12));
 	    controller.jmiAboutControl();
 	   
 	    //Create "Add New Defect" item
 	    jmiAddDefect = new JMenuItem("Add New Defect");
-	    jmiAddDefect.setFont(new Font("SansSerif", Font.PLAIN, 14));
+	    jmiAddDefect.setFont(new Font("SansSerif", Font.PLAIN, 12));
 	    controller.jmiAddDefectControl();
 	    
-	    //Create "Logout" item
-	    jmiLogout = new JMenuItem("Logout");
-	    jmiLogout.setFont(new Font("SansSerif", Font.PLAIN, 14));
+	    //Create "Exit" item
+	    jmiLogout = new JMenuItem("Exit");
+	    jmiLogout.setFont(new Font("SansSerif", Font.PLAIN, 12));
 	    controller.jmiLogOutControl();
 	    
 	    //Add menu bar components

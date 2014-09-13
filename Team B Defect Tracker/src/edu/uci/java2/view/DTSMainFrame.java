@@ -45,7 +45,7 @@ public class DTSMainFrame {
 		// Create the Main JFrame
 		mFrame = new JFrame();
 		mFrame.setTitle("Team B Defect Tracking System");
-		mFrame.setSize(800, 600);
+		mFrame.setSize(800, 550);
 		mFrame.setLocationRelativeTo(null);
 		
 		// Add the Help/About menubar

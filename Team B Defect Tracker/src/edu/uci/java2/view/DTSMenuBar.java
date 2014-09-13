@@ -39,7 +39,7 @@ public class DTSMenuBar extends JPanel{
 		
 		//Create menu bar
 		menuBar = new JMenuBar();
-		
+		//Create controller for all menu bar functions
 		controller  = new DTSMenuBarController(this);
 		
 		//Create "File" menu

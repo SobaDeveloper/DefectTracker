@@ -4,17 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Insets;
-
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-
-import edu.uci.java2.controller.AddDefectController;
 import edu.uci.java2.controller.DefectDetailsMenuBtnController;
-import edu.uci.java2.controller.DefectListUpdateMenuBtnController;
-import edu.uci.java2.controller.DefectsListRowSelectionController;
+import edu.uci.java2.controller.DefectsListController;
 import edu.uci.java2.dao.DefectDAO;
 import edu.uci.java2.model.Defect;
 
@@ -37,133 +31,46 @@ public class MainMenu extends JPanel
 	
 	final int MENU_BTN_WIDTH = 100;
 	final int MENU_BTN_HT = 100;
-	
-	private JButton viewUpdateBtn;
-	private JButton addNewBtn;
-	private JButton logoutBtn;
-	
-	private JPanel dtsPanel;
-	private JPanel btnPanel;
-	
-	private DefectsListPanel defectsListUpdatePanel;
+	private JPanel dtsPanel;	
+	private DefectsListPanel defectsListPanel;
 	protected DefectDetailsPanel defectDetailsPanel;
 	//NEW Defect Details Dialog
 	private DefectDetailsDialog defectDetailsDialog;
 	//NEW Add Defect Dialog
 	private AddDefectDialog addDefectDialog;
-	
 	private Defect defect = null;
-	
 	private DefectDAO 	dao = new DefectDAO();
 	
-	private int	defectID2Show = 0;
 	
 	MainMenu () 
 	{
 		super();	
 		
-		Color c = Color.GRAY;
-		setLayout( new BorderLayout());
-		
-		Dimension db = new Dimension( 750, 110 );
-		btnPanel = new JPanel();
-		btnPanel.setLayout(new FlowLayout());
-		btnPanel.setPreferredSize( db );
-		
-		// Create the menu buttons 
-		createMenuButtons();
+		setLayout( new BorderLayout());		
 				
-		// Create the dtsPanel which will contain one of the following panels 
-		// depending on which menu button is selected: 
-		// Defect Details, Defects View/Update List or Add New Defect screen.
+		// Create the dtsPanel
 		Dimension dp = new Dimension( 750, 450 );
 		dtsPanel = new JPanel();
 		dtsPanel.setLayout(new FlowLayout());
 		dtsPanel.setPreferredSize( dp );
-		dtsPanel.setBackground(c);
 		
-		// Create the panels that will be displayed when a menu button is pressed
-		createMenuPanels( dp );
+		//Create and set up the Defects List Panel.
+        defectsListPanel = new DefectsListPanel( dao );
+        defectsListPanel.setPreferredSize( dp );
         
-		// Add Menu Buttons and panel to MainMenu Panel
-		this.add(btnPanel, BorderLayout.NORTH);
+        
+        //Set up controller for Defect List Panel's table/row selection
+        DefectsListController listController = 
+        	new DefectsListController( this, defectsListPanel, dao );
+		listController.defectsListControl();
+		
+		// Add dtsPanel to MainMenu Panel
 		this.add(dtsPanel, BorderLayout.CENTER);
 
 		// Setup initial panel for Defect Tracking System (List/Update)
-		dtsPanel.add(defectsListUpdatePanel);
+		dtsPanel.add(defectsListPanel);
 	}
-	
-	/**
-	 * Create the Menu Buttons for the MainMenu view
-	 */
-	void createMenuButtons( )
-	{
-		Dimension d = new Dimension( MENU_BTN_WIDTH, MENU_BTN_HT );
-		// Define the View/Update Menu button
-		// Using html to create the two-line button text.
-		viewUpdateBtn = new JButton(
-				"<html><center>View/Update<br>Defect</center></html>");
-		// An Insets object is a representation of the borders of a container. 
-		// It specifies the space that a container must leave at each of its 
-		// edges. The space can be a border, a blank space, or a title.
-		// de-spacing:
-		// I made the left and right Insets -10. This just makes the text 
-		// more centered, not sure why :(
-		viewUpdateBtn.setMargin(new Insets(0, -10, 0, -10));
-		viewUpdateBtn.setPreferredSize( d );
 		
-		// Define the Add New Defect Menu button
-		addNewBtn = new JButton(
-				"<html><center>Add New<br>Defect</center></html>");
-		// de-spacing:
-		addNewBtn.setPreferredSize( d );
-		addNewBtn.setMargin(new Insets(0, -10, 0, -10));
-		
-		// Define the Logout Menu button. Text is single line & already centered
-		logoutBtn = new JButton("Logout");
-		logoutBtn.setPreferredSize( d );
-		
-		btnPanel.add(viewUpdateBtn );
-		btnPanel.add(addNewBtn );
-		btnPanel.add(logoutBtn );
-	}
-	
-	/**
-	 * Create the panels that will be displayed when a menu button is pressed
-	 * @param dp the Dimension of the panel
-	 */
-	void createMenuPanels( Dimension dp)
-	{
-		System.out.println("In createMenuPanels");
-		
-		//Create and set up the Defects List/Update Panel.
-        defectsListUpdatePanel = new DefectsListPanel( dao );
-        defectsListUpdatePanel.setPreferredSize( dp );
-        
-        // The Controller for the List/Update Defect Menu Button
-        DefectListUpdateMenuBtnController updateController = 
-        	new DefectListUpdateMenuBtnController( this );
-        updateController.defectListUpdateBtnControl();
-        
-        //Controller for Add Defect Button
-        AddDefectController adc = new AddDefectController(this);
-        adc.AddDefectControl();
-        
-        // Set up controller for DefectListPanel's table/row selection
-        DefectsListRowSelectionController listSelectController = 
-        	new DefectsListRowSelectionController( this, defectsListUpdatePanel, dao );
-		listSelectController.defectListRowSelectionController();
-       
-        
-		//Create and set up the Defects Detail Panel
-       // defectDetailsPanel = new DefectDetailsPanel();
-        //defectDetailsPanel.setPreferredSize( dp );
-     
-        DefectDetailsMenuBtnController detailsController = 
-        	new DefectDetailsMenuBtnController(defect, this );
-        detailsController.defectDetailsBtnControl();
-	}
-	
 	
 	/**
 	 * 
@@ -183,53 +90,13 @@ public class MainMenu extends JPanel
 	public void displayAddDefectDialog(){
 		JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
 		addDefectDialog = new AddDefectDialog(this, topFrame);
-		addDefectDialog.setVisible(true);
-		
-	}
-
-	/**
-	 * 
-	 *
-	public void DisplayDefectsListPanel()
-	{
-		System.out.println("in DisplayDefectsListPanel");
-		setPanel( defectsListUpdatePanel );
-	}
-	*/
-	
-	
-	/**
-	 * @return returns the button object associated with displaying the 
-	 * Add New Defect.
-	 */
-	public JButton getAddDefectButton()
-	{
-		return addNewBtn;
+		addDefectDialog.setVisible(true);	
 	}
 	
 	/**
-	 * @return returns the button object associated with displaying the panel
-	 * containing the list of open defects.
-	 */
-	public JButton getDefectListUpdateButton()
-	{
-		return viewUpdateBtn;
-	}
-
-	/**
+	 * Set the defect
 	 * @param d
 	 */
-	public void setDefectID2Show ( int d ) {
-		defectID2Show = d;
-	}
-	
-	/**
-	 * @return
-	 */
-	public int getDefectID2Show ( ) {
-		return defectID2Show;
-	}
-	
 	public void setDefect ( Defect d ) {
 		defect = d;
 	} 
@@ -239,7 +106,7 @@ public class MainMenu extends JPanel
 	 */
 	public void refreshDLP() {
 		System.out.println("In MainMenu refreshDLP");
-		defectsListUpdatePanel.refresh();
+		defectsListPanel.refresh();
 	}
 	
 }

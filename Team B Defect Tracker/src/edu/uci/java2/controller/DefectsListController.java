@@ -20,7 +20,7 @@ import edu.uci.java2.view.MainMenu;
  * @version 1.0 9/07/2014
  */
 
-public class DefectsListRowSelectionController {
+public class DefectsListController {
 //SLM	private Defect mainDefect;
 	private MainMenu mainMenu;
     private DefectsListPanel dlPanel;
@@ -28,20 +28,19 @@ public class DefectsListRowSelectionController {
     private Defect defect;
     private DefectDAO dao;
 
-    public DefectsListRowSelectionController(MainMenu mainMenu, DefectsListPanel dlPanel, DefectDAO dao)
+    public DefectsListController(MainMenu mainMenu, DefectsListPanel dlPanel, DefectDAO dao)
 	{
     	this.dlPanel = dlPanel;
     	this.mainMenu = mainMenu;
     	this.dao = dao;
-    	
-		System.out.println( " In DefectsListItemSelectionController  constructor");		
+		
 	}
     
 	
 	/**
 	 * MouseListener for the row selection
 	 */
-	public void defectListRowSelectionController( ){
+	public void defectsListControl( ){
 	
 		mouseListener = new MouseListener() {
 

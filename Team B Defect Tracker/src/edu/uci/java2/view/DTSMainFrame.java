@@ -24,7 +24,7 @@ public class DTSMainFrame {
 	
 	private Login 		loginView;
 	private MainMenu	mainMenuView;
-	
+	private DTSMenuBar	menuBar;
 	
 	public DTSMainFrame() {
 		createFrame();
@@ -47,6 +47,12 @@ public class DTSMainFrame {
 		mFrame.setTitle("Team B Defect Tracking System");
 		mFrame.setSize(800, 600);
 		mFrame.setLocationRelativeTo(null);
+		
+		// Add the Help/About menubar
+		menuBar = new DTSMenuBar();
+		mFrame.setJMenuBar(menuBar.menuBar);
+		
+		
 		// Exit program when close window
 		mFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		

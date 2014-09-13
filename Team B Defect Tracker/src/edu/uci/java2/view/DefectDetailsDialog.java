@@ -17,7 +17,7 @@ public class DefectDetailsDialog extends JDialog{
 		this.mainMenu = mainMenu;
 		DefectDetailsPanel ddp = new DefectDetailsPanel(mainMenu, mDefect);
 		getContentPane().add(ddp);
-		setLocationRelativeTo(parent);
 		pack();
+		setLocationRelativeTo(parent);
 	}
 }

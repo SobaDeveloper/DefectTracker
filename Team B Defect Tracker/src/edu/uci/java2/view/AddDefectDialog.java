@@ -12,7 +12,7 @@ public class AddDefectDialog extends JDialog{
 		super(parent, "Defect Details", true);
 		AddDefectPanel adp = new AddDefectPanel();
 		getContentPane().add(adp);
-		setLocationRelativeTo(null);
 		pack();
+		setLocationRelativeTo(parent);
 	}
 }

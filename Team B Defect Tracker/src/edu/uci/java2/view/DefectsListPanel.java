@@ -84,47 +84,16 @@ public class DefectsListPanel extends JPanel implements ItemListener {
         jcbApps.addItemListener(this);
         this.add(jcbApps);
 		
-        
   
         // Get list of Defects from DefectDAO
      	mOpenDefectsList = new DefectsList( dao ); 
         
-       
         
 		//Setup table attributes (size, font, etc) 
         mDefectTable = new JTable();
         mDefectTable.setPreferredScrollableViewportSize(new Dimension(750, 400 ));
         mDefectTable.setFillsViewportHeight(true);
-	
-        
-        //Sorter
-        
-        
- /*SLM - PUT IN A CONTROLLER       
-        //Add ListenSelectionListener to table 
-        lsm = mDefectTable.getSelectionModel();  
-        lsm.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);  
-        lsm.addListSelectionListener(new ListSelectionListener(){
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				 if (!e.getValueIsAdjusting()) {
-					 ListSelectionModel model = mDefectTable.getSelectionModel(); 
-					 int selected = model.getLeadSelectionIndex();
-					 if(selected>=0)
-						 printID(selected); 
-				 }
-			}
-			
-			//Print defect ID of selected row in console
-			private void printID(int selected){  
-	            String temp = "";  
-	            Object obj = mDefectTable.getValueAt(selected, 0);  
-	            temp += obj.toString();    
-	            System.out.println(temp);	
-			}
-        });  
-SLM */
-        
+	        
         //Create the scroll pane and add the table to it.
         JScrollPane scrollPane = new JScrollPane(mDefectTable);
 

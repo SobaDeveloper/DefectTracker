@@ -53,7 +53,6 @@ public class MainMenu extends JPanel
 	private AddDefectDialog addDefectDialog;
 	
 	private Defect defect = null;
-	private boolean isDetails = false;
 	
 	private DefectDAO 	dao = new DefectDAO();
 	
@@ -91,7 +90,7 @@ public class MainMenu extends JPanel
 		this.add(dtsPanel, BorderLayout.CENTER);
 
 		// Setup initial panel for Defect Tracking System (List/Update)
-		setPanel(defectsListUpdatePanel);
+		dtsPanel.add(defectsListUpdatePanel);
 	}
 	
 	/**
@@ -165,63 +164,6 @@ public class MainMenu extends JPanel
         detailsController.defectDetailsBtnControl();
 	}
 	
-	
-	
-	/**
-	 * 
-	 * @param panel
-	 */
-	private void setPanel( JPanel panel )
-	{
-		System.out.println("In setPanel  "+ panel.toString());
-		
-		try
-		{
-			// SLM _ NOT SURE THIS IS THE RIGHT WAY TO DO THE PANEL SWITCHING.
-			// WILL TRY TO FIGURE OUT A BETTER WAY.
-			
-			// Want to remove the current JPanel from dtsPanel
-			if ( dtsPanel.getComponent(0) != null )
-			{
-				System.out.println("dtsPanel.getComponent(0) NOT NULL");
-				
-				dtsPanel.removeAll();
-				dtsPanel.add(panel);
-				dtsPanel.repaint();
-			}
-		}
-		catch ( IndexOutOfBoundsException e )
-		{
-			// This is not really an error, just the first time
-			// anything has been added to the dtsPanel.
-			System.out.println("dtsPanel.getComponent(0) IS NULL");
-			// Nothing has been added to dtsPanel yet (i.e. 1st time)
-			dtsPanel.add(panel);
-			dtsPanel.repaint();
-		}
-		finally
-		{
-			if ( isDetails )
-				((DefectDetailsPanel) panel).refreshDB( getDefectID2Show() );
-			else
-				 ((DefectsListPanel) panel).refresh();
-				//((DefectsListPanel) panel).refresh();
-			// Reset the isDetails flag
-			isDetails = false;	
-		}
-	}
-	
-	/**
-	 * @param defectID
-	 *
-	public void DisplayDefectDetailsPanel( int defectID )
-	{
-		isDetails = true;
-		defectID2Show = defectID;
-		System.out.println("in DisplayDefectDetailsPanel  "+ defectID2Show );
-		setPanel(defectDetailsPanel );
-	}
-	*/
 	
 	/**
 	 * 

@@ -6,8 +6,8 @@ import edu.uci.java2.model.Defect;
 
 /**
  * X460.11/1 - Java Programming II - Team B
- * DatabaseHelper.java
- * Purpose: Provides access to MySQL database
+ * DefectDAO.java
+ * Purpose: Provide access to MySQL database
  * 
  * @author Shaun Adriano, Dennis Hom, Levi Hsiao, Susan Marosek
  * @version 1.0 8/27/2014
@@ -53,10 +53,11 @@ public class DefectDAO {
 	public Boolean checkLogin(String email, String password){
 		
 		Connection con = getConnection();
+		PreparedStatement ps = null;
 		
 		try{
 			String sql = "SELECT * FROM staff WHERE EMAIL=? AND PASSWORD=?";
-			PreparedStatement ps = con.prepareStatement(sql);
+			ps = con.prepareStatement(sql);
 			ps.setString(1, email);
 			ps.setString(2, password);
 			ResultSet rs = ps.executeQuery();
@@ -76,6 +77,26 @@ public class DefectDAO {
 			System.out.println(e.getMessage());
 			return false;
 		}
+		finally{
+			try{
+				if(ps != null){
+					ps.close();
+					System.out.println("preparedstatement closed");
+				}
+					
+			}catch(SQLException e){
+				e.printStackTrace();
+			}
+			try{
+				if(con != null){
+					con.close();
+					System.out.println("connection closed");
+				}
+					
+			}catch(SQLException e){
+				e.printStackTrace();
+			}		
+		}
 	}	
 	
 	/**
@@ -85,9 +106,10 @@ public class DefectDAO {
 	public ResultSet getAllDefects(){
 		
 		Connection con = getConnection();
+		Statement statement = null;
 		
 		try{
-			Statement statement = con.createStatement();
+			statement = con.createStatement();
 			ResultSet rows;
 			String sql = "SELECT * FROM defect ORDER BY DEFECT_ID";
 			rows = statement.executeQuery(sql);
@@ -95,6 +117,20 @@ public class DefectDAO {
 		}
 		catch(SQLException e){
 			System.out.println("SQL Error: " + e.getMessage());
+		}
+		finally{
+			try{
+				if(statement != null)
+					statement.close();					
+			}catch(SQLException e){
+				e.printStackTrace();
+			}
+			try{
+				if(con != null)
+					con.close();			
+			}catch(SQLException e){
+				e.printStackTrace();
+			}		
 		}
 		return null;
 	}
@@ -105,9 +141,10 @@ public class DefectDAO {
 	 */
 	public HashSet<String> getAllAppNames(){
 		Connection con = getConnection();
+		Statement statement = null;
 		
 		try{
-			Statement statement = con.createStatement();
+			statement = con.createStatement();
 			ResultSet rows;
 			String sql = "SELECT APPLICATION FROM defect";
 			rows = statement.executeQuery(sql);
@@ -122,6 +159,20 @@ public class DefectDAO {
 		catch(SQLException e){
 			System.out.println("SQL Error: " + e.getMessage());
 		}
+		finally{
+			try{
+				if(statement != null)
+					statement.close();					
+			}catch(SQLException e){
+				e.printStackTrace();
+			}
+			try{
+				if(con != null)
+					con.close();			
+			}catch(SQLException e){
+				e.printStackTrace();
+			}	
+		}
 		return null;
 	}
 	
@@ -134,16 +185,31 @@ public class DefectDAO {
 	public ResultSet getDefectsByApp(String appName){
 		
 		Connection con = getConnection();
+		PreparedStatement ps = null;
 		
 		try{
 			String sql = "SELECT * FROM defect WHERE APPLICATION=? ORDER BY DEFECT_ID";
-			PreparedStatement ps = con.prepareStatement(sql);
+			ps = con.prepareStatement(sql);
 			ps.setString(1, appName);
 			ResultSet rows = ps.executeQuery();
 			return rows;
 		}
 		catch(SQLException e){
 			System.out.println("SQL Error: " + e.getMessage());
+		}
+		finally{
+			try{
+				if(ps != null)
+					ps.close();					
+			}catch(SQLException e){
+				e.printStackTrace();
+			}
+			try{
+				if(con != null)
+					con.close();			
+			}catch(SQLException e){
+				e.printStackTrace();
+			}		
 		}
 		return null;
 	}
@@ -157,11 +223,11 @@ public class DefectDAO {
 	public ResultSet getListPanel(String appName){
 		
 		Connection con = getConnection();
-		
+		PreparedStatement ps = null;
 		try{
 			String sql = "SELECT DEFECT_ID, SUMMARY, DATE_CREATED, STATUS FROM defect "
 					+ "WHERE APPLICATION=? ORDER BY DEFECT_ID";
-			PreparedStatement ps = con.prepareStatement(sql);
+			ps = con.prepareStatement(sql);
 			ps.setString(1, appName);
 			ResultSet rows = ps.executeQuery();
 			return rows;
@@ -180,18 +246,15 @@ public class DefectDAO {
 	 */
 	public Defect getDefectByID ( int defectID ) {
 		Connection con = getConnection();
+		PreparedStatement ps = null;
 		Defect defect = null; 
 		
 		try{
 			String sql = "SELECT * FROM defect "
 					+ "WHERE DEFECT_ID =?";
-			PreparedStatement ps = con.prepareStatement(sql);
+			ps = con.prepareStatement(sql);
 			ps.setLong(1, defectID);
 			ResultSet defectRS = ps.executeQuery();
-			
-			
-			
-		//	ResultSet defectRS = dao.getDefectByID( defectID );
 			
 			//try{
 				while( defectRS.next()){
@@ -200,15 +263,27 @@ public class DefectDAO {
 				System.out.println("Defect = "+defect.toString());
 		/*	}
 			catch(SQLException ex){
-				System.out.println("SQL Error: " + ex.getMessage());
-				
+				System.out.println("SQL Error: " + ex.getMessage());		
 			}
-			*/
-			
+			*/	
 			return defect;
 		}
 		catch(SQLException e){
 			System.out.println("SQL Error: " + e.getMessage());
+		}
+		finally{
+			try{
+				if(ps != null)
+					ps.close();					
+			}catch(SQLException e){
+				e.printStackTrace();
+			}
+			try{
+				if(con != null)
+					con.close();			
+			}catch(SQLException e){
+				e.printStackTrace();
+			}		
 		}
 		return null;
 	}
@@ -244,6 +319,7 @@ public class DefectDAO {
 		catch(SQLException e){
 			System.out.println("SQL Error: " + e.getMessage());
 		}
+		
 		return null;
 	}
 	
@@ -254,6 +330,7 @@ public class DefectDAO {
 	public void addDefect(Defect d){
 		
 		Connection con = getConnection();
+		PreparedStatement ps = null;
 		
 		try{
 			
@@ -262,7 +339,7 @@ public class DefectDAO {
 					+ "SUMMARY, DESCRIPTION, ASSIGNEE, PRIORITY) "
 					+ "VALUES (?,?,?,?,?,?,?)";
 			
-			PreparedStatement ps = con.prepareStatement(sql);
+			ps = con.prepareStatement(sql);
 			ps.setString(1, d.getAppName());
 			ps.setString(2, d.getDefectStatus());
 			ps.setDate(3, (Date)d.getDateCreated());
@@ -275,6 +352,20 @@ public class DefectDAO {
 		}catch (SQLException e){
 			System.out.println("SQL Error: " + e.getMessage());
 		}
+		finally{
+			try{
+				if(ps != null)
+					ps.close();					
+			}catch(SQLException e){
+				e.printStackTrace();
+			}
+			try{
+				if(con != null)
+					con.close();			
+			}catch(SQLException e){
+				e.printStackTrace();
+			}		
+		}
 	}
 	
 	/**
@@ -284,6 +375,7 @@ public class DefectDAO {
 	public void updateDefect(Defect d){
 		
 		Connection con = getConnection();
+		PreparedStatement ps = null;
 		
 		try{
 			
@@ -293,7 +385,7 @@ public class DefectDAO {
 					+ "FINAL_RESOLUTION=?, RESOLUTION_DATE=? "
 					+ "WHERE DEFECT_ID=?";
 					
-			PreparedStatement ps = con.prepareStatement(sql);
+			ps = con.prepareStatement(sql);
 			ps.setString(1, d.getAppName());
 			ps.setString(2, d.getDefectStatus());
 			ps.setDate(3, (Date)d.getDateCreated());
@@ -309,6 +401,20 @@ public class DefectDAO {
 		}
 		catch(SQLException e){
 			System.out.println("SQL Error: " + e.getMessage());
+		}
+		finally{
+			try{
+				if(ps != null)
+					ps.close();					
+			}catch(SQLException e){
+				e.printStackTrace();
+			}
+			try{
+				if(con != null)
+					con.close();			
+			}catch(SQLException e){
+				e.printStackTrace();
+			}		
 		}
 	}
 }

@@ -25,8 +25,6 @@ import edu.uci.java2.email.DefectEmail;
 
 public class AddDefectPanel extends JPanel {
 
-	private static final String DEFAULT_APPNAME = "DEFAULT APPLICATION";
-	
 	private static final long serialVersionUID = 5148449399655441280L;
 	final static boolean shouldFill = true;
 	final static boolean shouldWeightX = true;
@@ -70,7 +68,7 @@ public class AddDefectPanel extends JPanel {
 		layout.addLayoutComponent(jlbAppName, gbc);
 		this.add(jlbAppName);
 		
-		jtxtAppName = new JTextField(DEFAULT_APPNAME);
+		jtxtAppName = new JTextField();
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.gridwidth = 2;
 		gbc.weightx = 0.5;
@@ -254,32 +252,42 @@ public class AddDefectPanel extends JPanel {
 				
 			//Retrieve values from user input
 			String appName = jtxtAppName.getText();
-			String status = String.valueOf(jcbDS.getSelectedItem());
-			String summary = jtxtSummary.getText();
-			String desc = jtxtDefectDesc.getText();
-			String assignee = jtxtAssignee.getText();
-			String priority = String.valueOf(jcbDP.getSelectedItem());
-			String resolution = null;
-			java.sql.Date resolutionDate = null;
-			java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-				
-			//Create new defect
-			mDefect = new Defect(appName, status, sqlDate, summary, desc, assignee,
-					priority, resolution, resolutionDate);
-				
-			//Add new defect to database
-			dao.addDefect(mDefect);
-				
-			//Display message after success
-			JOptionPane.showMessageDialog(null, "Defect Has Been Added!",
-					"Success!", JOptionPane.INFORMATION_MESSAGE);
-				
-			//Close parent JDialog
-			JDialog parent = (JDialog) getRootPane().getParent();
-			parent.dispose();
-			}
 			
-		});		
+			// Check if the appName is null or 1 or more blank characters
+			if ( appName.trim().compareTo("") != 0 )
+			{
+			
+				String status = String.valueOf(jcbDS.getSelectedItem());
+				String summary = jtxtSummary.getText();
+				String desc = jtxtDefectDesc.getText();
+				String assignee = jtxtAssignee.getText();
+				String priority = String.valueOf(jcbDP.getSelectedItem());
+				String resolution = null;
+				java.sql.Date resolutionDate = null;
+				java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+					
+				//Create new defect
+				mDefect = new Defect(appName, status, sqlDate, summary, desc, assignee,
+						priority, resolution, resolutionDate);
+					
+				//Add new defect to database
+				dao.addDefect(mDefect);
+					
+				//Display message after success
+				JOptionPane.showMessageDialog(null, "Defect Has Been Added!",
+						"Success!", JOptionPane.INFORMATION_MESSAGE);
+					
+				//Close parent JDialog
+				JDialog parent = (JDialog) getRootPane().getParent();
+				parent.dispose();
+			}
+			else {
+				//Display message for blank application name
+				JOptionPane.showMessageDialog(null, "Application Name field cannot be blank. Please enter an Application Name.",
+						"Error.", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+	});		
 		
 		
 		
@@ -310,22 +318,33 @@ public class AddDefectPanel extends JPanel {
 				
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			//Retrieve assignee
-			String to = jtxtAssignee.getText();
-			// current user logged in
-			String cc = "levi.hsiao@gmail.com";
-			// body include defect id and summary
-			String body = "App Name: " + jtxtAppName.getText() + " Summary: " + jtxtSummary.getText();		
 			
-			//Send Email
-			dEmail = new DefectEmail();
-			dEmail.send(to, cc, body);
+			// Check if the appName is null or 1 or more blank characters
+			if ( jtxtAppName.getText().trim().compareTo("") != 0 )
+			{
 			
-			//Display message
-			if(dEmail.checkSuccess())
-				JOptionPane.showMessageDialog(null, "Your Email Has Been Sent!",
-					"Success!", JOptionPane.INFORMATION_MESSAGE);
-			}	
+				//Retrieve assignee
+				String to = jtxtAssignee.getText();
+				// current user logged in
+				String cc = "levi.hsiao@gmail.com";
+				// body include defect id and summary
+				String body = "App Name: " + jtxtAppName.getText() + " Summary: " + jtxtSummary.getText();		
+				
+				//Send Email
+				dEmail = new DefectEmail();
+				dEmail.send(to, cc, body);
+				
+				//Display message
+				if(dEmail.checkSuccess())
+					JOptionPane.showMessageDialog(null, "Your Email Has Been Sent!",
+						"Success!", JOptionPane.INFORMATION_MESSAGE);
+			}
+			else {
+				//Display message for blank application name
+				JOptionPane.showMessageDialog(null, "Application Name field cannot be blank. Please enter an Application Name.",
+						"Error.", JOptionPane.ERROR_MESSAGE);
+			}
+		}	
 		});	
 	}
 	

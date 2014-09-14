@@ -29,7 +29,7 @@ import edu.uci.java2.model.Defect;
 /**
  * X460.11/1 - Java Programming II - Team B
  * DefectDetailsPanel.java
- * Purpose: Display the defect details for a new or existing defect.
+ * Purpose: Display the defect details for an existing defect.
  * 
  * @author Shaun Adriano, Dennis Hom, Levi Hsiao, Susan Marosek
  * @version 1.0 9/04/2014
@@ -93,7 +93,7 @@ public class DefectDetailsPanel extends JPanel implements ItemListener{
 		this.add(jlbDefectID);
 		
 		//Display the Creation Date
-		jlbDateCreated = new JLabel("Creation Date: " + mDefect.getDateCreated());
+		jlbDateCreated = new JLabel("Date Created: " + mDefect.getDateCreated());
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.weightx = 0.5;
 		gbc.gridx = 1;
@@ -126,9 +126,7 @@ public class DefectDetailsPanel extends JPanel implements ItemListener{
 		gbc.gridx = 3;		
 		gbc.gridy = 1;
 		layout.addLayoutComponent(jcbDS, gbc);
-		this.add(jcbDS);
-		
-		
+		this.add(jcbDS);	
 		
 		//Create Assignee JTextField
 		jtxtAssignee = new JTextField();
@@ -153,9 +151,7 @@ public class DefectDetailsPanel extends JPanel implements ItemListener{
 		gbc.gridx = 1;
 		gbc.gridy = 2;
 		layout.addLayoutComponent(jtxtAssignee, gbc);
-		this.add(jtxtAssignee);
-		
-		
+		this.add(jtxtAssignee);	
 		
 		//Create Defect Priority JComboBox
 		String [] priorityItems = {"", "Urgent", "High", "Medium", "Low"};
@@ -188,8 +184,6 @@ public class DefectDetailsPanel extends JPanel implements ItemListener{
 		layout.addLayoutComponent(jcbDP, gbc);
 		this.add(jcbDP);
 		
-		
-		
 		//Create Summary JTextArea with JScrollPane
 		jtxtSummary = new JTextArea(2, 50);
 		jtxtSummary.setLineWrap(true);
@@ -217,8 +211,6 @@ public class DefectDetailsPanel extends JPanel implements ItemListener{
 		gbc.gridy = 3;
 		layout.addLayoutComponent(jscpDefectSummary, gbc);
 		this.add(jscpDefectSummary);
-
-		
 		
 		//Create Description JTextArea and JScrollPane
 		jtxtDefectDesc = new JTextArea(2, 50);
@@ -255,8 +247,7 @@ public class DefectDetailsPanel extends JPanel implements ItemListener{
 		jtxtResolutionDate.setPreferredSize(new Dimension(70, 25));
 		jtxtResolutionDate.setEditable(false);
 		
-		//Retrieve status of status JComboBox
-		
+		//Retrieve status of status JComboBox	
 		String status = String.valueOf(jcbDS.getSelectedItem());
 		
 		/*
@@ -314,8 +305,7 @@ public class DefectDetailsPanel extends JPanel implements ItemListener{
 		gbc.gridy = 8;
 		layout.addLayoutComponent(jscFinalResolution, gbc);
 		this.add(jscFinalResolution);
-		
-		
+			
 		//Create Update Button
 		jbtUpdate = new JButton("Update");
 		gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -380,7 +370,6 @@ public class DefectDetailsPanel extends JPanel implements ItemListener{
 				parent.dispose();
 			}
 		});		
-	
 		
 		//Create Cancel Button
 		jbtCancel = new JButton("Cancel");
@@ -389,8 +378,7 @@ public class DefectDetailsPanel extends JPanel implements ItemListener{
 		gbc.gridx = 2;
 		gbc.gridy = 10;
 		this.add(jbtCancel, gbc);
-		
-		
+			
 		//Cancel button ActionListener
 		jbtCancel.addActionListener(new ActionListener(){
 		@Override
@@ -400,9 +388,7 @@ public class DefectDetailsPanel extends JPanel implements ItemListener{
 			parent.dispose();
 		}	
 	});	
-		
-
-		
+			
 		//Create Email Button
 		jbtEmail = new JButton("Email Assignee");
 		gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -421,12 +407,20 @@ public class DefectDetailsPanel extends JPanel implements ItemListener{
 			if ( jlbAppName.getText().trim().compareTo("") != 0 )
 			{
 			
-				//Retrieve assignee
+				// Retrieve assignee
 				String to = jtxtAssignee.getText();
-				// current user logged in
-				String cc = "levi.hsiao@gmail.com";
-				// body include defect id and summary
-				String body = "App Name: " + jlbAppName.getText() + " Summary: " + jtxtSummary.getText();		
+				// Default user email
+				String cc = "staffdefecttrackingsystem@gmail.com";
+				// Body message with detailed defect info
+				String body = "Application Name: " + jlbAppName.getText() + "\n" +
+						jlbDefectID.getText() + "\n" +
+						"Summary: " + jtxtSummary.getText() + "\n" +
+						"Description: " + jtxtDefectDesc.getText() + "\n" +
+						"Status: " + String.valueOf(jcbDS.getSelectedItem()) + "\n" +
+						"Priority: " + String.valueOf(jcbDP.getSelectedItem()) + "\n" +
+						jlbDateCreated.getText() + "\n" +
+						"Final Resolution Date: " + jtxtResolutionDate.getText() + "\n" +
+						"Final Resolution Summary: " + jtxtFinalResolution.getText();		
 				
 				//Send Email
 				email = new DefectEmail();
@@ -443,27 +437,13 @@ public class DefectDetailsPanel extends JPanel implements ItemListener{
 						"Error.", JOptionPane.ERROR_MESSAGE);
 			}
 		}	
-		});	
-		
-
-		
-}
-	
-	/**
-	 * Call when DefectDetailsPanel is displayed so DB is refreshed.
-	 * (NOT implemented yet)
-	 * @param defectID
-	 */
-	
-	public void refreshDB(int defectID)
-	{
-		System.out.println(" IN DefectDetailsPanel refreshDB()");
+		});		
 	}
+	
 	
 	/**
 	* @return Returns the submit button object
 	*/
-	
 	public JButton getSubmitButton() {
 		return jbtUpdate;
 	}
@@ -521,8 +501,3 @@ public class DefectDetailsPanel extends JPanel implements ItemListener{
 		return null;
 	}
 }
-
-
-
-
-

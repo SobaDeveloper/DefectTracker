@@ -1,7 +1,7 @@
 package edu.uci.java2.dao;
+
 import java.sql.*;
 import java.util.HashSet;
-
 import edu.uci.java2.model.Defect;
 
 /**
@@ -240,7 +240,7 @@ public class DefectDAO {
 	
 	
 	/**
-	 * Retrieve Defect for given a defectID
+	 * Retrieve Defect for a given defectID
 	 * @param defectID
 	 * @return Defect defect from the DB
 	 */
@@ -256,16 +256,10 @@ public class DefectDAO {
 			ps.setLong(1, defectID);
 			ResultSet defectRS = ps.executeQuery();
 			
-			//try{
-				while( defectRS.next()){
-					defect = getDefect(defectRS);
-				}
-				System.out.println("Defect = "+defect.toString());
-		/*	}
-			catch(SQLException ex){
-				System.out.println("SQL Error: " + ex.getMessage());		
+			while( defectRS.next()){
+				defect = getDefect(defectRS);
 			}
-			*/	
+			System.out.println("Defect = "+defect.toString());
 			return defect;
 		}
 		catch(SQLException e){
@@ -287,7 +281,6 @@ public class DefectDAO {
 		}
 		return null;
 	}
-	
 	
 	
 	/**

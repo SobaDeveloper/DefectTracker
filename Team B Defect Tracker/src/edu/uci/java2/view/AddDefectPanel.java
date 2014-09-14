@@ -17,7 +17,7 @@ import edu.uci.java2.email.DefectEmail;
 /**
  * X460.11/1 - Java Programming II - Team B
  * DefectDetailsPanel.java
- * Purpose: Display the defect details for a new or existing defect.
+ * Purpose: Display the defect details for an existing defect.
  * 
  * @author Shaun Adriano, Dennis Hom, Levi Hsiao, Susan Marosek
  * @version 1.0 9/04/2014
@@ -57,8 +57,7 @@ public class AddDefectPanel extends JPanel {
 		if (shouldFill) {
 			gbc.fill = GridBagConstraints.HORIZONTAL;
 		}
-		
-		
+			
 		//Display the Application Name
 		jlbAppName = new JLabel("Application Name: ");
 		gbc.anchor = GridBagConstraints.EAST;
@@ -80,10 +79,8 @@ public class AddDefectPanel extends JPanel {
 		layout.addLayoutComponent(jtxtAppName, gbc);
 		this.add(jtxtAppName);
 		
-		
-		
 		//Display the Creation Date
-		jlbDateCreated = new JLabel("Creation Date: ");
+		jlbDateCreated = new JLabel("Date Created: ");
 		gbc.anchor = GridBagConstraints.EAST;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.gridwidth = 1;
@@ -104,9 +101,7 @@ public class AddDefectPanel extends JPanel {
 		layout.addLayoutComponent(jtxtDateCreated, gbc);
 		this.add(jtxtDateCreated);
 		jtxtDateCreated.setText(s);
-		
-		
-		
+			
 		//Create Defect Statuses JComboBox
 		String[] statusItems = {"OPEN", "CLOSED"};
 		jcbDS = new JComboBox<String>(statusItems);
@@ -128,9 +123,7 @@ public class AddDefectPanel extends JPanel {
 		gbc.gridx = 3;		
 		gbc.gridy = 1;
 		layout.addLayoutComponent(jcbDS, gbc);
-		this.add(jcbDS);
-		
-		
+		this.add(jcbDS);	
 		
 		//Create Assignee JTextField
 		jtxtAssignee = new JTextField();
@@ -153,9 +146,7 @@ public class AddDefectPanel extends JPanel {
 		gbc.gridy = 2;
 		layout.addLayoutComponent(jtxtAssignee, gbc);
 		this.add(jtxtAssignee);
-		
-		
-		
+			
 		//Create Defect Priority JComboBox
 		String [] priorityItems = {"", "Urgent", "High", "Medium", "Low"};
 		jcbDP = new JComboBox<String>(priorityItems);
@@ -180,9 +171,7 @@ public class AddDefectPanel extends JPanel {
 		gbc.gridy = 2;
 		layout.addLayoutComponent(jcbDP, gbc);
 		this.add(jcbDP);
-		
-		
-		
+			
 		//Create Summary JTextArea with JScrollPane
 		jtxtSummary = new JTextArea(2, 50);
 		jtxtSummary.setLineWrap(true);
@@ -207,8 +196,6 @@ public class AddDefectPanel extends JPanel {
 		gbc.gridy = 3;
 		layout.addLayoutComponent(jscpDefectSummary, gbc);
 		this.add(jscpDefectSummary);
-
-		
 		
 		//Create Description JTextArea and JScrollPane
 		jtxtDefectDesc = new JTextArea(2, 50);
@@ -236,8 +223,6 @@ public class AddDefectPanel extends JPanel {
 		gbc.gridy = 5;
 		layout.addLayoutComponent(jscpDefectDesc, gbc);
 		this.add(jscpDefectDesc);
-		
-
 		
 		//Submit Button
 		jbtSubmit = new JButton("Submit");
@@ -294,8 +279,6 @@ public class AddDefectPanel extends JPanel {
 		}
 	});		
 		
-		
-		
 		//Cancel Button
 		jbtCancel = new JButton("Cancel");
 		gbc.weightx = 0.5;
@@ -309,9 +292,7 @@ public class AddDefectPanel extends JPanel {
 			JDialog parent = (JDialog) getRootPane().getParent();
 			parent.dispose();
 			}
-		});
-		
-		
+		});	
 		
 		//Email Button
 		jbtEmail = new JButton("Email Assignee");
@@ -328,12 +309,16 @@ public class AddDefectPanel extends JPanel {
 			if ( jtxtAppName.getText().trim().compareTo("") != 0 )
 			{
 			
-				//Retrieve assignee
+				// Retrieve assignee
 				String to = jtxtAssignee.getText();
-				// current user logged in
-				String cc = "levi.hsiao@gmail.com";
-				// body include defect id and summary
-				String body = "App Name: " + jtxtAppName.getText() + " Summary: " + jtxtSummary.getText();		
+				// Default user email
+				String cc = "staffdefecttrackingsystem@gmail.com";
+				// Body message with detailed defect info
+				String body = "Application Name: " + jtxtAppName.getText() + "\n" +
+						"Summary: " + jtxtSummary.getText() + "\n" +
+						"Description: " + jtxtDefectDesc.getText() + "\n" +
+						"Priority: " + String.valueOf(jcbDP.getSelectedItem()) + "\n" +
+						"Date Created: " + jtxtDateCreated.getText();	
 				
 				//Send Email
 				dEmail = new DefectEmail();
@@ -352,9 +337,6 @@ public class AddDefectPanel extends JPanel {
 		}	
 		});	
 	}
-	
-	
-	
 	
 	/**
 	 * Call when DefectDetailsPanel is displayed so DB is refreshed.

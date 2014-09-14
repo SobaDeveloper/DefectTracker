@@ -14,22 +14,21 @@ import edu.uci.java2.controller.DTSMenuBarController;
 /**
  * X460.11/1 - Java Programming II - Team B
  * DTSMenuBar.java
- * Purpose: Menubar container for the help menu and about menu item
+ * Purpose: Menubar container for the exit application, about,
+ * 			and add defect functions.
  * 
  * @author Shaun Adriano, Dennis Hom, Levi Hsiao, Susan Marosek
- * @version 1.0 8/29/2014
+ * @version 1.0 9/12/2014
  */
 public class DTSMenuBar extends JPanel{
 	
 	private static final long serialVersionUID = 3506496063505483051L;
-	private JMenuBar menuBar;
-	//private JFrame topFrame;
-	private JMenu jmFile, jmAddDefect, jmHelp;
-	private JMenuItem jmiAbout, jmiLogout, jmiAddDefect;
-	private DTSMenuBarController controller;
-	private AddDefectDialog addDefectDialog;
-	
-	private MainMenu mainMenu;
+	private JMenuBar 				menuBar;
+	private JMenu 					jmFile, jmAddDefect, jmHelp;
+	private JMenuItem 				jmiAbout, jmiExit, jmiAddDefect;
+	private DTSMenuBarController 	controller;
+	private AddDefectDialog 		addDefectDialog;
+	private MainMenu 				mainMenu;
 	
 	public DTSMenuBar(MainMenu mainMenu){
 		
@@ -37,78 +36,106 @@ public class DTSMenuBar extends JPanel{
 		
 		this.mainMenu = mainMenu;
 		
-		//Create menu bar
+		// Create the menu bar
 		menuBar = new JMenuBar();
-		//Create controller for all menu bar functions
+		// Create the controller for all menu bar functions
 		controller  = new DTSMenuBarController(this);
 		
-		//Create "File" menu
+		// Create the "File" menu
 	    jmFile = new JMenu("File");
 	    jmFile.setFont(new Font("SansSerif", Font.PLAIN, 12));
 	    jmFile.setMnemonic(KeyEvent.VK_F);
 	    
-	    //Create "Add Defect" menu
+	    // Create the "Add Defect" menu
 	    jmAddDefect = new JMenu("Add Defect");
 	    jmAddDefect.setFont(new Font("SansSerif", Font.PLAIN, 12));
 	    jmAddDefect.setMnemonic(KeyEvent.VK_A);
 	    
-	    //Create "Help" menu
+	    // Create the "Help" menu
 	    jmHelp = new JMenu("Help");
 	    jmHelp.setFont(new Font("SanSerif", Font.PLAIN, 12));
 	    jmHelp.setMnemonic(KeyEvent.VK_H);   
 	    
-	    //Create "About" item
+	    // Create the "About" item
 	    jmiAbout = new JMenuItem("About");
 	    jmiAbout.setFont(new Font("SansSerif", Font.PLAIN, 12));
 	    controller.jmiAboutControl();
 	   
-	    //Create "Add New Defect" item
+	    // Create the "Add New Defect" item
 	    jmiAddDefect = new JMenuItem("Add New Defect");
 	    jmiAddDefect.setFont(new Font("SansSerif", Font.PLAIN, 12));
 	    controller.jmiAddDefectControl();
 	    
-	    //Create "Exit" item
-	    jmiLogout = new JMenuItem("Exit");
-	    jmiLogout.setFont(new Font("SansSerif", Font.PLAIN, 12));
-	    controller.jmiLogOutControl();
+	    // Create the "Exit" item
+	    jmiExit = new JMenuItem("Exit");
+	    jmiExit.setFont(new Font("SansSerif", Font.PLAIN, 12));
+	    controller.jmiExitControl();
 	    
-	    //Add menu bar components
+	    // Add menus to the menu bar
 	    menuBar.add(jmFile);
 	    menuBar.add(jmAddDefect);
 	    menuBar.add(jmHelp);
 	    
-	    jmFile.add(jmiLogout);
+	    // Add menu items to the menus
+	    jmFile.add(jmiExit);
 	    jmAddDefect.add(jmiAddDefect);
 	    jmHelp.add(jmiAbout);  
 	}
 	
+	/**
+	 * Get the menu bar
+	 * @return the menu bar
+	 */
 	public JMenuBar getMenuBar(){
 		return menuBar;
 	}
 	
-	
+	/**
+	 * Get the "File" menu
+	 * @return the "File" menu
+	 */
 	public JMenu getFileMenu(){
 		return jmFile;
 	}
 	
+	/**
+	 * Get the "Add Defect" menu
+	 * @return the "Add Defect" menu
+	 */
 	public JMenu getAddDefectMenu(){
 		return jmAddDefect;
 	}
 	
+	/**
+	 * Get the "Help" menu
+	 * @return the "Help" menu
+	 */
 	public JMenu getHelpMenu(){
 		return jmHelp;
 	}
 	
+	/**
+	 * Get the "About" menu item
+	 * @return the "About" menu item
+	 */
 	public JMenuItem getAboutMenuItem(){
 		return jmiAbout;
 	}
 	
+	/**
+	 * Get the "Add Defect" menu item
+	 * @return the "Add Defect" menu item
+	 */
 	public JMenuItem getAddDefectMenuItem(){
 		return jmiAddDefect;
 	}
 	
-	public JMenuItem getLogoutMenuItem(){
-		return jmiLogout;
+	/**
+	 * Get the "Exit" menu item
+	 * @return the "Exit" menu item
+	 */
+	public JMenuItem getExitMenuItem(){
+		return jmiExit;
 	}
 	
 	/**
@@ -117,20 +144,18 @@ public class DTSMenuBar extends JPanel{
 	public void displayAddDefectDialog(){
 		JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
 		addDefectDialog = new AddDefectDialog(mainMenu, topFrame);
-		addDefectDialog.setVisible(true);
-		
+		addDefectDialog.setVisible(true);	
 	}
 	
 	/**
-	 * Set Menu Bar visible to true
+	 * Set menu bar visibility to true
 	 */
-	
 	public void setVisibleTrue(){
 		menuBar.setVisible(true);
 	}
 	
 	/**
-	 * Set Menu Bar visible to false
+	 * Set menu bar visibility to false
 	 */
 	public void setVisibleFalse(){
 		menuBar.setVisible(false);

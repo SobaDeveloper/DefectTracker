@@ -13,16 +13,16 @@ import java.util.Date;
 
 public class Defect {
 	
-	private String appName; 
-	private int defectID;
-	private String defectStatus;
-	private Date dateCreated;
-	private String defectSummary;
-	private String defectDesc;
-	private String assignee;
-	private String priority;
-	private String finalResolution;
-	private Date resolutionDate;
+	private String 		appName; 
+	private int 		defectID;
+	private String 		defectStatus;
+	private Date 		dateCreated;
+	private String 		defectSummary;
+	private String 		defectDesc;
+	private String 		assignee;
+	private String 		priority;
+	private String 		finalResolution;
+	private Date 		resolutionDate;
 	
 	/**
 	 * Default Constructor
@@ -30,6 +30,18 @@ public class Defect {
 	public Defect() {	
 	}
 
+	/**
+	 * Constructor with specified variables
+	 * @param appName the application name
+	 * @param defectStatus the defect status
+	 * @param dateCreated the date defect was created
+	 * @param defectSummary the defect summary
+	 * @param defectDesc the defect description
+	 * @param assignee the person assigned to the defect
+	 * @param priority the defect priority
+	 * @param finalResolution the final resolution summary of the defect
+	 * @param resolutionDate the date defect was resolved
+	 */
 	public Defect(String appName, String defectStatus, Date dateCreated,
 			String defectSummary, String defectDesc, String assignee,
 			String priority, String finalResolution, Date resolutionDate){

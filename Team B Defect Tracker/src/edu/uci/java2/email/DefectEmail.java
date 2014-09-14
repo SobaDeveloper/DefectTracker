@@ -1,8 +1,6 @@
 package edu.uci.java2.email;
 
 import java.util.Properties;
- 
-
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -15,16 +13,16 @@ import javax.swing.JOptionPane;
 /**
  * X460.11/1 - Java Programming II - Team B
  * DefectEmail.java
- * Purpose: Provides access to email via GMail with TLS
+ * Purpose: Provide access to email via Gmail with TLS
  * 
  * @author Shaun Adriano, Dennis Hom, Levi Hsiao, Susan Marosek
  * @version 1.0 9/10/2014
  */
 
 public class DefectEmail {
-    private final String from =  "staffdefecttrackingsystem@gmail.com";
-    private final String password = "dtsdts123";
-    private boolean success;
+    private final String 		FROM =  "staffdefecttrackingsystem@gmail.com";
+    private final String 		PASSWORD = "dtsdts123";
+    private boolean 			success;
     
     public void send(String to, String cc, String body) {
         // Get the session object  
@@ -37,20 +35,20 @@ public class DefectEmail {
         Session session = Session.getDefaultInstance(props, 
             new javax.mail.Authenticator() {
                 protected PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication(from, password);  
+                    return new PasswordAuthentication(FROM, PASSWORD);  
                 }
         });
 
-        // compose message  
+        // Compose the message  
         try {
             MimeMessage message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(from)); 
+            message.setFrom(new InternetAddress(FROM)); 
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
             message.addRecipient(Message.RecipientType.CC, new InternetAddress(cc));            
             message.setSubject("You have been assigned a new defect");
             message.setText(body);
 
-            // send message  
+            // Send the message  
             Transport.send(message);
             System.out.println("Email sent");
             success = true;
@@ -63,6 +61,10 @@ public class DefectEmail {
         }
     }
     
+    /**
+     * Check to see if email has been sent successfully
+     * @return true for success, false for failure
+     */
     public boolean checkSuccess(){
     	return success;
     }

@@ -2,31 +2,26 @@ package edu.uci.java2.view;
 
 import javax.swing.*;
 import edu.uci.java2.dao.DefectDAO;
-import edu.uci.java2.model.Staff;
 import java.awt.*;
 import java.awt.event.*;
-
 
 /**
  * X460.11/1 - Java Programming II - Team B
  * Login.java
- * Purpose: Login dialog
+ * Purpose: Initial login screen to access the defect tracking system
  * 
  * @author Shaun Adriano, Dennis Hom, Levi Hsiao, Susan Marosek
  * @version 1.1 9/05/2014
  */
 public class Login extends JPanel implements ActionListener {
 
-
 	//************************************************
 	// TEMP CODE to turn on and off Login Database 
 	// checking for emails & passwords
 	//
-	// Change to true when ready for database!!!
+	// Change to true when ready for database.
 	private static final boolean USE_DATABASE = true;
 	//************************************************
-
-
 
 	private static final int LOGIN_PANEL_WIDTH = 300;
 	private static final int LOGIN_PANEL_HT = 300;
@@ -42,23 +37,13 @@ public class Login extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 
-	private JLabel jlbUserName, jlbPassword;
-	private JTextField jtxtUserName;
-	private JPasswordField jpfPassword;
-	private JButton jbLogin, jbCancel;
-	private DefectDAO dao = new DefectDAO();
+	private JLabel 			jlbUserName, jlbPassword;
+	private JTextField 		jtxtUserName;
+	private JPasswordField 	jpfPassword;
+	private JButton 		jbLogin, jbCancel;
+	private DefectDAO 		dao = new DefectDAO();
+	protected DTSMainFrame 	dts; 
 
-	private Staff staff;
-
-	protected DTSMainFrame dts; 
-
-	/**
-	 * 
-	 * @param dts
-	 */
-
-	// Pass instance of DTSMainFrame to GUI components to make access to menu 
-	// actions possible
 	public Login( DTSMainFrame dts){
 		super();
 
@@ -75,7 +60,7 @@ public class Login extends JPanel implements ActionListener {
 		jlbUserName.setHorizontalAlignment(JLabel.RIGHT);
 		this.add(jlbUserName);
 
-		// User name input field (email address)
+		// Username input field (email address)
 		jtxtUserName = new JTextField(TEXT_SIZE);
 		jtxtUserName.setPreferredSize(new Dimension(TEXTFIELD_WIDTH, TEXT_HEIGHT));
 		this.add(jtxtUserName);
@@ -86,26 +71,25 @@ public class Login extends JPanel implements ActionListener {
 		jlbPassword.setHorizontalAlignment(JLabel.RIGHT);
 		this.add(jlbPassword);
 
-		// Password field
-		//this.add(jpfPassword = new JPasswordField(TEXT_SIZE));
+		// Password input field
 		jpfPassword = new JPasswordField(TEXT_SIZE);
 		jpfPassword.setPreferredSize(new Dimension(TEXTFIELD_WIDTH, TEXT_HEIGHT));
 		this.add(jpfPassword);
 
-		// Buttons
+		// Login button
 		jbLogin = new JButton("Login");
 		jbLogin.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HT));
 		this.add(jbLogin);
 
+		// Cancel button
 		jbCancel = new JButton("Cancel");
 		jbCancel.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HT));
 		this.add(jbCancel);
 
+		// Add button action listeners
 		jbLogin.addActionListener(this);
 		jbCancel.addActionListener(this);
-
 	}
-
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -116,25 +100,27 @@ public class Login extends JPanel implements ActionListener {
 		if(e.getSource() == jbLogin){
 			String email = new String(jtxtUserName.getText());
 
-
 			if ( USE_DATABASE )
 			{
 				String password = new String(jpfPassword.getPassword());
 				System.out.println(email + " " + password);
-
+				
+				// Verify username and password
 				if(dao.checkLogin(email, password)){
-					JOptionPane.showMessageDialog(null, "Sucessful Login!",
+					// Display success dialog on success
+					JOptionPane.showMessageDialog(null, "Successful Login!",
 							"Successful Login", JOptionPane.INFORMATION_MESSAGE);
 					wasSuccess = true;
 				}
 				else{
+					// Display error dialog on failure
 					JOptionPane.showMessageDialog(null, "Login failed!",
 							"Login failed", JOptionPane.ERROR_MESSAGE);
-					//System.exit(-1);
 				}
 			}	
-			else // temporarily don't use database
+			else // If database is not used
 			{
+				// Display success dialog
 				JOptionPane.showMessageDialog(null, "Sucessful Login!",
 						"Successful Login", JOptionPane.INFORMATION_MESSAGE);
 				wasSuccess = true;
@@ -147,14 +133,11 @@ public class Login extends JPanel implements ActionListener {
 				// Send message to display the MainMenu screen
 				dts.DisplayMainMenu();
 			}
-
+		// Exit if cancel button is pressed
 		} else if(e.getSource() == jbCancel){
-			//If cancel button is clicked
 			System.exit(0);			
 		}               
 	}
-
-
 }
 
 

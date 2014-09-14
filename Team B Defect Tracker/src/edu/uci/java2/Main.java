@@ -3,9 +3,7 @@ package edu.uci.java2;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-
 import edu.uci.java2.view.DTSMainFrame;
-
 
 /**
  * X460.11/1 - Java Programming II - Team B

@@ -2,16 +2,13 @@ package edu.uci.java2.view;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-
 import javax.swing.JFrame;
-
-
 
 /**
  * X460.11/1 - Java Programming II - Team B
  * DTSMainFrame.java
  * 
- * Purpose: Main JFrame container into which the Login or MainMenu Panels
+ * Purpose: Main JFrame container in which the Login and MainMenu panels
  * are displayed. 
  * 
  * @author Shaun Adriano, Dennis Hom, Levi Hsiao, Susan Marosek
@@ -20,8 +17,7 @@ import javax.swing.JFrame;
 
 public class DTSMainFrame {
 	
-	protected JFrame mFrame;
-	
+	protected JFrame 	mFrame;
 	private Login 		loginView;
 	private MainMenu	mainMenuView;
 	private DTSMenuBar	menuBar;
@@ -30,13 +26,9 @@ public class DTSMainFrame {
 		createFrame();
 	}
 	
-	private void createFrame() {
-		
-		
+	private void createFrame() {		
 		
 		// Instantiate new MainMenu view
-		// MainMenu will have a method to setPanel() which can be set to 
-		// View/Update, New/Detail screens based on menu button press
 		mainMenuView = new MainMenu();
 		
 		// Instantiate new Login View
@@ -48,30 +40,36 @@ public class DTSMainFrame {
 		mFrame.setSize(800, 550);
 		mFrame.setLocationRelativeTo(null);
 		
-		// Add the Help/About menubar
+		// Add the menu bar
 		menuBar = new DTSMenuBar(mainMenuView);
 		mFrame.setJMenuBar(menuBar.getMenuBar());
+		// Set initial visibility of menu bar to false
 		menuBar.setVisibleFalse();
 		
 		// Exit program when close window
 		mFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+		// Set layout to FlowLayout
 		mFrame.setLayout( new FlowLayout());	
 		
-		// Show the Login screen			
+		// Show the Login screen. This is the first screen seen by the user.			
 		mFrame.getContentPane().add(loginView, BorderLayout.CENTER);	
-		mFrame.setVisible(true);
-		
+		mFrame.setVisible(true);	
 	}
-		
+	
+	/**
+	 * Get the main JFrame
+	 * @return the main JFrame
+	 */
 	public JFrame getFrame() {
 		return mFrame;
 	}
 	
-	// Display the Main Menu screen
+	/**
+	 * Display the MainMenu panel and make the menu bar visible
+	 */
 	public void DisplayMainMenu()
 	{
-		//mainMenuView = new MainMenu();
 		mFrame.getContentPane().add(mainMenuView, BorderLayout.CENTER);	
 		menuBar.setVisibleTrue();
 	}		

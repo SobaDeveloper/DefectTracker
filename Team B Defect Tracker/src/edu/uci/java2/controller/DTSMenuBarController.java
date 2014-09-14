@@ -2,25 +2,33 @@ package edu.uci.java2.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import edu.uci.java2.view.DTSMenuBar;
 
+/**
+ * X460.11/1 - Java Programming II - Team B
+ * DTSMenuBarController.java
+ * Purpose: Handle the menu functions of the menu bar
+ * 
+ * @author Shaun Adriano, Dennis Hom, Levi Hsiao, Susan Marosek
+ * @version 1.0 9/12/2014
+ */
+
 public class DTSMenuBarController {
 	
-	private DTSMenuBar menuBar;
-    private ActionListener al;
-    private JFrame topFrame;
+	private DTSMenuBar 			menuBar;
+    private ActionListener 		al;
+    private JFrame 				topFrame;
     
     public DTSMenuBarController(DTSMenuBar menuBar){
     	this.menuBar = menuBar;
     }
     
-    
     /**
-     * Controller for the "Add New Defect" menu item. Display the AddDefectDialog.
+     * Controller for the "Add New Defect" menu item. Calls the AddDefectDialog
+     * when selected.
      */
     public void jmiAddDefectControl(){
     	
@@ -34,14 +42,15 @@ public class DTSMenuBarController {
     }
     
     /**
-     * Controller for the "About" menu item. Displays a dialog showing app info.
+     * Controller for the "About" menu item. Calls a modal dialog displaying
+     * team project and member info.
      */
     public void jmiAboutControl(){
     	
-    	//Retrieve parent frame
+    	// Retrieve parent frame
 	    topFrame = (JFrame) SwingUtilities.getWindowAncestor(menuBar);
     	
-	    //ActionListener
+	    // Display the "About" dialog
 	    al = new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -53,17 +62,17 @@ public class DTSMenuBarController {
     }
     
     /**
-     * Controller for the "Logout" menu item. Exits application.
+     * Controller for the "Exit" menu item. Exits the application.
      */
-    public void jmiLogOutControl(){
-    	//ActionListener
+    public void jmiExitControl(){
+    	// Exit the application
     	al = new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);			
 			}
     	};
-    	menuBar.getLogoutMenuItem().addActionListener(al);
+    	menuBar.getExitMenuItem().addActionListener(al);
     }
     
     /**

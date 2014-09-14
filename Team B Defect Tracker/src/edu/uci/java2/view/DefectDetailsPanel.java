@@ -25,6 +25,7 @@ import javax.swing.JScrollPane;
 import edu.uci.java2.dao.DefectDAO;
 import edu.uci.java2.email.DefectEmail;
 import edu.uci.java2.model.Defect;
+
 /**
  * X460.11/1 - Java Programming II - Team B
  * DefectDetailsPanel.java
@@ -40,51 +41,20 @@ public class DefectDetailsPanel extends JPanel implements ItemListener{
 	final static boolean shouldFill = true;
 	final static boolean shouldWeightX = true;
 	private GridBagLayout layout;
+	private DefectDAO dao = new DefectDAO();
+    private DefectEmail email = new DefectEmail();
 	
 	Defect	mDefect = new Defect();
-	JLabel	jlbAppName;
-	JLabel	jlbDefectID;
-	JLabel	jlbDefectStatus;
-	JLabel	jlbDateCreated;
-	JLabel	jlbDefectSummary;
-	JLabel	jlbDefectDesc;
-	JLabel	jlbAssignee;
-	JLabel	jlbPriority;
-	JLabel	jlbFinalResolution;
-	JLabel	jlbResolutionDateLabel;
-	JLabel	jlbResolutionDate;
-	JTextArea	jtxtSummary;
-	JTextArea	jtxtDefectDesc;
-	JTextArea	jtxtFinalResolution;
-	JTextField	jtxtAssignee;
-	JTextField	jtxtResolutionDate;
-	JButton	jbtSubmit;
-	JButton	jbtCancel;
-	JComboBox<String>	jcbDS;
-	JComboBox<String>	jcbDP;
+	JLabel	jlbAppName, jlbDefectID, jlbDefectStatus, jlbDateCreated, jlbDefectSummary, jlbDefectDesc, jlbAssignee,
+		jlbPriority, jlbFinalResolution, jlbResolutionDateLabel, jlbResolutionDate;
+	JTextArea	jtxtSummary, jtxtDefectDesc, jtxtFinalResolution;
+	JTextField	jtxtResolutionDate, jtxtAssignee;
+	JButton	jbtUpdate, jbtCancel, jbtEmail;
+	JComboBox<String>	jcbDS, jcbDP;
 
-	private DefectDAO dao = new DefectDAO();
-        private DefectEmail email = new DefectEmail();
 	
 	protected MainMenu mainMenu;
 	
-        private void sendDefect() {
-            //Retrieve assignee
-            String to = jtxtAssignee.getText();
-            // current user logged in
-            String cc = "dnlhom11@gmail.com";
-            // body include defect id and summary
-            String body = "App Name: " + jlbAppName.getText() + ", Summary: " + jtxtSummary.getText();
-
-            email.send(to, cc, body);
-
-            //Display message
-            if (email.checkSuccess()) {
-                JOptionPane.showMessageDialog(null, "Defect Status Email Has Been Sent!",
-                        "Success!", JOptionPane.INFORMATION_MESSAGE);
-            }            
-        }
-
 	public DefectDetailsPanel( final MainMenu mainMenu, Defect d){
 		
 		this.mainMenu = mainMenu;
@@ -320,7 +290,6 @@ public class DefectDetailsPanel extends JPanel implements ItemListener{
 		//Create Final Resolution JTextArea with JScrollPane
 		jtxtFinalResolution = new JTextArea(2, 50);
 		
-		
 		if (mDefect.getFinalResolution() != null)	{	
 			jtxtFinalResolution.setText(mDefect.getFinalResolution());
 		}
@@ -347,87 +316,124 @@ public class DefectDetailsPanel extends JPanel implements ItemListener{
 		this.add(jscFinalResolution);
 		
 		
-		//Create Submit Button (Need to tie to/make a listener that will save edits on hitting Submit)
-		jbtSubmit = new JButton("Submit");
+		//Create Update Button
+		jbtUpdate = new JButton("Update");
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.gridwidth = 1;
 		gbc.gridheight = 1;
 		gbc.weightx = 0.5;
 		gbc.gridx = 1;
 		gbc.gridy = 10;
-		this.add(jbtSubmit, gbc);
+		this.add(jbtUpdate, gbc);
 		
 		//Disable Submit Button if defect status is "CLOSED"
 		if(status.equals("CLOSED")){
-			jbtSubmit.setEnabled(false);
+			jbtUpdate.setEnabled(false);
 		}
 		
-		//Submit button actionlistener
-		jbtSubmit.addActionListener(new ActionListener(){
+		//Submit button ActionListener
+		jbtUpdate.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+								
+				//Create new defect
+				Defect defect = new Defect();
+
+				//Set defect according to user input
+				defect.setDefectID(defect.getDefectID());
+				defect.setAppName(defect.getAppName());
+				defect.setDefectStatus(String.valueOf(jcbDS.getSelectedItem()));
+								
+				//Convert date created to sql.date
+				java.util.Date utilDate = mDefect.getDateCreated();
+				java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+				defect.setDateCreated(sqlDate);
+								
+				defect.setDefectSummary(jtxtSummary.getText());
+				defect.setDefectDesc(jtxtDefectDesc.getText());
+				defect.setAssignee(jtxtAssignee.getText());
+				defect.setPriority(String.valueOf(jcbDP.getSelectedItem()));
+				defect.setFinalResolution(jtxtFinalResolution.getText());
+								
+				//Convert resolution date to sql.date
+				java.sql.Date rSqlDate = null;
+				String startDate = jtxtResolutionDate.getText();
+				
+				if(!startDate.equals("")){
+					rSqlDate = getSqlDate(startDate);	
+				}			
+				defect.setResolutionDate(rSqlDate);
+		                        
+				//Update defect in database
+				dao.updateDefect(defect);	
+		                        
+				//Display message after success
+				JOptionPane.showMessageDialog(null, "Defect Has Been Updated!",
+						"Success!", JOptionPane.INFORMATION_MESSAGE);
+		
+				//Close parent JDialog
+				JDialog parent = (JDialog) getRootPane().getParent();
+				
+				//SLM
+				mainMenu.refreshDLP();
+				
+				parent.dispose();
+			}
+		});		
+	
+		//Create Email Button
+		jbtEmail = new JButton("Email");
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.weightx = 0.5;
+		gbc.gridx = 2;
+		gbc.gridy = 10;
+		this.add(jbtEmail, gbc);
+		
+		//Email Button ActionListener
+		jbtEmail.addActionListener(new ActionListener(){
+			
 		@Override
 		public void actionPerformed(ActionEvent e) {
-						
-		//Create new defect
-		Defect defect = new Defect();
-						
-		//Set defect according to user input
-		defect.setDefectID(mDefect.getDefectID());
-		defect.setAppName(mDefect.getAppName());
-		defect.setDefectStatus(String.valueOf(jcbDS.getSelectedItem()));
-						
-		//Convert date created to sql.date
-		java.util.Date utilDate = mDefect.getDateCreated();
-		java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-		defect.setDateCreated(sqlDate);
-						
-		defect.setDefectSummary(jtxtSummary.getText());
-		defect.setDefectDesc(jtxtDefectDesc.getText());
-		defect.setAssignee(jtxtAssignee.getText());
-		defect.setPriority(String.valueOf(jcbDP.getSelectedItem()));
-		defect.setFinalResolution(jtxtFinalResolution.getText());
-						
-		//Convert resolution date to sql.date
-		java.sql.Date rSqlDate = null;
-		String startDate = jtxtResolutionDate.getText();
-		
-		if(!startDate.equals("")){
-			rSqlDate = getSqlDate(startDate);	
-		}			
-		defect.setResolutionDate(rSqlDate);
-                        
-		//Update defect in database
-		dao.updateDefect(defect);	
-                        
-		//Display message after success
-		JOptionPane.showMessageDialog(null, "Defect Has Been Updated!",
-				"Success!", JOptionPane.INFORMATION_MESSAGE);
-
-                // send defect via email
-                sendDefect();
-                
-		//Close parent JDialog
-		JDialog parent = (JDialog) getRootPane().getParent();
-		
-		//SLM
-		mainMenu.refreshDLP();
-		
-		parent.dispose();
-		}
-	});		
-		
-		
+			
+			// Check if the appName is null or 1 or more blank characters
+			if ( jlbAppName.getText().trim().compareTo("") != 0 )
+			{
+			
+				//Retrieve assignee
+				String to = jtxtAssignee.getText();
+				// current user logged in
+				String cc = "levi.hsiao@gmail.com";
+				// body include defect id and summary
+				String body = "App Name: " + jlbAppName.getText() + " Summary: " + jtxtSummary.getText();		
+				
+				//Send Email
+				email = new DefectEmail();
+				email.send(to, cc, body);
+				
+				//Display message
+				if(email.checkSuccess())
+					JOptionPane.showMessageDialog(null, "Your Email Has Been Sent!",
+						"Success!", JOptionPane.INFORMATION_MESSAGE);
+			}
+			else {
+				//Display message for blank application name
+				JOptionPane.showMessageDialog(null, "Application Name field cannot be blank. Please enter an Application Name.",
+						"Error.", JOptionPane.ERROR_MESSAGE);
+			}
+		}	
+		});	
 		
 		
 		//Create Cancel Button
 		jbtCancel = new JButton("Cancel");
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.weightx = 0.5;
-		gbc.gridx = 2;
+		gbc.gridx = 3;
 		gbc.gridy = 10;
 		this.add(jbtCancel, gbc);
 		
 		
-		//Cancel button actionlistener
+		//Cancel button ActionListener
 		jbtCancel.addActionListener(new ActionListener(){
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
@@ -436,6 +442,9 @@ public class DefectDetailsPanel extends JPanel implements ItemListener{
 			parent.dispose();
 		}	
 	});	
+		
+
+		
 }
 	
 	/**
@@ -443,6 +452,7 @@ public class DefectDetailsPanel extends JPanel implements ItemListener{
 	 * (NOT implemented yet)
 	 * @param defectID
 	 */
+	
 	public void refreshDB(int defectID)
 	{
 		System.out.println(" IN DefectDetailsPanel refreshDB()");
@@ -451,12 +461,13 @@ public class DefectDetailsPanel extends JPanel implements ItemListener{
 	/**
 	* @return Returns the submit button object
 	*/
+	
 	public JButton getSubmitButton() {
-		return jbtSubmit;
+		return jbtUpdate;
 	}
 	
 	/**
-	 * ItemListener for the status JComboBox to link with resolution date textfield
+	 * ItemListener for the status JComboBox to link with resolution date JTextField
 	 */
 	@Override
 	public void itemStateChanged(ItemEvent e) {
@@ -471,14 +482,14 @@ public class DefectDetailsPanel extends JPanel implements ItemListener{
 			
 			/*
 			 * If defect has no resolution date and user sets status to "CLOSED"
-			 * resolution date textfield will automatically enter current date.
+			 * resolution date JTextField will automatically enter current date.
 			 */
 			if(selected.equals("CLOSED") && mDefect.getResolutionDate()==null){
 				jtxtResolutionDate.setText(s);
 			}
 			/*
 			 * If defect has no resolution date and user sets status back to "OPEN"
-			 * resolution date textfield will be blank
+			 * resolution date JTextField will be blank
 			 */
 			else if(selected.equals("OPEN") && mDefect.getResolutionDate()==null){
 				jtxtResolutionDate.setText("");

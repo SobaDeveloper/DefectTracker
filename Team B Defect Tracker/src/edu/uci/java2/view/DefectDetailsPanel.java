@@ -340,8 +340,8 @@ public class DefectDetailsPanel extends JPanel implements ItemListener{
 				Defect defect = new Defect();
 
 				//Set defect according to user input
-				defect.setDefectID(defect.getDefectID());
-				defect.setAppName(defect.getAppName());
+				defect.setDefectID(mDefect.getDefectID());
+				defect.setAppName(mDefect.getAppName());
 				defect.setDefectStatus(String.valueOf(jcbDS.getSelectedItem()));
 								
 				//Convert date created to sql.date
@@ -381,11 +381,33 @@ public class DefectDetailsPanel extends JPanel implements ItemListener{
 			}
 		});		
 	
-		//Create Email Button
-		jbtEmail = new JButton("Email");
+		
+		//Create Cancel Button
+		jbtCancel = new JButton("Cancel");
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.weightx = 0.5;
 		gbc.gridx = 2;
+		gbc.gridy = 10;
+		this.add(jbtCancel, gbc);
+		
+		
+		//Cancel button ActionListener
+		jbtCancel.addActionListener(new ActionListener(){
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			//Close parent JDialog
+			JDialog parent = (JDialog) getRootPane().getParent();
+			parent.dispose();
+		}	
+	});	
+		
+
+		
+		//Create Email Button
+		jbtEmail = new JButton("Email Assignee");
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.weightx = 0.5;
+		gbc.gridx = 3;
 		gbc.gridy = 10;
 		this.add(jbtEmail, gbc);
 		
@@ -422,26 +444,6 @@ public class DefectDetailsPanel extends JPanel implements ItemListener{
 			}
 		}	
 		});	
-		
-		
-		//Create Cancel Button
-		jbtCancel = new JButton("Cancel");
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.weightx = 0.5;
-		gbc.gridx = 3;
-		gbc.gridy = 10;
-		this.add(jbtCancel, gbc);
-		
-		
-		//Cancel button ActionListener
-		jbtCancel.addActionListener(new ActionListener(){
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			//Close parent JDialog
-			JDialog parent = (JDialog) getRootPane().getParent();
-			parent.dispose();
-		}	
-	});	
 		
 
 		

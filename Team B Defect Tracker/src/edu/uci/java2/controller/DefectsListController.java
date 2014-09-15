@@ -43,19 +43,34 @@ public class DefectsListController {
 			public void mouseClicked(MouseEvent e) {
 				
 				JTable target = (JTable) e.getSource();
-				int row = target.getSelectedRow();
+				// Need to check if user has clicked outside of the Table bounds
+				try {
+					int row = target.getSelectedRow();
 				
-				int defectID = (int) target.getValueAt(row, 0);
-				System.out.println("defect id = "+defectID+"   "+target.getValueAt(row, 0).toString());
-				
-				System.out.println("In Controller table row clicked... row = "+row);
-				
-				// Retrieve the defect from the DB by its Defect ID
-				defect = dao.getDefectByID( defectID );		
-				// Set defect in the MainMenu
-				mainMenu.setDefect(defect);
-				// Instantiate the details dialog from the MainMenu
-				mainMenu.displayDetailsDialog(defect);		
+					int defectID = (int) target.getValueAt(row, 0);
+					System.out.println("defect id = "+defectID+"   "+target.getValueAt(row, 0).toString());
+					
+					System.out.println("In Controller table row clicked... row = "+row);
+					
+					// Retrieve the defect from the DB by its Defect ID
+					defect = dao.getDefectByID( defectID );		
+					// Set defect in the MainMenu
+					mainMenu.setDefect(defect);
+					
+					// Clearing selection so that if user clicks outside of 
+					// table bounds again, the click will be ignored. Without
+					// this statement, the previously selected defect will be 
+					// brought up in the update screen.
+					target.clearSelection();
+					
+					// Instantiate the details dialog from the MainMenu
+					mainMenu.displayDetailsDialog(defect);	
+				}
+				// User clicked outside of the table bounds, ignore the click
+				catch ( IndexOutOfBoundsException ioobe ){
+					//Ignore this error. User clicked outside of table
+					System.out.println("Clicked out of table bounds, ignore");
+				}
 			}
 
 			// Below stubs are unused but required by interface

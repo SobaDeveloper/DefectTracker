@@ -255,7 +255,7 @@ public class DefectDetailsPanel extends JPanel implements ItemListener{
 		 * date textfield to that date
 		 */
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd"); 
-		if (mDefect.getFinalResolution() != null && status.equals("CLOSED"))	{	
+		if (mDefect.getResolutionDate() != null && status.equals("CLOSED"))	{	
 			String text = df.format(mDefect.getResolutionDate());
 			jtxtResolutionDate.setText(text);
 		}		 

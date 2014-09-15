@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.HashSet;
+import java.util.TreeSet;
 
 import javax.swing.*;
 
@@ -35,16 +37,17 @@ public class AddDefectPanel extends JPanel {
 	private JLabel	jlbAppName, jlbDefectStatus, jlbDateCreated, jlbDefectSummary, jlbDefectDesc, 
 		jlbAssignee, jlbPriority;
 	private JTextArea	jtxtSummary, jtxtDefectDesc;
-	private JTextField	jtxtAssignee, jtxtAppName, jtxtDateCreated;
+	private JTextField	jtxtAssignee, jtxtDateCreated;
 	private JButton	jbtSubmit, jbtCancel, jbtEmail;
-	private JComboBox<String>	jcbDS, jcbDP;
+	private JComboBox<String>	jcbDS, jcbDP, jcbApps;
 	private java.util.Date utilDate;
 	private DefectEmail dEmail;
 	
+	static final String APP_PROMPT = "Select An Application";
 	protected MainMenu mainMenu;
 	
 	public AddDefectPanel(final MainMenu mainMenu){
-		
+		super();
 		this.mainMenu = mainMenu;
 
 		Dimension dp = new Dimension( 800, 250 );
@@ -69,15 +72,32 @@ public class AddDefectPanel extends JPanel {
 		layout.addLayoutComponent(jlbAppName, gbc);
 		this.add(jlbAppName);
 		
-		jtxtAppName = new JTextField();
+		//Retrieve HashSet of application names
+		HashSet<String> appNamesSet = new HashSet<>(dao.getAllAppNames());
+		//Sort HashSet
+		TreeSet<String> sortedList = new TreeSet<String>(appNamesSet);
+		
+		//Create JComboBox of application names
+		jcbApps = new JComboBox<String>();
+		jcbApps.addItem(APP_PROMPT);
+		
+		for (String s : sortedList) {
+			jcbApps.addItem(s);
+		}
+		
+		//Display the List of Applications
+		jcbApps.setSelectedIndex(0);
+		jcbApps.setEditable(false);
+		jcbApps.setFont(new Font("SansSerif", Font.BOLD, 14));
+		
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.gridwidth = 2;
 		gbc.weightx = 0.5;
 		gbc.weighty = 0.5;
 		gbc.gridx = 1;
 		gbc.gridy = 0;
-		layout.addLayoutComponent(jtxtAppName, gbc);
-		this.add(jtxtAppName);
+		layout.addLayoutComponent(jcbApps, gbc);
+		this.add(jcbApps);
 		
 		//Display the Creation Date
 		jlbDateCreated = new JLabel("Date Created: ");
@@ -238,10 +258,10 @@ public class AddDefectPanel extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 				
 			//Retrieve values from user input
-			String appName = jtxtAppName.getText();
+			String appName = String.valueOf(jcbApps.getSelectedItem());
 			
 			// Check if the appName is null or 1 or more blank characters
-			if ( appName.trim().compareTo("") != 0 )
+			if ( appName.trim().compareTo(APP_PROMPT) != 0 )
 			{
 			
 				String status = String.valueOf(jcbDS.getSelectedItem());
@@ -273,7 +293,7 @@ public class AddDefectPanel extends JPanel {
 			}
 			else {
 				//Display message for blank application name
-				JOptionPane.showMessageDialog(null, "Application Name field cannot be blank. Please enter an Application Name.",
+				JOptionPane.showMessageDialog(null, "Please select a valid Application Name.",
 						"Error.", JOptionPane.ERROR_MESSAGE);
 			}
 		}
@@ -305,8 +325,9 @@ public class AddDefectPanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			
+			String appName = String.valueOf(jcbApps.getSelectedItem());
 			// Check if the appName is null or 1 or more blank characters
-			if ( jtxtAppName.getText().trim().compareTo("") != 0 )
+			if ( appName.trim().compareTo(APP_PROMPT) != 0 )
 			{
 			
 				// Retrieve assignee
@@ -314,7 +335,7 @@ public class AddDefectPanel extends JPanel {
 				// Default user email
 				String cc = "staffdefecttrackingsystem@gmail.com";
 				// Body message with detailed defect info
-				String body = "Application Name: " + jtxtAppName.getText() + "\n" +
+				String body = "Application Name: " + appName + "\n" +
 						"Summary: " + jtxtSummary.getText() + "\n" +
 						"Description: " + jtxtDefectDesc.getText() + "\n" +
 						"Priority: " + String.valueOf(jcbDP.getSelectedItem()) + "\n" +
@@ -331,7 +352,7 @@ public class AddDefectPanel extends JPanel {
 			}
 			else {
 				//Display message for blank application name
-				JOptionPane.showMessageDialog(null, "Application Name field cannot be blank. Please enter an Application Name.",
+				JOptionPane.showMessageDialog(null, "Please select a valid Application Name.",
 						"Error.", JOptionPane.ERROR_MESSAGE);
 			}
 		}	
